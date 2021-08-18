@@ -1,0 +1,16 @@
+{
+  "name": "whatsapp-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TahirReyaz",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "mal-scraper": "^2.11.3",
+    "venom-bot": "^3.1.1"
+  }
+}

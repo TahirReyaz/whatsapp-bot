@@ -1,0 +1,3403 @@
+{
+  "truthNdares": [
+    {
+      "id": 0,
+      "type": "Dare",
+      "level": 2,
+      "summary": "I dare you to Stand up for 2 turns",
+      "time": "",
+      "turns": 2
+    },
+    {
+      "id": 1,
+      "type": "Dare",
+      "level": 2,
+      "summary": "I dare you to do 10 pushups with one hand in less than a minute",
+      "time": 60,
+      "turns": ""
+    },
+    {
+      "id": 2,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What actor/actress do you prefer?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 3,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Who is your secret crush?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 4,
+      "type": "Truth",
+      "level": 0,
+      "summary": "What is the most disgusting thing you've ever done?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 5,
+      "type": "Dare",
+      "level": 2,
+      "summary": "I dare you to do a headstand for 2 mins",
+      "time": 120,
+      "turns": ""
+    },
+    {
+      "id": 6,
+      "type": "Truth",
+      "level": 3,
+      "summary": "What is your biggest fear in a relationship?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 7,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What was your funniest first date ever?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 8,
+      "type": "Truth",
+      "level": 3,
+      "summary": "What is your biggest turn off in a partner?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 9,
+      "type": "Truth",
+      "level": 0,
+      "summary": "What is your weirdest habit?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 10,
+      "type": "Truth",
+      "level": 3,
+      "summary": "How many kids would you like to have?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 11,
+      "type": "Truth",
+      "level": 3,
+      "summary": "What is the perfect first day?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 12,
+      "type": "Truth",
+      "level": 0,
+      "summary": "What is one embarrassing fact I should know about you?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 13,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What was your childhood nickname?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 14,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite movie?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 15,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Describe your worst date ever?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 16,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If there was no such thing as money; what would you do with your life?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 17,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite food?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 18,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What are your three favourite colours; and why?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 19,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your dream job?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 20,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you were trapped on an island for 3 days; what would you take with you?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 21,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Who is your favourite person and why?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 22,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Do you prefer apple or android?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 23,
+      "type": "Truth",
+      "level": 1,
+      "summary": "How do you put your toilet paper on the roll?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 24,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your best talent?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 25,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Do you believe in love at first sight?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 26,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Do you believe in love at all?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 27,
+      "type": "Truth",
+      "level": 3,
+      "summary": "What is your dream wedding?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 28,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Would you ever consider being a nudist?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 29,
+      "type": "Truth",
+      "level": 1,
+      "summary": "How do you feel about end pieces of a loaf of bread?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 30,
+      "type": "Truth",
+      "level": 1,
+      "summary": "Can you touch your tongue to your nose?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 31,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you could take away one bad thing in the world; what would it be?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 32,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your guilty pleasure?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 33,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is the most exotic food that you have ever eaten?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 34,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What country would like to live in if you had the chance?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 35,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you could change one thing on your body; what would it be?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 36,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What do you daydream about the most?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 37,
+      "type": "Truth",
+      "level": 0,
+      "summary": "Describe the weirdest dream you’ve ever had?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 38,
+      "type": "Truth",
+      "level": 1,
+      "summary": "Can you lick your elbow?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 39,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite season of the year?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 40,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Could you go a week without junk food?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 41,
+      "type": "Truth",
+      "level": 3,
+      "summary": "How was your first kiss?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 42,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Describe your worst kiss ever?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 43,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Do you like to exercise?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 44,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do an impression of your favorite celebrity",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 45,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Close your eyes and send a blind text to a random person",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 46,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Go grab a broom and do your best tango",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 47,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Give a 3 minute stand-up comedy routine",
+      "time": 180,
+      "turns": ""
+    },
+    {
+      "id": 48,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Break dance",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 49,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Make up a story about the item to your right",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 50,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Sing the alphabet without moving your mouth",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 51,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do your best president impression",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 52,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Yell out the first word that comes to your mind right now",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 53,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Call the pizza place and order 300 sardine pizzas",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 54,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Pound on your chest and act like a gorilla for the next minute",
+      "time": 60,
+      "turns": ""
+    },
+    {
+      "id": 55,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Sing everything you say for the next 10 minutes",
+      "time": 600,
+      "turns": ""
+    },
+    {
+      "id": 56,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Give a foot massage",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 57,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Say the alphabet backwards in 15 seconds",
+      "time": 15,
+      "turns": ""
+    },
+    {
+      "id": 58,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Go to the neighbour’s house and ask for a banana",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 59,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Go up to someone random and ask for a hug",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 60,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Set your cell phone language to Chinese for the next 10 minutes",
+      "time": 600,
+      "turns": ""
+    },
+    {
+      "id": 61,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Act like your favourite Disney character for the rest of the game",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 62,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Sing “Twinkle Twinkle; Little Star” while beat boxing",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 63,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Give a concert with your air guitar",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 64,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Make a poem using the words orange and moose",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 65,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Unbuckle your own belt using your elbows",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 66,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Brush someone else’s teeth",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 67,
+      "type": "Dare",
+      "level": 3,
+      "summary": "Twerk for a minute",
+      "time": 60,
+      "turns": ""
+    },
+    {
+      "id": 68,
+      "type": "Dare",
+      "level": 3,
+      "summary": "Belly dance to a country song",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 69,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Make up a country song of the top of your head",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 70,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Get on all fours and act like a dog until your next turn",
+      "time": "",
+      "turns": 1
+    },
+    {
+      "id": 71,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Make up a short rap about another player",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 72,
+      "type": "Dare",
+      "level": 3,
+      "summary": "Act like Romeo from “Romeo and Juliet” (pick who you want to be Juliet)",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 73,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do an impression of someone until another player can guess who you are",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 74,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Say “ya heard meh” after everything you say for the next 5 minutes",
+      "time": 300,
+      "turns": ""
+    },
+    {
+      "id": 75,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Act like you do not understand your own language until your next turn (come up with your own language)",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 76,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Use the letters of the name of another player to describe them (ex. SAM : S – Silly",
+      "time": "A – Attractive",
+      "turns": "M – Merry)"
+    },
+    {
+      "id": 77,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Only use sign language for the next round",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 78,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do pushups until it’s your turn again",
+      "time": "",
+      "turns": 1
+    },
+    {
+      "id": 79,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Wear a finger moustache for the next 5 minutes",
+      "time": 300,
+      "turns": ""
+    },
+    {
+      "id": 80,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Only use your elbows and knees to go make a sandwich",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 81,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Write a Facebook (or other social media) post only using your toes",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 82,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Take a selfie with the toilet and post it online",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 83,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Paint your toenails only using your teeth",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 84,
+      "type": "Truth",
+      "level": 3,
+      "summary": "How flexible are you?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 85,
+      "type": "Dare",
+      "level": 3,
+      "summary": "Take and ice cube and run it up and down your partner’s body until it is melted",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 86,
+      "type": "Dare",
+      "level": 3,
+      "summary": "Give a back rub the person to your right",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 87,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite color?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 88,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite animal?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 89,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite food?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 90,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite school subject?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 91,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Who is your favourite teacher; and why?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 92,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite song?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 93,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Who is your favourite Disney character?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 94,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite TV show?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 95,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your pet’s name?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 96,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your shoe size?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 97,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite movie?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 98,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Who is your favourite singer?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 99,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Do you like bugs?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 100,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite vegetable?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 101,
+      "type": "Truth",
+      "level": 2,
+      "summary": "15. Would you rather be a chicken or duck?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 102,
+      "type": "Truth",
+      "level": 2,
+      "summary": "16. Would you rather be a pig or snake?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 103,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite game to play?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 104,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Do you like doing chores?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 105,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite thing to do on the weekends?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 106,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Do you know how to dance?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 107,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Do you know how to cook?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 108,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Can you speak a different language?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 109,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite thing to do after school?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 110,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Are you in any sports?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 111,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite sport?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 112,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What animal are you scared of?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 113,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Are you scared of monsters?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 114,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Do you have an imaginary friend?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 115,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Who is your best friend?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 116,
+      "type": "Truth",
+      "level": 2,
+      "summary": "When did you learn how to ride a bike?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 117,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Can you use a pogo stick?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 118,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What do you want to be when you grow up?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 119,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite sport in the Olympics?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 120,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is the capital of the state that you live in?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 121,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you could go anywhere in the world; where would you go?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 122,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you a million dollars; what would you do with all of your money?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 123,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you could dye your hair any colour; what colour would you pick?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 124,
+      "type": "Truth",
+      "level": 2,
+      "summary": "How many brothers and sisters do you have?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 125,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you could be any animal; which one would you be?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 126,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite place to go out to eat?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 127,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do the silliest dance that you can think of",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 128,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Act like an old lady or an old man",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 129,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Spin around 10 times; when you get done try to walk in a straight line",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 130,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do 10 jumping jacks; and then do 10 pushups",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 131,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Say the alphabet backwards in 30 seconds",
+      "time": 30,
+      "turns": ""
+    },
+    {
+      "id": 132,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Go a whole minute without blinking",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 133,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Hold your breath for 10 seconds",
+      "time": 10,
+      "turns": ""
+    },
+    {
+      "id": 134,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Act like a chicken for 1 minute",
+      "time": 60,
+      "turns": ""
+    },
+    {
+      "id": 135,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Jump up and down until it’s your turn again",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 136,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Close your eyes until it’s your turn again",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 137,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Sing “Itsy Bitsy Spider” while standing on your head",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 138,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do 5 cartwheels in a row",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 139,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do a backbend",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 140,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Act like your favourite Disney person",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 141,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Say “banana” after everything you say until it is your turn again",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 142,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Make up a poem about the colour blue",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 143,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Act like a monkey until it is your turn again",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 144,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do a handstand",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 145,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Cross your eyes",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 146,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Lick your nose",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 147,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Eat a spoonful of peanut butter",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 148,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Tickle the person to your right",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 149,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Tie your shoe strings together and try to walk to the door and back",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 150,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Act like a baby until your next turn",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 151,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Moo like a cow as loud as you can",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 152,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do the sprinkler dance",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 153,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Act like your favourite superhero",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 154,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Go 10 minutes without saying the words: but; a; the; or",
+      "time": 600,
+      "turns": ""
+    },
+    {
+      "id": 155,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Act like a statue until it is your turn again (no talking or moving)",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 156,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Meow like cat",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 157,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Put your leg behind you head",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 158,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Sing your favourite song",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 159,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Make a fish face",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 160,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Pretend that you are an airplane for 2 minutes",
+      "time": 120,
+      "turns": ""
+    },
+    {
+      "id": 161,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Dance like a ballerina",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 162,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Say the alphabet in a different language",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 163,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do your best hip hop dance",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 164,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Try to lick your elbow",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 165,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Paint your fingernails with a crayon",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 166,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Sit upside down in a chair until your next turn",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 167,
+      "type": "Truth",
+      "level": 2,
+      "summary": "How people have you slept with on campus?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 168,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your real GPA?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 169,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your least favourite frat on campus?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 170,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What did you do on your first night of freshman year?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 171,
+      "type": "Truth",
+      "level": 1,
+      "summary": "Have you ever blacked out from drinking too much?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 172,
+      "type": "Truth",
+      "level": 0,
+      "summary": "What is the craziest thing that you have ever done while drunk?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 173,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Who is the best roommate that you have ever had?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 174,
+      "type": "Truth",
+      "level": 1,
+      "summary": "What is the most annoying thing that your roommate has ever done?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 175,
+      "type": "Truth",
+      "level": 1,
+      "summary": "Did you smoke or drink before college? Or did you start when you got here?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 176,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Would you drop out of school if you were to win the lottery?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 177,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is the best party that you’ve ever been to?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 178,
+      "type": "Truth",
+      "level": 2,
+      "summary": "How many parties have you thrown at your house?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 179,
+      "type": "Truth",
+      "level": 1,
+      "summary": "What is most amount of shots that you have taken in one night?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 180,
+      "type": "Truth",
+      "level": 0,
+      "summary": "Have you ever thrown up in someone’s car?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 181,
+      "type": "Truth",
+      "level": 0,
+      "summary": "Have you ever wet bed from being too drunk?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 182,
+      "type": "Truth",
+      "level": 1,
+      "summary": "What is the longest you have gone without sleep?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 183,
+      "type": "Truth",
+      "level": 2,
+      "summary": "How many times have you skipped class for no reason?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 184,
+      "type": "Truth",
+      "level": 1,
+      "summary": "Have you ever gotten an STD?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 185,
+      "type": "Truth",
+      "level": 1,
+      "summary": "Have you ever woken up to a stranger in your bed?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 186,
+      "type": "Truth",
+      "level": 1,
+      "summary": "What is the earliest you have ever started drinking in the day?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 187,
+      "type": "Truth",
+      "level": 1,
+      "summary": "Have you ever spent your parent’s money on alcohol?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 188,
+      "type": "Truth",
+      "level": 1,
+      "summary": "How many freshmen have you slept with?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 189,
+      "type": "Truth",
+      "level": 1,
+      "summary": "Have you ever taken money from a freshman?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 190,
+      "type": "Truth",
+      "level": 1,
+      "summary": "Have you ever lied to your parents about if you were in classes or not?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 191,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Have you ever taken money from your roommate?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 192,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is the most annoying thing your roommate does?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 193,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Have you been in any fights while in school?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 194,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Have you ever had someone write a paper for you?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 195,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Take a shot",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 196,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Take a shot off of the person to your right",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 197,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Run down the street in only your underwear",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 198,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Slap the person to your left on the booty",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 199,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Eat a raw egg",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 200,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Eat a dry pack of noodles",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 201,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Floss the teeth of the person to your left",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 202,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Take a shower fully clothed",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 203,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Speak like Tony Montana for the next 10 minutes",
+      "time": 600,
+      "turns": ""
+    },
+    {
+      "id": 204,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Eat toilet paper",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 205,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Snort a line of sugar",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 206,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Eat some soap",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 207,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Twerk on a handstand",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 208,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Let someone give you haircut with their weak hand",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 209,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Make a freestyle rap song about each person in the group",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 210,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Lick someone’s foot",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 211,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Call someone random; and talk freaky to them",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 212,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Email one of your professor’s and tell them you love them",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 213,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Lick the wall",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 214,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Take two shots of a dark and a light liquor ( 4 shots total)",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 215,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Let someone lick a full circle around your face",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 216,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Stand in the corner in “time out”; not say a word for the next 3 rounds",
+      "time": "",
+      "turns": 3
+    },
+    {
+      "id": 217,
+      "type": "Dare",
+      "level": 3,
+      "summary": "Make out with someone’s boyfriend or girlfriend",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 218,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Chug a whole beer in 15 seconds",
+      "time": 15,
+      "turns": ""
+    },
+    {
+      "id": 219,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Sit in the trash can for the next round",
+      "time": "",
+      "turns": 1
+    },
+    {
+      "id": 220,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Chug an entire beer; then spin around for 15 seconds; after that try to run to the door",
+      "time": 15,
+      "turns": ""
+    },
+    {
+      "id": 221,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Take 2 shots and do a cartwheel",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 222,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Call your parents and tell them you’re dropping out",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 223,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is the most annoying thing that your mom does?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 224,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is the most annoying thing that your dad does?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 225,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Have you ever snuck anyone into to the house?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 226,
+      "type": "Truth",
+      "level": 2,
+      "summary": "How many times have you snuck out of the house?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 227,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is the best dish that you mom makes for dinner?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 228,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you could change any of the house rules; what would it be?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 229,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Would you rather be a horse or a cow?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 230,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is the funniest thing your grandparents have ever said?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 231,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you could get rid of one household chore; what would it be?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 232,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite cartoon from your generation?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 233,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite childhood song?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 234,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite board game to play with your family?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 235,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you could put one person in your family on mute for a day; who would it be?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 236,
+      "type": "Truth",
+      "level": 2,
+      "summary": "At what age did you learn to ride a bike?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 237,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Do you know how to swim?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 238,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Describe your dream home",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 239,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is the funniest dream that you have ever had?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 240,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Have you ever had a dream about one of your relatives?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 241,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Who is your celebrity husband or wife?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 242,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Who taught you how to tie your shoes?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 243,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is the longest that you have ever been without taking a shower?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 244,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Have you ever worn the same clothes for more than three days?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 245,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite holiday and why?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 246,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you could be any dinosaur; which would it be?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 247,
+      "type": "Truth",
+      "level": 2,
+      "summary": "How long could you without eating your favourite food?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 248,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Who in your family tells the corniest jokes?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 249,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Would you rather be a bumblebee or a slug?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 250,
+      "type": "Truth",
+      "level": 0,
+      "summary": "Have you ever eaten a worm?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 251,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Have you ever picked your nose when you thought no one was looking?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 252,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you could be any super villain; who would you be?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 253,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Put peanut butter on your nose; and try to to lick it off",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 254,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do a headstand",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 255,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Stand on one leg for the next three rounds",
+      "time": "",
+      "turns": 3
+    },
+    {
+      "id": 256,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Cross your eyes and walk to front yard and back",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 257,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do an impression of your favourite relative; do not stop until everyone can guess who you are",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 258,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Act like the family pet until it is your turn again",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 259,
+      "type": "Dare",
+      "level": 2,
+      "summary": "For the next 2 rounds; you must do whatever the person to your right says",
+      "time": "",
+      "turns": 2
+    },
+    {
+      "id": 260,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Quack and walk like a duck",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 261,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do your best impression of Mickey Mouse",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 262,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Spin around for 10 seconds and run out the mailbox and back",
+      "time": 10,
+      "turns": ""
+    },
+    {
+      "id": 263,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Balance a spoon on your nose until the next round",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 264,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do your best evil laugh; as loud as you can",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 265,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Make a funny face; take a selfie; and post it on Facebook",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 266,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Call a random person and sing happy birthday to them",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 267,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Blindfolded; go to the kitchen and make sandwich",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 268,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Give the person to your left a wet willy",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 269,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Wiggle your ears without using your hands",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 270,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Talk like a baby for the next 3 rounds",
+      "time": "",
+      "turns": 3
+    },
+    {
+      "id": 271,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Record yourself doing the silliest dance you can do; and post it to Facebook",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 272,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Tell a funny knock knock joke; everyone must laugh",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 273,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Hold your breath for 15 seconds",
+      "time": 15,
+      "turns": ""
+    },
+    {
+      "id": 274,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do a headstand while you sing your favourite nursery rhyme",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 275,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Try to spin on your head like a break dancer",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 276,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Balance the object to your left on your head for the next three rounds",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 277,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do your best hula dance",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 278,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Tapdance on the couch",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 279,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Stand up and spin around for the next two rounds",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 280,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do 150 jumping jacks",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 281,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Use the person to your right’s stomach as a drum and make upa tribal dance",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 282,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Stand like a flamingo for the next four rounds",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 283,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Who is your best looking teacher that you have ever had?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 284,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Have you ever cheated on any test?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 285,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Who is your crush at school?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 286,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Who is the most annoying person you know?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 287,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Have you ever pulled a prank on your teacher?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 288,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Have you ever lied to your parents about what you were doingafter school?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 289,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Have you ever blamed something that you have done on one of your siblings?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 290,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What college do you plan on going to?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 291,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Are you still a virgin?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 292,
+      "type": "Truth",
+      "level": 3,
+      "summary": "How many boyfriends (or girlfriends) have you had?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 293,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Have you ever been kissed yet? If so; who was your best kiss?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 294,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your biggest pet peeve?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 295,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is the best vacation you’ve ever been on?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 296,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Have you ever told one of your best friend’s secrets; even if you said you wouldn’t?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 297,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Have you ever had a crush on someone that your best friend has dated?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 298,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is the most annoying thing that one of your siblings has done?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 299,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Do you have a job? If so; what is your favourite thing aboutit?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 300,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you were a billionaire; what would you spend your time doing?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 301,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is the longest time you have ever been grounded?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 302,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is the longest time that you think you could go withoutyour cell phone?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 303,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is the most expensive thing you own?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 304,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you had the choice to live on your own right now; would you do it?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 305,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Can you see yourself being married to the creepiest kid a your school someday?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 306,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Would you ever get on a dating website?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 307,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Have you ever watched an adult film without your parents knowing?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 308,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you could own your own business one day; what would it be?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 309,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite kind of clothing?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 310,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What celebrity are you obsessed with?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 311,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is the funniest youtube video you have ever seen?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 312,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Who is the worst teacher you have ever had; why?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 313,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite sports team?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 314,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What he craziest thing that you have ever done without yourparents knowing?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 315,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What would you do if your parents left the house to you fora whole week?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 316,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your favourite song that is out right now?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 317,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Could you go two months without talking to your friends?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 318,
+      "type": "Dare",
+      "level": 2,
+      "summary": "With powder in your hand; smack the person to you left on thecheek",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 319,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do a handstand on the wall for the next two rounds",
+      "time": "",
+      "turns": 2
+    },
+    {
+      "id": 320,
+      "type": "Dare",
+      "level": 3,
+      "summary": "Kiss a pillow until it is your turn again",
+      "time": "",
+      "turns": 1
+    },
+    {
+      "id": 321,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Do your best chicken dance outside on the lawn",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 322,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Eat three spoonfuls of mustard",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 323,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Using only your elbows; make a Facebook status and post it",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 324,
+      "type": "Dare",
+      "level": 3,
+      "summary": "Text your crush and tell them how much you like them",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 325,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Send an email to one of your teachers; telling them about howyour day is going",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 326,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Smell pepper and try not to sneeze",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 327,
+      "type": "Dare",
+      "level": 3,
+      "summary": "Ask your crush out on a date",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 328,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Blindfolded; spin around 10 times and walk down the street and back",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 329,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Take a selfie with a broom and post it on all of your socialmedia",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 330,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Put the socks of the person to your right in your mouth",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 331,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Do an impression of your most annoying teacher",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 332,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Prank call a local restaurant and order one of everything onthe menu",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 333,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Eat half a stick of butter",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 334,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Try to tickle yourself",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 335,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Go rinse your mouth out with soap or a minute; then blow soap bubbles from your mouth until the soap runs out",
+      "time": 60,
+      "turns": ""
+    },
+    {
+      "id": 336,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Do a cannonball onto the couch",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 337,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Eat as much hot sauce as you can",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 338,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Give person to your left a kiss on the forehead",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 339,
+      "type": "Dare",
+      "level": 3,
+      "summary": "Share a shirt with the person to your right for the next 3 rounds",
+      "time": "",
+      "turns": 3
+    },
+    {
+      "id": 340,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Hold your shoe up to your nose until it is your turn again",
+      "time": "",
+      "turns": 1
+    },
+    {
+      "id": 341,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Go outside and sing your national anthem as loud as you can",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 342,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Fold yourself into a pretzel",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 343,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Run in place or the next three rounds",
+      "time": "",
+      "turns": 3
+    },
+    {
+      "id": 344,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Call and yell at one of your parents and then tell them theyare grounded for a week",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 345,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Take a selfie with your finger up your nose and post it to all your social media",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 346,
+      "type": "Dare",
+      "level": 3,
+      "summary": "Do your best belly dance",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 347,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Walk on your hands from one side of the room to the other",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 348,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Make up a three minute song about the first thing that comesto your mind",
+      "time": 180,
+      "turns": ""
+    },
+    {
+      "id": 349,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Act like a pig until it is your turn again",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 350,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Put makeup on with no mirror",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 351,
+      "type": "Truth",
+      "level": 3,
+      "summary": "What is your favourite part of my body?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 352,
+      "type": "Truth",
+      "level": 0,
+      "summary": "How long have you gone without showering?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 353,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What don't you want anyone in this group to ask you? (Be sure to keep it in mind for future rounds!)",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 354,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Have you ever told a lie during a game of Truth or Dare? What was it and why?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 355,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Have you ever had a crush on anyone here?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 356,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Have you ever stolen anything?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 357,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What's your scariest nightmare?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 358,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What do you think is your biggest physical flaw?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 359,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Have you ever gone skinny dipping?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 360,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What kind of pajamas do you wear to bed?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 361,
+      "type": "Truth",
+      "level": 1,
+      "summary": "What's the dumbest thing you've ever done on a dare?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 362,
+      "type": "Truth",
+      "level": 3,
+      "summary": "What color is your underwear?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 363,
+      "type": "Truth",
+      "level": 0,
+      "summary": "Have you ever peed in the swimming pool?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 364,
+      "type": "Truth",
+      "level": 0,
+      "summary": "Where is the strangest place you've used the bathroom?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 365,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Are you scared of dying? Why?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 366,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your biggest fear?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 367,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What happened on the worst day of your life?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 368,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Have you ever climbed a tree?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 369,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Have you ever sang and danced in the grocery store?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 370,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you could be a superhero; what would your power be?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 371,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What would you do if you were invisible for a day?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 372,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If your life were made into a movie who would play you?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 373,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What's your biggest pet peeve?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 374,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What is your special talent?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 375,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What's the best meal you've ever had?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 376,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What's you favorite Disney movie and why?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 377,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What would you do with a million dollars if you ever won the lottery?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 378,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Who was your first crush; or who is your current crush?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 379,
+      "type": "Truth",
+      "level": 3,
+      "summary": "How old were you when you had your first kiss?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 380,
+      "type": "Truth",
+      "level": 3,
+      "summary": "What would you do if your current boyfriend/girlfriend ended things right now?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 381,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Have you ever cheated on a boyfriend/girlfriend?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 382,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Have you ever been cheated on by a boyfriend/girlfriend?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 383,
+      "type": "Truth",
+      "level": 3,
+      "summary": "If you could go on a date with anyone in the room who would it be?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 384,
+      "type": "Truth",
+      "level": 3,
+      "summary": "What is the most awkward moment you've ever had on a date?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 385,
+      "type": "Truth",
+      "level": 3,
+      "summary": "If you could kiss a celebrity without it impacting your current relationship; who would it be?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 386,
+      "type": "Truth",
+      "level": 3,
+      "summary": "What would you do on the perfect first date?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 387,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Of all the people you know; who has the most beautiful eyes?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 388,
+      "type": "Truth",
+      "level": 3,
+      "summary": "If you could marry one teacher in the school; who would you pick and why?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 389,
+      "type": "Truth",
+      "level": 3,
+      "summary": "What were your first impressions of me (the person asking the question)?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 390,
+      "type": "Truth",
+      "level": 3,
+      "summary": "What personality traits would cause you to end a friendship?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 391,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Would you go behind a friend's back with a crush?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 392,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Have you ever lied to your best friend?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 393,
+      "type": "Truth",
+      "level": 3,
+      "summary": "Would you ever cheat off a friend's paper?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 394,
+      "type": "Truth",
+      "level": 2,
+      "summary": "How many best friends have you had during your lifetime?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 395,
+      "type": "Truth",
+      "level": 2,
+      "summary": "If you were stuck on a deserted island which friend would you want with you?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 396,
+      "type": "Truth",
+      "level": 2,
+      "summary": "Which person here knows something about you that you wouldn't want revealed?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 397,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What are the three qualities you feel are most important in a friend?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 398,
+      "type": "Truth",
+      "level": 2,
+      "summary": "What would make you lie for your friend?",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 399,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Drink a mystery brew concocted by the rest of the group. Make sure there is nothing harmful or dangerous in the concoction and set a reasonable limit of sips the person must take to complete the dare.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 400,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Eat a mouthful of crackers and try to whistle.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 401,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Crack an egg on your head.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 402,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Combine two foods that should never go together; such as pickles and peanut butter or applesauce and olives; and eat a huge bite.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 403,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Stand next to the refrigerator (or food pack if you're camping); close your eyes; and randomly point to something inside. Keep your eyes shut while someone from the group helps you eat some of the food you picked.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 404,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Pretend to be a waiter or waitress and take snack orders from everyone in the group. Bring them the food they ordered and then check back to see if they like it.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 405,
+      "type": "Dare",
+      "level": 0,
+      "summary": "Eat a snack without using your hands.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 406,
+      "type": "Dare",
+      "level": 3,
+      "summary": "Exchange shirts with the person next to you for the next round of questions.",
+      "time": "",
+      "turns": 1
+    },
+    {
+      "id": 407,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Wear a funny hat on your head for the next three rounds of questions.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 408,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Wear your pants backward for the rest of the game.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 409,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Take off your socks and wear them on your hands for the rest of the evening.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 410,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Make a headdress out of toilet paper and pose for photos.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 411,
+      "type": "Dare",
+      "level": 3,
+      "summary": "Switch clothing with someone of the opposite gender. Change in private; but wear the clothes for the next four rounds.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 412,
+      "type": "Dare",
+      "level": 1,
+      "summary": "Get a large garbage bag and cut the bottom open. Put it on like a skirt and tie the ties around your waist. Act like you are modeling couture on the catwalk.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 413,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Take 10 minutes to come up with an outfit that has every color of the rainbow. Borrow things from friends as you need to.",
+      "time": 600,
+      "turns": ""
+    },
+    {
+      "id": 414,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Set up a tea party between any of the stuffed animals in the house. Invite the girls in your group to join.",
+      "time": 180,
+      "turns": ""
+    },
+    {
+      "id": 415,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Tell them they have to do a logic puzzle and if they don't finish it within 3 minutes - you will give them an embarrasing dare!",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 416,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Say the alphabet backwards in a British accent.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 417,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Run around the room imitating a monkey.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 418,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Give someone in the group a piggyback ride around the room.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 419,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Make up a rap about the person to your right.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 420,
+      "type": "Dare",
+      "level": 2,
+      "summary": "If there is a pet at the event; try to hold the pet for the rest of the night.",
+      "time": "",
+      "turns": ""
+    },
+    {
+      "id": 421,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Pretend that you're swimming underwater for the next three rounds of questions. Don't forget to make bubbling noises and come up for air from time to time.",
+      "time": "",
+      "turns": 3
+    },
+    {
+      "id": 422,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Everything you say for the rest of the game has to rhyme.",
+      "time": "",
+      "turns": 40
+    },
+    {
+      "id": 423,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Repeat everything another player says for the next three rounds of the game.",
+      "time": "",
+      "turns": 3
+    },
+    {
+      "id": 424,
+      "type": "Dare",
+      "level": 2,
+      "summary": "Sing instead of speaking for the next two rounds of the game.",
+      "time": "",
+      "turns": 2
+    }
+  ]}
