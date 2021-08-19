@@ -2,6 +2,7 @@
 // import { create, Whatsapp } from 'venom-bot';
 const venom = require("venom-bot");
 const truthOrDareFile = require("./data/truth-or-dare.json");
+const wyrFile = require("./data/wyr.json");
 const axios = require("axios");
 const malScraper = require("mal-scraper");
 
@@ -180,6 +181,18 @@ function start(client) {
         }while(truthOrDareFile.truthNdares[dareId].type != "Dare")
         composeMsg = [ "Dare: ", dare, "\n", "Level: ", DareLevel];
         composeMsg.forEach( txt => { msgString += txt; });
+        // Send the response to the sender
+        client
+          .reply(message.from, msgString, message.id.toString())
+          .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
+          .catch(error => { console.error("Error when sending truth: ", error); });
+      break;
+      /////////////////////////////////WOULD YOU RATHER/////////////////////////////////
+      case "BotWyr":
+        RecievedMsgPermission = true;
+        let wyrNo;
+        wyrNo = Math.floor(Math.random() * 240); // 239 is the number of entries in the wyr.json file
+        msgString = wyrFile.questions[wyrNo].question; 
         // Send the response to the sender
         client
           .reply(message.from, msgString, message.id.toString())
