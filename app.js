@@ -191,7 +191,7 @@ function start(client) {
       case "BotWyr":
         RecievedMsgPermission = true;
         let wyrNo;
-        wyrNo = Math.floor(Math.random() * 240); // 239 is the number of entries in the wyr.json file
+        wyrNo = Math.floor(Math.random() * 241); // 240 is the number of entries in the wyr.json file
         msgString = wyrFile.questions[wyrNo].question; 
         // Send the response to the sender
         client
@@ -217,15 +217,18 @@ function start(client) {
           "\n  For example:\n*BotRoast Tahir*",
           "\n--------------------------------------------------",
           "\n3. For Truth or Dare Game:\nSend 'BotTruth' for getting a truth question\nSend 'BotDare' for getting a dare",
-          "\n  For example:\n*BotTruth*",
+          "\n  For example:\n*BotTruth* or *BotDare*",
           "\n--------------------------------------------------",
-          "\n4. For getting the meaning of an English word:\nSend 'EnglishDefine <Word>'",
+          "\n4. For getting a 'Would You Rather' question:\nSend 'BotWyr'",
+          "\n  For example:\n*BotWyr*",
+          "\n--------------------------------------------------",
+          "\n5. For getting the meaning of an English word:\nSend 'EnglishDefine <Word>'",
           "\n  For example:\n*EnglishDefine table*",
           "\n--------------------------------------------------",
-          "\n5. For getting the details of an Anime:\nSend 'AnimeDetail <Title>'",
+          "\n6. For getting the details of an Anime:\nSend 'AnimeDetail <Title>'",
           "\n  For example:\n*AnimeDetail Naruto*",
           "\n--------------------------------------------------",
-          "\n6. For getting the details of a Kanji:nSend 'KanjiDefine <Kanji>'",
+          "\n7. For getting the details of a Kanji:nSend 'KanjiDefine <Kanji>'",
           "\n  For example:\n*KanjiDefine 空*",
         ];
         composeMsg.forEach(function (txt) {
