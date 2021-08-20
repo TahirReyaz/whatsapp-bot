@@ -5,7 +5,7 @@ const truthOrDareFile = require("./data/truth-or-dare.json");
 const wyrFile = require("./data/wyr.json");
 const axios = require("axios");
 const malScraper = require("mal-scraper");
-
+const acb = require("acb-api");
 
 // Create the client
 venom
@@ -118,7 +118,7 @@ function start(client) {
             })
             .catch(function (err) {
               client
-                .reply(message.from, "Word not found.. Sorry", message.id.toString())
+                .reply(message.from, "Word not found.. Sorry. Check if the Command Syntax was wrong", message.id.toString())
                 .then(() => { console.log(err) })
                 .catch((erro) => { console.error("Error when sending error: ", erro); });
             });
@@ -149,6 +149,108 @@ function start(client) {
             .catch(err => { // Send not found to sender
               client
                 .reply(message.from, "Anime not found.. Sorry", message.id.toString())
+                .then(() => { console.log(err) })
+                .catch((erro) => { console.error("Error when sending error: ", erro); });
+          });
+      break;
+      ////////////////////////////////////ANIME IDs/////////////////////////////////////
+      case "AnimeIds": 
+        RecievedMsgPermission = true;
+        const charAnime = message.body.substring("AnimeIds".length);
+        acb.get_anime_by_search(charAnime)
+          .then(data => {
+            data.forEach(result => {msgString += "\n*" + result.anime_id + "* - " + result.anime_name})
+            msgString+= "\nGet the IDs of characters of an anime by sending 'AnimeChars <id>\nFor example\n*AnimeChars 101671*" 
+            // Send the response to the sender
+            client
+              .reply(message.from, msgString, message.id.toString())
+              .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
+              .catch(erro => { console.error("Error when sending Anime search results:\n", erro); });
+            })
+            .catch(err => { // Send not found to sender
+              client
+                .reply(message.from, "Anime not found.. Sorry. Check if the command syntax is wrong", message.id.toString())
+                .then(() => { console.log(err) })
+                .catch((erro) => { console.error("Error when sending error: ", erro); });
+          });
+      break;
+      //////////////////////////////ANIME CHARACTERS IDs////////////////////////////////
+      case "AnimeChars": 
+        RecievedMsgPermission = true;
+        const animeId = botQuery[1];
+        acb.get_anime_by_id(animeId)
+          .then(data => {
+            // Set the fields to be sent in message
+            msgString = data.anime_id + "- *" + data.anime_name + "*\n*Characters:*";
+            data.characters.forEach(character => {msgString += "\n*" + character.id + "* - " + character.name});
+            msgString += "\nGet details of a character by sending 'CharDetail <id>\nFor example\n*CharDetail 10820*";
+            // Send the response to the sender
+            client
+            .sendImage(message.from, data.anime_image, null, msgString)
+            .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
+            .catch(erro => { console.error("Error when sending character ids: ", erro); });
+            })
+            .catch(err => { // Send not found to sender
+              client
+                .reply(message.from, "Anime not found.. Sorry", message.id.toString())
+                .then(() => { console.log(err) })
+                .catch((erro) => { console.error("Error when sending error: ", erro); });
+          });
+      break;
+      /////////////////////////ANIME CHARACTER DETAIL- BY SEARCH////////////////////////
+      case "CharDetail": 
+        RecievedMsgPermission = true;
+        const charName = message.body.substring("CharDetail ".length);
+        acb.get_character_by_search(charName)
+          .then((data) => {
+            let idString = "";
+            data.forEach(result => {idString += "\n*" + result.id + "* - " + result.anime_name}) 
+            // Set the fields to be sent in message
+            composeMsg = [
+              "*Name* : ", data[0].name,
+              "\n*Gender* : ", data[0].gender,
+              "\n*ID* : ", data[0].id,
+              "\n*Description* : ", data[0].desc,
+              "\n\n*IDs of characters with similar name:*", idString,
+              "\nGet Details of other characters by sending *CharIdDetail <id>*"
+            ];
+            composeMsg.forEach( txt => { msgString += txt; });
+            // Send the response to the sender
+            client
+              .sendImage(message.from, data[0].character_image, null, msgString)
+              .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
+              .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
+            })
+            .catch(err => { // Send not found to sender
+              client
+                .reply(message.from, "Character not found.. Sorry", message.id.toString())
+                .then(() => { console.log(err) })
+                .catch((erro) => { console.error("Error when sending error: ", erro); });
+          });
+      break;
+      ///////////////////////////ANIME CHARACTER DETAIL- BY ID//////////////////////////
+      case "CharIdDetail": 
+        RecievedMsgPermission = true;
+        const charId = botQuery[1];
+        acb.get_character_by_id(charId)
+          .then(data => {
+            // Set the fields to be sent in message
+            composeMsg = [
+              "*Name* : ", data.name,
+              "\n*Gender* : ", data.gender,
+              "\n*ID* : ", data.id,
+              "\n*Description* : ", data.desc,
+            ];
+            composeMsg.forEach( txt => { msgString += txt; });
+            // Send the response to the sender
+            client
+              .sendImage(message.from, data.character_image, null, msgString)
+              .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
+              .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
+            })
+            .catch(err => { // Send not found to sender
+              client
+                .reply(message.from, "Character not found.. Sorry", message.id.toString())
                 .then(() => { console.log(err) })
                 .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
@@ -214,22 +316,54 @@ function start(client) {
           "1. For just getting a reply:\nSend ' *HiBot* ' (without the ')",
           "\n--------------------------------------------------",
           "\n2. For roasting someone:\nSend 'BotRoast <Name>'",
-          "\n  For example:\n*BotRoast Tahir*",
+          "\nFor example:\n*BotRoast Tahir*",
           "\n--------------------------------------------------",
           "\n3. For Truth or Dare Game:\nSend 'BotTruth' for getting a truth question\nSend 'BotDare' for getting a dare",
-          "\n  For example:\n*BotTruth* or *BotDare*",
+          "\nFor example:\n*BotTruth* or *BotDare*",
           "\n--------------------------------------------------",
           "\n4. For getting a 'Would You Rather' question:\nSend 'BotWyr'",
-          "\n  For example:\n*BotWyr*",
+          "\nFor example:\n*BotWyr*",
           "\n--------------------------------------------------",
           "\n5. For getting the meaning of an English word:\nSend 'EnglishDefine <Word>'",
-          "\n  For example:\n*EnglishDefine table*",
+          "\nFor example:\n*EnglishDefine table*",
           "\n--------------------------------------------------",
-          "\n6. For getting the details of an Anime:\nSend 'AnimeDetail <Title>'",
-          "\n  For example:\n*AnimeDetail Naruto*",
+          "\n6. For getting the Anime commands:\nSend 'AnimeHelp",
+          "\nFor example:\n*AnimeHelp*",
           "\n--------------------------------------------------",
           "\n7. For getting the details of a Kanji:nSend 'KanjiDefine <Kanji>'",
-          "\n  For example:\n*KanjiDefine 空*",
+          "\nFor example:\n*KanjiDefine 空*",
+        ];
+        composeMsg.forEach(function (txt) {
+          msgString += txt;
+        });
+        // Send the message
+        client
+          .reply(message.from, msgString, message.id.toString())
+          .then(() => { console.log("Sent message: ", msgString + "\n-------------------------"); })
+          .catch((erro) => { console.error("Error when sending: ", erro); });
+      break;
+      ////////////////////////////////////ANIME MENU/////////////////////////////////////
+      case "AnimeHelp":
+        RecievedMsgPermission = true;
+        // Compose the message
+        composeMsg = [
+          "1. For getting the details of an Anime:\nSend 'AnimeDetail <Title>'",
+          "\nFor example:\n*AnimeDetail Naruto*",
+          "\n--------------------------------------------------",
+          "\n2. For getting details of an Anime character by search:\nSend 'CharDetail <Name>'",
+          "\nFor example:\n*CharDetail Kakashi*",
+          "\n--------------------------------------------------",
+          "\n3. For getting details of an Anime character by id:\nSend 'CharIdDetail <id>'",
+          "\nFor example:\n*CharIdDetail 10820*",
+          "\n--------------------------------------------------",
+          "\n4. For getting IDs of an Anime by search:\nSend 'AnimeIds <Anime name or Title>'",
+          "\nFor example:\n*AnimeIds Naruto*",
+          "\n--------------------------------------------------",
+          "\n5. For getting character list and character Ids of an Anime by anime id:\nSend 'AnimeChars <AnimeId>'",
+          "\nFor example:\n*AnimeChars 100053*",
+          "\n--------------------------------------------------",
+          "\n6. For getting other Commands:\nSend 'HelpBot'",
+          "\nFor example:\n*HelpBot*",
         ];
         composeMsg.forEach(function (txt) {
           msgString += txt;

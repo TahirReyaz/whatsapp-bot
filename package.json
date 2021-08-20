@@ -9,6 +9,7 @@
   "author": "TahirReyaz",
   "license": "ISC",
   "dependencies": {
+    "acb-api": "^1.3.6",
     "axios": "^0.21.1",
     "mal-scraper": "^2.11.3",
     "venom-bot": "^3.0.21"
