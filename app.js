@@ -183,7 +183,7 @@ function start(client) {
             // Set the fields to be sent in message
             msgString = data.anime_id + "- *" + data.anime_name + "*\n*Characters:*";
             data.characters.forEach(character => {msgString += "\n*" + character.id + "* - " + character.name});
-            msgString += "\nGet details of a character by sending 'CharDetail <id>\nFor example\n*CharDetail 10820*";
+            msgString += "\nGet details of a character by sending 'CharIdDetail <id>\nFor example\n*CharIdDetail 10820*";
             // Send the response to the sender
             client
             .sendImage(message.from, data.anime_image, null, msgString)
@@ -219,11 +219,13 @@ function start(client) {
             client
               .sendImage(message.from, data[0].character_image, null, msgString)
               .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
-              .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
+              .catch(erro => { console.error("Error when sending character details: ", erro); });
             })
             .catch(err => { // Send not found to sender
               client
-                .reply(message.from, "Character not found.. Sorry", message.id.toString())
+                .reply(message.from, 
+                  "Character not found.. Sorry.\nCheck if the command syntax is right or not.\nDon't get confused by similar looking commands.", 
+                  message.id.toString())
                 .then(() => { console.log(err) })
                 .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
