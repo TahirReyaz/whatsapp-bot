@@ -205,17 +205,21 @@ function start(client) {
         const charName = message.body.substring("CharDetail ".length);
         acb.get_character_by_search(charName)
           .then((data) => {
-            let idString = "";
-            data.forEach(result => {idString += "\n*" + result.id + "* - " + result.anime_name}) 
             // Set the fields to be sent in message
             composeMsg = [
               "*Name* : ", data[0].name,
               "\n*Gender* : ", data[0].gender,
               "\n*ID* : ", data[0].id,
-              "\n*Description* : ", data[0].desc,
-              "\n\n*IDs of characters with similar name:*", idString,
-              "\nGet Details of other characters by sending *CharIdDetail <id>*"
+              "\n*Description* : ", data[0].desc
             ];
+            if(data.length > 1) {
+              let idString = "";
+              data.forEach(result => {idString += "\n*" + result.id + "* - " + result.anime_name}) 
+                composeMsg.push (
+                "\n\n*IDs of characters with similar name:*", idString,
+                "\nGet Details of other characters by sending *CharIdDetail <id>*"
+              );
+            }
             composeMsg.forEach( txt => { msgString += txt; });
             // Send the response to the sender
             client
@@ -232,7 +236,7 @@ function start(client) {
                 .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
       break;
-      /////////////////////////MOVIE DETAIL////////////////////////
+      ////////////////////////////////////MOVIE DETAIL//////////////////////////////////
       case "MovieDetail": 
         RecievedMsgPermission = true;
         const movieName = message.body.substring("MovieDetail ".length);
@@ -265,7 +269,7 @@ function start(client) {
           }
         });
       break;
-      /////////////////////////SONG DETAIL- BY SEARCH////////////////////////
+      ///////////////////////////////SONG DETAIL- BY SEARCH/////////////////////////////
       case "SongSearch": 
         RecievedMsgPermission = true;
         const songName = message.body.substring("SongSearch ".length);
@@ -403,10 +407,13 @@ function start(client) {
           "\n5. For getting the meaning of an English word:\nSend 'EnglishDefine <Word>'",
           "\nFor example:\n*EnglishDefine table*",
           "\n--------------------------------------------------",
-          "\n6. For getting the Anime commands:\nSend 'AnimeHelp",
+          "\n6. For getting the details of a movie or a series:\nSend 'MovieDetail <title>'",
+          "\nFor example:\n*MovieDetail Daredevil*",
+          "\n--------------------------------------------------",
+          "\n7. For getting the Anime commands:\nSend 'AnimeHelp",
           "\nFor example:\n*AnimeHelp*",
           "\n--------------------------------------------------",
-          "\n7. For getting the details of a Kanji:nSend 'KanjiDefine <Kanji>'",
+          "\n8. For getting the details of a Kanji:nSend 'KanjiDefine <Kanji>'",
           "\nFor example:\n*KanjiDefine 空*",
         ];
         composeMsg.forEach(function (txt) {
