@@ -2,12 +2,12 @@
 // import { create, Whatsapp } from 'venom-bot';
 const venom = require("venom-bot");
 const truthOrDareFile = require("./data/truth-or-dare.json");
-const wyrFile = require("./data/wyr.json");
 const axios = require("axios");
 const malScraper = require("mal-scraper");
 const acb = require("acb-api");
-const bandcamp = require('bandcamp-scraper')
+const bandcamp = require("bandcamp-scraper")
 const nameToImdb = require("name-to-imdb");
+const wyr = require("wyr");
 
 // Create the client
 venom
@@ -372,14 +372,20 @@ function start(client) {
       /////////////////////////////////WOULD YOU RATHER/////////////////////////////////
       case "BotWyr":
         RecievedMsgPermission = true;
-        let wyrNo;
-        wyrNo = Math.floor(Math.random() * 241); // 240 is the number of entries in the wyr.json file
-        msgString = wyrFile.questions[wyrNo].question; 
-        // Send the response to the sender
-        client
-          .reply(message.from, msgString, message.id.toString())
-          .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
-          .catch(error => { console.error("Error when sending truth: ", error); });
+        wyr().
+          then(response => {
+            composeMsg = [
+              "Would you rather:",
+              "\n*A* : ", response.blue.question, "\nOr",
+              "\n*B* : ", response.red.question
+            ]
+            composeMsg.forEach(txt => {msgString += txt}); 
+            // Send the response to the sender
+            client
+              .reply(message.from, msgString, message.id.toString())
+              .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
+              .catch(error => { console.error("Error when sending truth: ", error); });
+        })
       break;
       /////////////////////////////////////BOT MENU/////////////////////////////////////
       case "BotHelp":
