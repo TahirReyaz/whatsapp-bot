@@ -6,8 +6,8 @@ const axios = require("axios");
 const malScraper = require("mal-scraper");
 const acb = require("acb-api");
 const bandcamp = require("bandcamp-scraper")
-const nameToImdb = require("name-to-imdb");
 const wyr = require("wyr");
+require('dotenv').config();
 
 // Create the client
 venom
@@ -240,36 +240,41 @@ function start(client) {
       case "MovieDetail": 
         RecievedMsgPermission = true;
         const movieName = data.substring("MovieDetail ".length);
-        if(movieName != "Your Name" && movieName != "Your name" && movieName != "your name") {
-          nameToImdb(movieName, function(error, res, inf) { 
-            if(!error) {
-              // Set the fields to be sent in message
-              composeMsg = [
-                "*ID* : ", inf.meta.id,
-                "\n*Name* : ", inf.meta.name,
-                "\n*Year* : ", inf.meta.year,
-                "\n*Type* : ", inf.meta.type,
-                "\n*Year Range* : ", inf.meta.yearRange,
-                "\n*Starring* : ", inf.meta.starring,
-                "\n*Similarity* : ", inf.meta.similarity,
-              ];
-              composeMsg.forEach( txt => { msgString += txt });
-              // Send the response to the sender
-              client
-                .sendImage(message.from, inf.meta.image.src, null, msgString)
-                .then(() => { console.log("Sent message: \n" + inf + "\n--------------------"); })
-                .catch(erro => { console.error("Error when sending character details: ", erro); });
-            }
-            else { // Send not found to sender
-              client
-                .reply(message.from, 
-                  "Movie/ Series not found.. Sorry.\nCheck if the command syntax is right or not.\nDon't get confused by similar looking commands.", 
-                  message.id.toString())
-                .then(() => { console.log(error) })
-                .catch((erro) => { console.error("Error when sending error: ", erro); });
-            }
-          });
-        }
+        axios
+        .get("https://www.omdbapi.com/?apikey=" + process.env.OMDB_API_KEY + "&t=" + movieName)
+        .then( response => {
+          // Set the fields of the message
+            composeMsg = [
+              "*Title* : ", response.data.Title,
+              "\n*Type* : ", response.data.Type,
+              "\n*Year* : ", response.data.Year,
+              "\n*Rated* : ", response.data.Rated,
+              "\n*Released* : ", response.data.Released,
+              "\n*Run-time* : ", response.data.Runtime,
+              "\n*Genre* : ", response.data.Genre,
+              "\n*Director* : ", response.data.Director,
+              "\n*Writer* : ", response.data.Writer,
+              "\n*Actors* : ", response.data.Actors,
+              "\n*Language* : ", response.data.Language,
+              "\n*Country* : ", response.data.Country,
+              "\n*Awards* : ", response.data.Awards,
+              "\n*IMDB rating* : ", response.data.imdbRating,
+              "\n*Plot* : ", response.data.Plot
+            ];
+          // Convert the array into text string
+          composeMsg.forEach(txt => { msgString += txt; });
+          // Send the response to the sender
+          client
+            .sendImage(message.from, response.data.Poster, null, msgString)
+            .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
+            .catch((erro) => { console.error("Error when sending: ", erro); });
+        })
+        .catch(function (err) {
+          client
+            .reply(message.from, "Movie/ Series not found.. Sorry. Check if the Command Syntax was wrong", message.id.toString())
+            .then(() => { console.log(err) })
+            .catch((erro) => { console.error("Error when sending error: ", erro); });
+        });
       break;
       ///////////////////////////////SONG DETAIL- BY SEARCH/////////////////////////////
       case "SongSearch": 

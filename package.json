@@ -12,8 +12,8 @@
     "acb-api": "^1.3.6",
     "axios": "^0.21.1",
     "bandcamp-scraper": "^1.4.1",
+    "dotenv": "^10.0.0",
     "mal-scraper": "^2.11.3",
-    "name-to-imdb": "^3.0.2",
     "venom-bot": "^3.0.21",
     "wyr": "^1.0.2"
   }
