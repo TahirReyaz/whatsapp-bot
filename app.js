@@ -240,34 +240,36 @@ function start(client) {
       case "MovieDetail": 
         RecievedMsgPermission = true;
         const movieName = data.substring("MovieDetail ".length);
-        nameToImdb(movieName, function(error, res, inf) { 
-          if(!error) {
-            // Set the fields to be sent in message
-            composeMsg = [
-              "*ID* : ", inf.meta.id,
-              "\n*Name* : ", inf.meta.name,
-              "\n*Year* : ", inf.meta.year,
-              "\n*Type* : ", inf.meta.type,
-              "\n*Year Range* : ", inf.meta.yearRange,
-              "\n*Starring* : ", inf.meta.starring,
-              "\n*Similarity* : ", inf.meta.similarity,
-            ];
-            composeMsg.forEach( txt => { msgString += txt });
-            // Send the response to the sender
-            client
-              .sendImage(message.from, inf.meta.image.src, null, msgString)
-              .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
-              .catch(erro => { console.error("Error when sending character details: ", erro); });
-          }
-          else { // Send not found to sender
-            client
-              .reply(message.from, 
-                "Movie/ Series not found.. Sorry.\nCheck if the command syntax is right or not.\nDon't get confused by similar looking commands.", 
-                message.id.toString())
-              .then(() => { console.log(error) })
-              .catch((erro) => { console.error("Error when sending error: ", erro); });
-          }
-        });
+        if(movieName != "Your Name" && movieName != "Your name" && movieName != "your name") {
+          nameToImdb(movieName, function(error, res, inf) { 
+            if(!error) {
+              // Set the fields to be sent in message
+              composeMsg = [
+                "*ID* : ", inf.meta.id,
+                "\n*Name* : ", inf.meta.name,
+                "\n*Year* : ", inf.meta.year,
+                "\n*Type* : ", inf.meta.type,
+                "\n*Year Range* : ", inf.meta.yearRange,
+                "\n*Starring* : ", inf.meta.starring,
+                "\n*Similarity* : ", inf.meta.similarity,
+              ];
+              composeMsg.forEach( txt => { msgString += txt });
+              // Send the response to the sender
+              client
+                .sendImage(message.from, inf.meta.image.src, null, msgString)
+                .then(() => { console.log("Sent message: \n" + inf + "\n--------------------"); })
+                .catch(erro => { console.error("Error when sending character details: ", erro); });
+            }
+            else { // Send not found to sender
+              client
+                .reply(message.from, 
+                  "Movie/ Series not found.. Sorry.\nCheck if the command syntax is right or not.\nDon't get confused by similar looking commands.", 
+                  message.id.toString())
+                .then(() => { console.log(error) })
+                .catch((erro) => { console.error("Error when sending error: ", erro); });
+            }
+          });
+        }
       break;
       ///////////////////////////////SONG DETAIL- BY SEARCH/////////////////////////////
       case "SongSearch": 
