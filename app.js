@@ -239,7 +239,7 @@ function start(client) {
       ////////////////////////////////////MOVIE DETAIL//////////////////////////////////
       case "MovieDetail": 
         RecievedMsgPermission = true;
-        const movieName = message.body.substring("MovieDetail ".length);
+        const movieName = data.substring("MovieDetail ".length);
         nameToImdb(movieName, function(error, res, inf) { 
           if(!error) {
             // Set the fields to be sent in message
@@ -252,7 +252,7 @@ function start(client) {
               "\n*Starring* : ", inf.meta.starring,
               "\n*Similarity* : ", inf.meta.similarity,
             ];
-            composeMsg.forEach( txt => { msgString += txt; });
+            composeMsg.forEach( txt => { msgString += txt });
             // Send the response to the sender
             client
               .sendImage(message.from, inf.meta.image.src, null, msgString)
@@ -260,12 +260,12 @@ function start(client) {
               .catch(erro => { console.error("Error when sending character details: ", erro); });
           }
           else { // Send not found to sender
-              client
-                .reply(message.from, 
-                  "Character not found.. Sorry.\nCheck if the command syntax is right or not.\nDon't get confused by similar looking commands.", 
-                  message.id.toString())
-                .then(() => { console.log(error) })
-                .catch((erro) => { console.error("Error when sending error: ", erro); });
+            client
+              .reply(message.from, 
+                "Movie/ Series not found.. Sorry.\nCheck if the command syntax is right or not.\nDon't get confused by similar looking commands.", 
+                message.id.toString())
+              .then(() => { console.log(error) })
+              .catch((erro) => { console.error("Error when sending error: ", erro); });
           }
         });
       break;
