@@ -6,6 +6,8 @@ const wyrFile = require("./data/wyr.json");
 const axios = require("axios");
 const malScraper = require("mal-scraper");
 const acb = require("acb-api");
+const bandcamp = require('bandcamp-scraper')
+const nameToImdb = require("name-to-imdb");
 
 // Create the client
 venom
@@ -229,6 +231,78 @@ function start(client) {
                 .then(() => { console.log(err) })
                 .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
+      break;
+      /////////////////////////MOVIE DETAIL////////////////////////
+      case "MovieDetail": 
+        RecievedMsgPermission = true;
+        const movieName = message.body.substring("MovieDetail ".length);
+        nameToImdb(movieName, function(error, res, inf) { 
+          if(!error) {
+            // Set the fields to be sent in message
+            composeMsg = [
+              "*ID* : ", inf.meta.id,
+              "\n*Name* : ", inf.meta.name,
+              "\n*Year* : ", inf.meta.year,
+              "\n*Type* : ", inf.meta.type,
+              "\n*Year Range* : ", inf.meta.yearRange,
+              "\n*Starring* : ", inf.meta.starring,
+              "\n*Similarity* : ", inf.meta.similarity,
+            ];
+            composeMsg.forEach( txt => { msgString += txt; });
+            // Send the response to the sender
+            client
+              .sendImage(message.from, inf.meta.image.src, null, msgString)
+              .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
+              .catch(erro => { console.error("Error when sending character details: ", erro); });
+          }
+          else { // Send not found to sender
+              client
+                .reply(message.from, 
+                  "Character not found.. Sorry.\nCheck if the command syntax is right or not.\nDon't get confused by similar looking commands.", 
+                  message.id.toString())
+                .then(() => { console.log(error) })
+                .catch((erro) => { console.error("Error when sending error: ", erro); });
+          }
+        });
+      break;
+      /////////////////////////SONG DETAIL- BY SEARCH////////////////////////
+      case "SongSearch": 
+        RecievedMsgPermission = true;
+        const songName = message.body.substring("SongSearch ".length);
+        bandcamp.search({query: songName, page: 1}, (error, searchResults) => {
+          if(!error) {
+            let tagString = "", songImgUrl;
+            searchResults.forEach(result => {
+              if(result.type === "track") {
+                result.tags.every(tag => {tagString += tag + ", "}) 
+                // Set the fields to be sent in message
+                composeMsg = [
+                  "*Name* : ", result.name,
+                  "\n*Type* : ", result.type,
+                  "\n*Artist* : ", result.artist,
+                  "\n*Tags* : ", tagString,
+                ];
+                songImgUrl = result.imageUrl;
+                return false;
+              }
+              return true;
+            })
+            composeMsg.forEach( txt => { msgString += txt; });
+            // Send the response to the sender
+            client
+              .sendImage(message.from, songImgUrl, null, msgString)
+              .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
+              .catch(erro => { console.error("Error when sending character details: ", erro); });
+            }
+          else { // Send not found to sender
+              client
+                .reply(message.from, 
+                  "Character not found.. Sorry.\nCheck if the command syntax is right or not.\nDon't get confused by similar looking commands.", 
+                  message.id.toString())
+                .then(() => { console.log(error) })
+                .catch((erro) => { console.error("Error when sending error: ", erro); });
+          }
+        });
       break;
       ///////////////////////////ANIME CHARACTER DETAIL- BY ID//////////////////////////
       case "CharIdDetail": 
