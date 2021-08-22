@@ -358,11 +358,18 @@ function start(client) {
           // Convert the array into text string
           composeMsg.forEach(txt => { msgString += txt; });
           // Send the response to the sender
-          if(response.data.Response === "True") {
-            client
-              .sendImage(message.from, response.data.Poster, null, msgString)
-              .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
-              .catch((erro) => { console.error("Error when sending: ", erro); });            
+          if(response.data.Response === "True") { // If the movie was found then send the details and poster
+            if(response.data.Poster === "N/A") { // If there is no poster then send only the details
+              client
+                .reply(message.from, msgString, message.id.toString())
+                .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
+                .catch((erro) => { console.error("Error when sending: ", erro); });            
+            } else { // If there is a poster then send the details with the poster           
+              client
+                .sendImage(message.from, response.data.Poster, null, msgString)
+                .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
+                .catch((erro) => { console.error("Error when sending: ", erro); });            
+            }          
           } else {
             client
               .reply(message.from, "Movie/ Series not found.. Sorry. Check the spelling", message.id.toString())
