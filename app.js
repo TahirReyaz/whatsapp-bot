@@ -358,10 +358,17 @@ function start(client) {
           // Convert the array into text string
           composeMsg.forEach(txt => { msgString += txt; });
           // Send the response to the sender
-          client
-            .sendImage(message.from, response.data.Poster, null, msgString)
-            .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
-            .catch((erro) => { console.error("Error when sending: ", erro); });
+          if(response.data.Response === "True") {
+            client
+              .sendImage(message.from, response.data.Poster, null, msgString)
+              .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
+              .catch((erro) => { console.error("Error when sending: ", erro); });            
+          } else {
+            client
+              .reply(message.from, "Movie/ Series not found.. Sorry. Check the spelling", message.id.toString())
+              .then(() => { console.log(response.data.Error) })
+              .catch((erro) => { console.error("Error when sending error: ", erro); });
+          }
         })
         .catch(function (err) {
           client
