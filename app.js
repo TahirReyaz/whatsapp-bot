@@ -21,6 +21,8 @@ function start(client) {
     const data = message.body;
     const botQuery = data.split(" ");
     let composeMsg = [], msgString = "", RecievedMsgPermission = false;
+    let name, animeName, charName, charAnime, movieName, songName; 
+    let queryPermission = true;
     switch(botQuery[0]) {
       //////////////////////////////////////HI BOT//////////////////////////////////////
       case "HiBot" :
@@ -34,11 +36,23 @@ function start(client) {
       break;
       //////////////////////////////////////ROAST///////////////////////////////////////
       case ".roast":
+        name = message.body.substring(".roast ".length);
+        queryPermission = false;
       case "BotRoast":
+        if(queryPermission) {
+          name = message.body.substring("BotRoast ".length);
+          queryPermission = false;
+        }
       case "Botroast":
+        if(queryPermission) {
+          name = message.body.substring("Botroast ".length);
+          queryPermission = false;
+        }
       case "botroast":
         RecievedMsgPermission = true;
-        const name = message.body.substring("BotRoast ".length);
+        if(queryPermission) {
+          name = message.body.substring("botroast ".length);
+        }
         axios
           .get("https://evilinsult.com/generate_insult.php?lang=en&type=json")
           .then(function (response) {
@@ -140,11 +154,24 @@ function start(client) {
       break;
       ///////////////////////////////////ANIME DETAIL///////////////////////////////////
       case ".ad": 
+        animeName = message.body.substring(".ad ".length);
+        queryPermission = false;
       case "AnimeDetail": 
+        if(queryPermission) {
+          animeName = message.body.substring("AnimeDetail ".length);
+          queryPermission = false;
+        }
       case "Animedetail": 
+        if(queryPermission) {
+          animeName = message.body.substring("Animedetail ".length);
+          queryPermission = false;
+        }
       case "animedetail": 
         RecievedMsgPermission = true;
-        const animeName = message.body.substring("AnimeDetail ".length);
+        if(queryPermission) {
+          animeName = message.body.substring("animedetail ".length);
+          queryPermission = false;
+        }
         malScraper.getInfoFromName(animeName)
           .then((data) => {
             let genreString = "", i;
@@ -173,11 +200,24 @@ function start(client) {
       break;
       ////////////////////////////////////ANIME IDs/////////////////////////////////////
       case ".aid": 
+        charAnime = message.body.substring(".aid ".length);
+        queryPermission = false;
       case "AnimeIds": 
+        if(queryPermission) {
+          charAnime = message.body.substring("AnimeIds ".length);
+          queryPermission = false;
+        }
       case "Animeids": 
+        if(queryPermission) {
+          charAnime = message.body.substring("Animeids ".length);
+          queryPermission = false;
+        }
       case "animeids": 
         RecievedMsgPermission = true;
-        const charAnime = message.body.substring("AnimeIds".length);
+        if(queryPermission) {
+          charAnime = message.body.substring("animeids ".length);
+          queryPermission = false;
+        }
         acb.get_anime_by_search(charAnime)
           .then(data => {
             data.forEach(result => {msgString += "\n*" + result.anime_id + "* - " + result.anime_name})
@@ -223,11 +263,24 @@ function start(client) {
       break;
       /////////////////////////ANIME CHARACTER DETAIL- BY SEARCH////////////////////////
       case ".cd":
+        charName = message.body.substring(".cd ".length);
+        queryPermission = false;
       case "CharDetail": 
+        if(queryPermission) {
+          charName = message.body.substring("CharDetail ".length);
+          queryPermission = false;
+        }
       case "Chardetail": 
+        if(queryPermission) {
+          charName = message.body.substring("Chardetail ".length);
+          queryPermission = false;
+        }
       case "chardetail": 
         RecievedMsgPermission = true;
-        const charName = message.body.substring("CharDetail ".length);
+        if(queryPermission) {
+          charName = message.body.substring("chardetail ".length);
+          queryPermission = false;
+        }
         acb.get_character_by_search(charName)
           .then((data) => {
             // Set the fields to be sent in message
@@ -263,11 +316,24 @@ function start(client) {
       break;
       ////////////////////////////////////MOVIE DETAIL//////////////////////////////////
       case ".md":
+        charName = message.body.substring(".md ".length);
+        queryPermission = false;
       case "MovieDetail": 
+        if(queryPermission) {
+          charName = message.body.substring("MovieDetail ".length);
+          queryPermission = false;
+        }
       case "Moviedetail":
+        if(queryPermission) {
+          charName = message.body.substring("Moviedetail ".length);
+          queryPermission = false;
+        }
       case "moviedetail":
         RecievedMsgPermission = true;
-        const movieName = data.substring("MovieDetail ".length);
+        if(queryPermission) {
+          charName = message.body.substring("moviedetail ".length);
+          queryPermission = false;
+        }
         axios
         .get("https://www.omdbapi.com/?apikey=" + process.env.OMDB_API_KEY + "&t=" + movieName)
         .then( response => {
