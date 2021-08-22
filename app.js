@@ -24,6 +24,8 @@ function start(client) {
     switch(botQuery[0]) {
       //////////////////////////////////////HI BOT//////////////////////////////////////
       case "HiBot" :
+      case "Hibot" :
+      case "hibot" :
         RecievedMsgPermission = true;
         client
           .reply(message.from, "Bot dikha nhi ki mu utha kr chale aye.\nSend 'HelpBot' for commands", message.id.toString())
@@ -31,7 +33,10 @@ function start(client) {
           .catch((erro) => { console.error('Error when sending: ', erro); });
       break;
       //////////////////////////////////////ROAST///////////////////////////////////////
+      case ".roast":
       case "BotRoast":
+      case "Botroast":
+      case "botroast":
         RecievedMsgPermission = true;
         const name = message.body.substring("BotRoast ".length);
         axios
@@ -60,7 +65,11 @@ function start(client) {
           .catch( error => { console.log(error); });
       break;
       /////////////////////////////////KANJI DEFINITION/////////////////////////////////
+      case ".kd":
+      case "KanjiDef":
       case "KanjiDefine":
+      case "Kanjidefine":
+      case "kanjidefine":
         RecievedMsgPermission = true;
         // Get the response from the api
         axios
@@ -93,7 +102,11 @@ function start(client) {
         });
       break;
       ////////////////////////////////////DICTIONARY////////////////////////////////////
+      case ".ed":
+      case "Engdef":
       case "EnglishDefine":
+      case "Englishdefine":
+      case "englishdefine":
         RecievedMsgPermission = true;
         let defNexample = [], i;
           // Get the response from the api
@@ -126,7 +139,10 @@ function start(client) {
             });
       break;
       ///////////////////////////////////ANIME DETAIL///////////////////////////////////
+      case ".ad": 
       case "AnimeDetail": 
+      case "Animedetail": 
+      case "animedetail": 
         RecievedMsgPermission = true;
         const animeName = message.body.substring("AnimeDetail ".length);
         malScraper.getInfoFromName(animeName)
@@ -156,7 +172,10 @@ function start(client) {
           });
       break;
       ////////////////////////////////////ANIME IDs/////////////////////////////////////
+      case ".aid": 
       case "AnimeIds": 
+      case "Animeids": 
+      case "animeids": 
         RecievedMsgPermission = true;
         const charAnime = message.body.substring("AnimeIds".length);
         acb.get_anime_by_search(charAnime)
@@ -177,7 +196,10 @@ function start(client) {
           });
       break;
       //////////////////////////////ANIME CHARACTERS IDs////////////////////////////////
+      case ".ac": 
       case "AnimeChars": 
+      case "AnimeChars": 
+      case "animechars": 
         RecievedMsgPermission = true;
         const animeId = botQuery[1];
         acb.get_anime_by_id(animeId)
@@ -200,7 +222,10 @@ function start(client) {
           });
       break;
       /////////////////////////ANIME CHARACTER DETAIL- BY SEARCH////////////////////////
+      case ".cd":
       case "CharDetail": 
+      case "Chardetail": 
+      case "chardetail": 
         RecievedMsgPermission = true;
         const charName = message.body.substring("CharDetail ".length);
         acb.get_character_by_search(charName)
@@ -237,7 +262,10 @@ function start(client) {
           });
       break;
       ////////////////////////////////////MOVIE DETAIL//////////////////////////////////
+      case ".md":
       case "MovieDetail": 
+      case "Moviedetail":
+      case "moviedetail":
         RecievedMsgPermission = true;
         const movieName = data.substring("MovieDetail ".length);
         axios
@@ -277,7 +305,10 @@ function start(client) {
         });
       break;
       ///////////////////////////////SONG DETAIL- BY SEARCH/////////////////////////////
+      case ".ss":
       case "SongSearch": 
+      case "Songsearch": 
+      case "songsearch": 
         RecievedMsgPermission = true;
         const songName = message.body.substring("SongSearch ".length);
         bandcamp.search({query: songName, page: 1}, (error, searchResults) => {
@@ -316,7 +347,10 @@ function start(client) {
         });
       break;
       ///////////////////////////ANIME CHARACTER DETAIL- BY ID//////////////////////////
+      case ".cid": 
       case "CharIdDetail": 
+      case "Chariddetail": 
+      case "chariddetail": 
         RecievedMsgPermission = true;
         const charId = botQuery[1];
         acb.get_character_by_id(charId)
@@ -343,7 +377,10 @@ function start(client) {
           });
       break;
       ///////////////////////////////TRUTH OR DARE: TRUTH///////////////////////////////
+      case ".truth":
       case "BotTruth":
+      case "Bottruth":
+      case "bottruth":
         RecievedMsgPermission = true;
         let truthid, truth, truthLevel;
         do {
@@ -360,7 +397,10 @@ function start(client) {
           .catch(error => { console.error("Error when sending truth: ", error); });
       break;
       ////////////////////////////////TRUTH OR DARE: DARE///////////////////////////////
+      case ".dare":
       case "BotDare":
+      case "Botdare":
+      case "botdare":
         RecievedMsgPermission = true;
         let dareId, dare, DareLevel;
         do {
@@ -377,7 +417,10 @@ function start(client) {
           .catch(error => { console.error("Error when sending truth: ", error); });
       break;
       /////////////////////////////////WOULD YOU RATHER/////////////////////////////////
+      case ".wyr":
       case "BotWyr":
+      case "Botwyr":
+      case "botwyr":
         RecievedMsgPermission = true;
         wyr().
           then(response => {
@@ -395,39 +438,45 @@ function start(client) {
         })
       break;
       /////////////////////////////////////BOT MENU/////////////////////////////////////
+      case ".help":
       case "BotHelp":
-        RecievedMsgPermission = true;
-        client
-          .reply(message.from, "HelpBot", message.id.toString())
-          .then(() => { console.log("Sent message: ", "HelpBot" + "\n-------------------------"); })
-          .catch((erro) => { console.error("Error when sending: ", erro); });
-      break;
+      case "Bothelp":
       case "HelpBot":
+      case "Helpbot":
+      case "helpbot":
         RecievedMsgPermission = true;
         // Compose the message
         composeMsg = [
           "1. For just getting a reply:\nSend ' *HiBot* ' (without the ')",
           "\n--------------------------------------------------",
-          "\n2. For roasting someone:\nSend 'BotRoast <Name>'",
+          "\n2. For roasting someone:\nSend 'BotRoast <Name>' | Short Command: *.roast* <Name>",
           "\nFor example:\n*BotRoast Tahir*",
           "\n--------------------------------------------------",
-          "\n3. For Truth or Dare Game:\nSend 'BotTruth' for getting a truth question\nSend 'BotDare' for getting a dare",
+          "\n3. For Truth or Dare Game:", 
+          "\nSend 'BotTruth' for getting a truth question | Short Command: *.truth*",
+          "\n\nSend 'BotDare' for getting a dare | Short Command: *.dare*",
           "\nFor example:\n*BotTruth* or *BotDare*",
           "\n--------------------------------------------------",
-          "\n4. For getting a 'Would You Rather' question:\nSend 'BotWyr'",
+          "\n4. For getting a 'Would You Rather' question:",
+          "\nSend 'BotWyr' | Short Command: *.wyr*",
           "\nFor example:\n*BotWyr*",
           "\n--------------------------------------------------",
-          "\n5. For getting the meaning of an English word:\nSend 'EnglishDefine <Word>'",
+          "\n5. For getting the meaning of an English word:",
+          "\nSend 'EnglishDefine <Word>' | Short Command: *.ed* <word>",
           "\nFor example:\n*EnglishDefine table*",
           "\n--------------------------------------------------",
-          "\n6. For getting the details of a movie or a series:\nSend 'MovieDetail <title>'",
+          "\n6. For getting the details of a movie or a series:",
+          "\nSend 'MovieDetail <title>' | Short Command: *.md* <title>",
           "\nFor example:\n*MovieDetail Daredevil*",
           "\n--------------------------------------------------",
-          "\n7. For getting the Anime commands:\nSend 'AnimeHelp",
+          "\n7. For getting the Anime commands:",
+          "\nSend 'AnimeHelp | Short Command: *.ahelp*",
           "\nFor example:\n*AnimeHelp*",
           "\n--------------------------------------------------",
-          "\n8. For getting the details of a Kanji:nSend 'KanjiDefine <Kanji>'",
+          "\n8. For getting the details of a Kanji:",
+          "\nSend 'KanjiDefine <Kanji>' | Short Command: *.kd* <Kanji>",
           "\nFor example:\n*KanjiDefine 空*",
+          "\n```There is no case sensitiviy for full commands```"
         ];
         composeMsg.forEach(function (txt) {
           msgString += txt;
@@ -439,27 +488,37 @@ function start(client) {
           .catch((erro) => { console.error("Error when sending: ", erro); });
       break;
       ////////////////////////////////////ANIME MENU/////////////////////////////////////
+      case ".ahelp":
       case "AnimeHelp":
+      case "Animehelp":
+      case "animehelp":
         RecievedMsgPermission = true;
         // Compose the message
         composeMsg = [
-          "1. For getting the details of an Anime:\nSend 'AnimeDetail <Title>'",
+          "1. For getting the details of an Anime:",
+          "\nSend 'AnimeDetail <Title>' | Short Command: *.ad* <Title>",
           "\nFor example:\n*AnimeDetail Naruto*",
           "\n--------------------------------------------------",
-          "\n2. For getting details of an Anime character by search:\nSend 'CharDetail <Name>'",
+          "\n2. For getting details of an Anime character by search:",
+          "\nSend 'CharDetail <Name>' | Short Command: *.cd* <Name>",
           "\nFor example:\n*CharDetail Kakashi*",
           "\n--------------------------------------------------",
-          "\n3. For getting details of an Anime character by id:\nSend 'CharIdDetail <id>'",
+          "\n3. For getting details of an Anime character by id:",
+          "\nSend 'CharIdDetail <id>' | Short Command: *.cid* <id>",
           "\nFor example:\n*CharIdDetail 10820*",
           "\n--------------------------------------------------",
-          "\n4. For getting IDs of an Anime by search:\nSend 'AnimeIds <Anime name or Title>'",
+          "\n4. For getting IDs of an Anime by search:",
+          "\nSend 'AnimeIds <Anime name or Title>' | Short Command: *.aid* <Name or Title>",
           "\nFor example:\n*AnimeIds Naruto*",
           "\n--------------------------------------------------",
-          "\n5. For getting character list and character Ids of an Anime by anime id:\nSend 'AnimeChars <AnimeId>'",
+          "\n5. For getting character list and character Ids of an Anime by anime id:",
+          "\nSend 'AnimeChars <AnimeId>' | Short Command: *.ac* <AnimeId>",
           "\nFor example:\n*AnimeChars 100053*",
           "\n--------------------------------------------------",
-          "\n6. For getting other Commands:\nSend 'HelpBot'",
+          "\n6. For getting other Commands:",
+          "\nSend 'HelpBot' | Short Command: *.help*",
           "\nFor example:\n*HelpBot*",
+          "\n```There is no case sensitiviy for full commands```"
         ];
         composeMsg.forEach(function (txt) {
           msgString += txt;
