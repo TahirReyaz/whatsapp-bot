@@ -316,22 +316,22 @@ function start(client) {
       break;
       ////////////////////////////////////MOVIE DETAIL//////////////////////////////////
       case ".md":
-        charName = message.body.substring(".md ".length);
+        movieName = message.body.substring(".md ".length);
         queryPermission = false;
       case "MovieDetail": 
         if(queryPermission) {
-          charName = message.body.substring("MovieDetail ".length);
+          movieName = message.body.substring("MovieDetail ".length);
           queryPermission = false;
         }
       case "Moviedetail":
         if(queryPermission) {
-          charName = message.body.substring("Moviedetail ".length);
+          movieName = message.body.substring("Moviedetail ".length);
           queryPermission = false;
         }
       case "moviedetail":
         RecievedMsgPermission = true;
         if(queryPermission) {
-          charName = message.body.substring("moviedetail ".length);
+          movieName = message.body.substring("moviedetail ".length);
           queryPermission = false;
         }
         axios
