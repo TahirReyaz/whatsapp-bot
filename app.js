@@ -22,7 +22,8 @@ function start(client) {
     const botQuery = data.split(" ");
     let composeMsg = [], msgString = "", RecievedMsgPermission = false;
     let name, animeName, charName, charAnime, movieName, songName; 
-    let queryPermission = true;
+    let queryPermission = true, params = {};
+    const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
     switch(botQuery[0]) {
       //////////////////////////////////////HI BOT//////////////////////////////////////
       case "HiBot" :
@@ -152,6 +153,81 @@ function start(client) {
                 .catch((erro) => { console.error("Error when sending error: ", erro); });
             });
       break;
+      /////////////////////////////////WIKIPEDIA SEARCH/////////////////////////////////
+      case ".wiki":
+        RecievedMsgPermission = true;
+        params = {
+          origin: "*",
+          format: "json",
+          action: "query",
+          prop: "extracts",
+          exintro: true,
+          explaintext: true,
+          generator: "search",
+          gsrlimit: 10,
+          gsrsearch: message.body.substring(".wiki ".length)
+        };
+        axios
+          .get(wikiEndpoint, { params })
+          .then(response => {
+            const wikis = Object.values(response.data.query.pages)
+            // Set the fields to be sent in message
+            composeMsg = ["Use the Page IDs for further details"];
+            wikis.forEach(wiki => {
+              composeMsg.push(
+                "\n*Title* : ", wiki.title,
+                " - *Page ID* : ", wiki.pageid
+              );
+            });
+            composeMsg.push("\nSend 'wikiPage <Page ID>' for further details");
+            composeMsg.forEach( txt => { msgString += txt; });
+            // Send the response to the sender
+            client
+              .reply(message.from, msgString, message.id.toString())
+              .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
+              .catch(erro => { console.error("Error when wiki page IDs: ", erro); });
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      break;
+      //////////////////////////////////WIKIPEDIA PAGE//////////////////////////////////
+      case ".wp":
+      case "wikiPage":
+      case "WikiPage":
+      case "wikipage":
+        RecievedMsgPermission = true;
+        console.log("I ran "  + botQuery[1]);
+        params = {
+          origin: "*",
+          format: "json",
+          action: "query",
+          prop: "extracts",
+          pageids: botQuery[1],
+          exintro: true,
+          explaintext: true,
+        };
+        axios
+          .get(wikiEndpoint, { params })
+          .then(response => {
+            const wiki = Object.values(response.data.query.pages);
+            // Set the fields to be sent in message
+            composeMsg= [
+              "*Page ID* : ", wiki[0].pageid,
+              "\n*Title* : ", wiki[0].title,
+              "\n*Info* : ", wiki[0].extract//.substring(0, 400)
+            ];
+            composeMsg.forEach( txt => { msgString += txt; });
+            // Send the response to the sender
+            client
+              .reply(message.from, msgString, message.id.toString())
+              .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
+              .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      break;
       ///////////////////////////////////ANIME DETAIL///////////////////////////////////
       case ".ad": 
         animeName = message.body.substring(".ad ".length);
@@ -191,7 +267,7 @@ function start(client) {
               .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
               .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
             })
-            .catch(err => { // Send not found to sender
+          .catch(err => { // Send not found to sender
               client
                 .reply(message.from, "Anime not found.. Sorry", message.id.toString())
                 .then(() => { console.log(err) })
@@ -544,6 +620,14 @@ function start(client) {
           "\n5. For getting the meaning of an English word:",
           "\nSend 'EnglishDefine <Word>' | Short Command: *.ed* <word>",
           "\nFor example:\n*EnglishDefine table*",
+          "\n--------------------------------------------------",
+          "\n6. For searching wiki page IDs of a term:",
+          "\nSend '.wiki <term>'",
+          "\nFor example:\n*.wiki Indian Population*",
+          "\n--------------------------------------------------",
+          "\n7. For getting the details of wiki page from page ID:",
+          "\nSend 'wikiPage <page ID>' | Short Command: *.wp* <page ID>",
+          "\nFor example:\n*wikiPage 14598*",
           "\n--------------------------------------------------",
           "\n6. For getting the details of a movie or a series:",
           "\nSend 'MovieDetail <title>' | Short Command: *.md* <title>",
