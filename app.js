@@ -603,43 +603,24 @@ function start(client) {
         RecievedMsgPermission = true;
         // Compose the message
         composeMsg = [
-          "1. For just getting a reply:\nSend ' *HiBot* ' (without the ')",
+          "1. For just getting a reply:",
+          "\nSend ' *HiBot* ' (without the ')",
           "\n--------------------------------------------------",
-          "\n2. For roasting someone:\nSend 'BotRoast <Name>' | Short Command: *.roast* <Name>",
+          "\n2. For roasting someone:",
+          "\nSend 'BotRoast <Name>' | Short Command: *.roast* <Name>",
           "\nFor example:\n*BotRoast Tahir*",
           "\n--------------------------------------------------",
-          "\n3. For Truth or Dare Game:", 
-          "\nSend 'BotTruth' for getting a truth question | Short Command: *.truth*",
-          "\n\nSend 'BotDare' for getting a dare | Short Command: *.dare*",
-          "\nFor example:\n*BotTruth* or *BotDare*",
+          "\n3. For getting Information related commands like wiki, dictionary etc.:",
+          "\nSend 'InfoHelp' | Short Command: *.ihelp*",
+          "\nFor example:\n*InfoHelp*",
           "\n--------------------------------------------------",
-          "\n4. For getting a 'Would You Rather' question:",
-          "\nSend 'BotWyr' | Short Command: *.wyr*",
-          "\nFor example:\n*BotWyr*",
+          "\n4. For getting Text based games related commands like truth or dare, Would you rather etc.:",
+          "\nSend 'GameHelp' | Short Command: *.ghelp*",
+          "\nFor example:\n*GameHelp*",
           "\n--------------------------------------------------",
-          "\n5. For getting the meaning of an English word:",
-          "\nSend 'EnglishDefine <Word>' | Short Command: *.ed* <word>",
-          "\nFor example:\n*EnglishDefine table*",
-          "\n--------------------------------------------------",
-          "\n6. For searching wiki page IDs of a term:",
-          "\nSend '.wiki <term>'",
-          "\nFor example:\n*.wiki Indian Population*",
-          "\n--------------------------------------------------",
-          "\n7. For getting the details of wiki page from page ID:",
-          "\nSend 'wikiPage <page ID>' | Short Command: *.wp* <page ID>",
-          "\nFor example:\n*wikiPage 14598*",
-          "\n--------------------------------------------------",
-          "\n6. For getting the details of a movie or a series:",
-          "\nSend 'MovieDetail <title>' | Short Command: *.md* <title>",
-          "\nFor example:\n*MovieDetail Daredevil*",
-          "\n--------------------------------------------------",
-          "\n7. For getting the Anime commands:",
-          "\nSend 'AnimeHelp | Short Command: *.ahelp*",
-          "\nFor example:\n*AnimeHelp*",
-          "\n--------------------------------------------------",
-          "\n8. For getting the details of a Kanji:",
-          "\nSend 'KanjiDefine <Kanji>' | Short Command: *.kd* <Kanji>",
-          "\nFor example:\n*KanjiDefine 空*",
+          "\n5. For getting Entertainment related commands like movie detail, anime detail etc.:",
+          "\nSend 'EntHelp' | Short Command: *.ehelp*",
+          "\nFor example:\n*EntHelp*",
           "\n```There is no case sensitiviy for full commands```"
         ];
         composeMsg.forEach(function (txt) {
@@ -651,7 +632,108 @@ function start(client) {
           .then(() => { console.log("Sent message: ", msgString + "\n-------------------------"); })
           .catch((erro) => { console.error("Error when sending: ", erro); });
       break;
-      ////////////////////////////////////ANIME MENU/////////////////////////////////////
+      ////////////////////////////////ENTERTAINMENT MENU////////////////////////////////
+      case ".ehelp":
+      case "EntHelp":
+      case "Enthelp":
+      case "enthelp":
+        RecievedMsgPermission = true;
+        // Compose the message
+        composeMsg = [
+          "1. For getting the details of a Movie or a Series:",
+          "\nSend 'MovieDetail <title>' | Short Command: *.md* <title>",
+          "\nFor example:\n*MovieDetail Daredevil*",
+          "\n--------------------------------------------------",
+          "\n2. For getting the Anime commands:",
+          "\nSend 'AnimeHelp | Short Command: *.ahelp*",
+          "\nFor example:\n*AnimeHelp*",
+          "\n--------------------------------------------------",
+          "\n3. For getting other Commands:",
+          "\nSend 'HelpBot' | Short Command: *.help*",
+          "\nFor example:\n*HelpBot*",
+          "\n```There is no case sensitiviy for full commands```"
+        ];
+        composeMsg.forEach(function (txt) {
+          msgString += txt;
+        });
+        // Send the message
+        client
+          .reply(message.from, msgString, message.id.toString())
+          .then(() => { console.log("Sent message: ", msgString + "\n-------------------------"); })
+          .catch((erro) => { console.error("Error when sending: ", erro); });
+      break;
+      /////////////////////////////////INFORMATION MENU/////////////////////////////////
+      case ".ihelp":
+      case "InfoHelp":
+      case "Infohelp":
+      case "infohelp":
+        RecievedMsgPermission = true;
+        // Compose the message
+        composeMsg = [
+          "\n1. For getting the meaning of an English word:",
+          "\nSend 'EnglishDefine <Word>' | Short Command: *.ed* <word>",
+          "\nFor example:\n*EnglishDefine table*",
+          "\n--------------------------------------------------",
+          "\n2. For searching wiki page IDs of a term:",
+          "\nSend '.wiki <term>'",
+          "\nFor example:\n*.wiki Indian Population*",
+          "\n--------------------------------------------------",
+          "\n3. For getting the details of wiki page from page ID:",
+          "\nSend 'wikiPage <page ID>' | Short Command: *.wp* <page ID>",
+          "\nFor example:\n*wikiPage 14598*",
+          "\n--------------------------------------------------",
+          "\n4. For getting the details of a Kanji:",
+          "\nSend 'KanjiDefine <Kanji>' | Short Command: *.kd* <Kanji>",
+          "\nFor example:\n*KanjiDefine 空*",
+          "\n--------------------------------------------------",
+          "\n5. For getting other Commands:",
+          "\nSend 'HelpBot' | Short Command: *.help*",
+          "\nFor example:\n*HelpBot*",
+          "\n```There is no case sensitiviy for full commands```"
+        ];
+        composeMsg.forEach(function (txt) {
+          msgString += txt;
+        });
+        // Send the message
+        client
+          .reply(message.from, msgString, message.id.toString())
+          .then(() => { console.log("Sent message: ", msgString + "\n-------------------------"); })
+          .catch((erro) => { console.error("Error when sending: ", erro); });
+      break;
+      ////////////////////////////////////GAMES MENU///////////////////////////////////
+      case ".ghelp":
+      case "GameHelp":
+      case "Gamehelp":
+      case "gamehelp":
+        RecievedMsgPermission = true;
+        // Compose the message
+        composeMsg = [
+          "```Text based Games related commands```",
+          "\n--------------------------------------------------",
+          "\n1. For Truth or Dare Game:", 
+          "\nSend 'BotTruth' for getting a truth question | Short Command: *.truth*",
+          "\n\nSend 'BotDare' for getting a dare | Short Command: *.dare*",
+          "\nFor example:\n*BotTruth* or *BotDare*",
+          "\n--------------------------------------------------",
+          "\n2. For getting a 'Would You Rather' question:",
+          "\nSend 'BotWyr' | Short Command: *.wyr*",
+          "\nFor example:\n*BotWyr*",
+          "\n--------------------------------------------------",
+          "\n3. For getting other Commands:",
+          "\nSend 'HelpBot' | Short Command: *.help*",
+          "\nFor example:\n*HelpBot*",
+          "\n```There is no case sensitiviy for full commands```"
+        ];
+        composeMsg.forEach(function (txt) {
+          msgString += txt;
+        });
+        // Send the message
+        client
+          .reply(message.from, msgString, message.id.toString())
+          .then(() => { console.log("Sent message: ", msgString + "\n-------------------------"); })
+          .catch((erro) => { console.error("Error when sending: ", erro); });
+      break;
+      ///////////////////////////////////ANIME MENU////////////////////////////////////
       case ".ahelp":
       case "AnimeHelp":
       case "Animehelp":
