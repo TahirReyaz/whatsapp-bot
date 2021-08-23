@@ -170,22 +170,32 @@ function start(client) {
         axios
           .get(wikiEndpoint, { params })
           .then(response => {
-            const wikis = Object.values(response.data.query.pages)
-            // Set the fields to be sent in message
-            composeMsg = ["Use the Page IDs for further details"];
-            wikis.forEach(wiki => {
-              composeMsg.push(
-                "\n*Title* : ", wiki.title,
-                " - *Page ID* : ", wiki.pageid
-              );
-            });
-            composeMsg.push("\nSend 'wikiPage <Page ID>' for further details");
-            composeMsg.forEach( txt => { msgString += txt; });
-            // Send the response to the sender
-            client
-              .reply(message.from, msgString, message.id.toString())
-              .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
-              .catch(erro => { console.error("Error when wiki page IDs: ", erro); });
+            if(response.data.query) { // If the page is found then query exists
+              const wikis = Object.values(response.data.query.pages)
+              // Set the fields to be sent in message
+              composeMsg = ["Use the Page IDs for further details"];
+              wikis.forEach(wiki => {
+                composeMsg.push(
+                  "\n*Title* : ", wiki.title,
+                  " - *Page ID* : ", wiki.pageid
+                );
+              });
+              composeMsg.push("\nSend 'wikiPage <Page ID>' for further details");
+              composeMsg.forEach( txt => { msgString += txt; });
+              // Send the response to the sender
+              client
+                .reply(message.from, msgString, message.id.toString())
+                .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
+                .catch(erro => { console.error("Error when wiki page IDs: ", erro); });
+            } else {
+              client
+                .reply(message.from,
+                  "```Search Results Not Found```\nCheck the syntax and search term\nDon't get confused with similar commands\nCheck them by sending *InfoHelp*",
+                  message.id.toString()
+                )
+                .then(() => { console.log("Results Not found\n-------------------------")})
+                .catch(erro => { console.error("Error when sending error: ", erro); });
+            }
           })
           .catch(error => {
             console.log(error);
@@ -197,7 +207,6 @@ function start(client) {
       case "WikiPage":
       case "wikipage":
         RecievedMsgPermission = true;
-        console.log("I ran "  + botQuery[1]);
         params = {
           origin: "*",
           format: "json",
@@ -210,19 +219,29 @@ function start(client) {
         axios
           .get(wikiEndpoint, { params })
           .then(response => {
-            const wiki = Object.values(response.data.query.pages);
-            // Set the fields to be sent in message
-            composeMsg= [
-              "*Page ID* : ", wiki[0].pageid,
-              "\n*Title* : ", wiki[0].title,
-              "\n*Info* : ", wiki[0].extract//.substring(0, 400)
-            ];
-            composeMsg.forEach( txt => { msgString += txt; });
-            // Send the response to the sender
-            client
-              .reply(message.from, msgString, message.id.toString())
-              .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
-              .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
+            if(response.data.query) { // If the page is found then query exists
+              const wiki = Object.values(response.data.query.pages);
+              // Set the fields to be sent in message
+              composeMsg= [
+                "*Page ID* : ", wiki[0].pageid,
+                "\n*Title* : ", wiki[0].title,
+                "\n*Info* : ", wiki[0].extract//.substring(0, 400)
+              ];
+              composeMsg.forEach( txt => { msgString += txt; });
+              // Send the response to the sender
+              client
+                .reply(message.from, msgString, message.id.toString())
+                .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
+                .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
+            } else {
+              client
+                .reply(message.from,
+                  "```Page Not Found```\nCheck the syntax and page id\nDon't get confused with similar commands\nCheck them by sending *InfoHelp*",
+                  message.id.toString()
+                )
+                .then(() => { console.log("Page Not found\n---------------------------")})
+                .catch(erro => { console.error("Error when sending error: ", erro); });
+            }
           })
           .catch(error => {
             console.log(error);
