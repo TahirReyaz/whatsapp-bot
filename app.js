@@ -5,7 +5,7 @@ const truthOrDareFile = require("./data/truth-or-dare.json");
 const axios = require("axios");
 const malScraper = require("mal-scraper");
 const acb = require("acb-api");
-const bandcamp = require("bandcamp-scraper")
+const musicInfo = require("music-info");
 const wyr = require("wyr");
 require('dotenv').config();
 
@@ -18,12 +18,18 @@ venom
 // Start the client
 function start(client) {
   client.onMessage((message) => {
+    // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
     let composeMsg = [], msgString = "", RecievedMsgPermission = false;
-    let name, animeName, charName, charAnime, movieName, songName; 
-    let queryPermission = true, params = {};
-    const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
+    const queryCutter = botQuery[0] + " ";
+    const query = data.substring(queryCutter.length);
+    const wikiEndpoint = "https://en.wikipedia.org/w/api.php?", params = {};
+    const songParams = {
+      title: query
+      // artist: "Kana Boon"
+    }
+
     switch(botQuery[0]) {
       //////////////////////////////////////HI BOT//////////////////////////////////////
       case "HiBot" :
@@ -37,23 +43,10 @@ function start(client) {
       break;
       //////////////////////////////////////ROAST///////////////////////////////////////
       case ".roast":
-        name = message.body.substring(".roast ".length);
-        queryPermission = false;
       case "BotRoast":
-        if(queryPermission) {
-          name = message.body.substring("BotRoast ".length);
-          queryPermission = false;
-        }
       case "Botroast":
-        if(queryPermission) {
-          name = message.body.substring("Botroast ".length);
-          queryPermission = false;
-        }
       case "botroast":
         RecievedMsgPermission = true;
-        if(queryPermission) {
-          name = message.body.substring("botroast ".length);
-        }
         axios
           .get("https://evilinsult.com/generate_insult.php?lang=en&type=json")
           .then(function (response) {
@@ -88,7 +81,7 @@ function start(client) {
         RecievedMsgPermission = true;
         // Get the response from the api
         axios
-          .get(encodeURI("https://kanjiapi.dev/v1/kanji/" + botQuery[1]))
+          .get(encodeURI("https://kanjiapi.dev/v1/kanji/" + query))
           .then(function (res) {
             const kanjiData = res.data;
             let meaningString = "", kunString = "", onString = "", i;
@@ -97,7 +90,7 @@ function start(client) {
             for(i=0; i< kanjiData.on_readings.length; i++) { onString += kanjiData.on_readings[i] + " , " }
             // Set the fields to be sent in message
             composeMsg = [
-              " *Kanji* : ", botQuery[1],
+              " *Kanji* : ", query,
               "\n *Meanings* : ", meaningString,
               "\n *Kunyomi readings* : ", kunString,
               "\n *Onyomi readings* : ", onString
@@ -126,7 +119,7 @@ function start(client) {
         let defNexample = [], i;
           // Get the response from the api
           axios
-            .get("https://api.dictionaryapi.dev/api/v2/entries/en_US/" + botQuery[1])
+            .get("https://api.dictionaryapi.dev/api/v2/entries/en_US/" + query)
             .then(function (response) {
               // Set the fields of the message
               response.data[0].meanings.forEach(meaning => {
@@ -165,7 +158,7 @@ function start(client) {
           explaintext: true,
           generator: "search",
           gsrlimit: 10,
-          gsrsearch: message.body.substring(".wiki ".length)
+          gsrsearch: query
         };
         axios
           .get(wikiEndpoint, { params })
@@ -212,7 +205,7 @@ function start(client) {
           format: "json",
           action: "query",
           prop: "extracts",
-          pageids: botQuery[1],
+          pageids: query,
           exintro: true,
           explaintext: true,
         };
@@ -249,25 +242,11 @@ function start(client) {
       break;
       ///////////////////////////////////ANIME DETAIL///////////////////////////////////
       case ".ad": 
-        animeName = message.body.substring(".ad ".length);
-        queryPermission = false;
       case "AnimeDetail": 
-        if(queryPermission) {
-          animeName = message.body.substring("AnimeDetail ".length);
-          queryPermission = false;
-        }
       case "Animedetail": 
-        if(queryPermission) {
-          animeName = message.body.substring("Animedetail ".length);
-          queryPermission = false;
-        }
       case "animedetail": 
         RecievedMsgPermission = true;
-        if(queryPermission) {
-          animeName = message.body.substring("animedetail ".length);
-          queryPermission = false;
-        }
-        malScraper.getInfoFromName(animeName)
+        malScraper.getInfoFromName(query)
           .then((data) => {
             let genreString = "", i;
             for(i=0; i< data.genres.length; i++) {genreString += data.genres[i] + ", "}
@@ -295,25 +274,11 @@ function start(client) {
       break;
       ////////////////////////////////////ANIME IDs/////////////////////////////////////
       case ".aid": 
-        charAnime = message.body.substring(".aid ".length);
-        queryPermission = false;
       case "AnimeIds": 
-        if(queryPermission) {
-          charAnime = message.body.substring("AnimeIds ".length);
-          queryPermission = false;
-        }
       case "Animeids": 
-        if(queryPermission) {
-          charAnime = message.body.substring("Animeids ".length);
-          queryPermission = false;
-        }
       case "animeids": 
         RecievedMsgPermission = true;
-        if(queryPermission) {
-          charAnime = message.body.substring("animeids ".length);
-          queryPermission = false;
-        }
-        acb.get_anime_by_search(charAnime)
+        acb.get_anime_by_search(query)
           .then(data => {
             data.forEach(result => {msgString += "\n*" + result.anime_id + "* - " + result.anime_name})
             msgString+= "\nGet the IDs of characters of an anime by sending 'AnimeChars <id>\nFor example\n*AnimeChars 101671*" 
@@ -336,8 +301,7 @@ function start(client) {
       case "AnimeChars": 
       case "animechars": 
         RecievedMsgPermission = true;
-        const animeId = botQuery[1];
-        acb.get_anime_by_id(animeId)
+        acb.get_anime_by_id(query)
           .then(data => {
             // Set the fields to be sent in message
             msgString = data.anime_id + "- *" + data.anime_name + "*\n*Characters:*";
@@ -358,25 +322,11 @@ function start(client) {
       break;
       /////////////////////////ANIME CHARACTER DETAIL- BY SEARCH////////////////////////
       case ".cd":
-        charName = message.body.substring(".cd ".length);
-        queryPermission = false;
       case "CharDetail": 
-        if(queryPermission) {
-          charName = message.body.substring("CharDetail ".length);
-          queryPermission = false;
-        }
       case "Chardetail": 
-        if(queryPermission) {
-          charName = message.body.substring("Chardetail ".length);
-          queryPermission = false;
-        }
       case "chardetail": 
         RecievedMsgPermission = true;
-        if(queryPermission) {
-          charName = message.body.substring("chardetail ".length);
-          queryPermission = false;
-        }
-        acb.get_character_by_search(charName)
+        acb.get_character_by_search(query)
           .then((data) => {
             // Set the fields to be sent in message
             composeMsg = [
@@ -411,26 +361,12 @@ function start(client) {
       break;
       ////////////////////////////////////MOVIE DETAIL//////////////////////////////////
       case ".md":
-        movieName = message.body.substring(".md ".length);
-        queryPermission = false;
       case "MovieDetail": 
-        if(queryPermission) {
-          movieName = message.body.substring("MovieDetail ".length);
-          queryPermission = false;
-        }
       case "Moviedetail":
-        if(queryPermission) {
-          movieName = message.body.substring("Moviedetail ".length);
-          queryPermission = false;
-        }
       case "moviedetail":
         RecievedMsgPermission = true;
-        if(queryPermission) {
-          movieName = message.body.substring("moviedetail ".length);
-          queryPermission = false;
-        }
         axios
-        .get("https://www.omdbapi.com/?apikey=" + process.env.OMDB_API_KEY + "&t=" + movieName)
+        .get("https://www.omdbapi.com/?apikey=" + process.env.OMDB_API_KEY + "&t=" + query)
         .then( response => {
           // Set the fields of the message
             composeMsg = [
@@ -479,47 +415,63 @@ function start(client) {
             .catch((erro) => { console.error("Error when sending error: ", erro); });
         });
       break;
-      ///////////////////////////////SONG DETAIL- BY SEARCH/////////////////////////////
-      case ".ss":
-      case "SongSearch": 
-      case "Songsearch": 
-      case "songsearch": 
+      /////////////////////////////////////SONG DETAIL//////////////////////////////////
+      case ".sd":
+      case "SongDetail": 
+      case "Songdetail": 
+      case "songdetail": 
         RecievedMsgPermission = true;
-        const songName = message.body.substring("SongSearch ".length);
-        bandcamp.search({query: songName, page: 1}, (error, searchResults) => {
-          if(!error) {
-            let tagString = "", songImgUrl;
-            searchResults.forEach(result => {
-              if(result.type === "track") {
-                result.tags.every(tag => {tagString += tag + ", "}) 
-                // Set the fields to be sent in message
-                composeMsg = [
-                  "*Name* : ", result.name,
-                  "\n*Type* : ", result.type,
-                  "\n*Artist* : ", result.artist,
-                  "\n*Tags* : ", tagString,
-                ];
-                songImgUrl = result.imageUrl;
-                return false;
-              }
-              return true;
-            })
-            composeMsg.forEach( txt => { msgString += txt; });
+        musicInfo.searchSong(songParams, 600)
+          .then(song => {
+            const songLength = song.lengthMilliSec / 1000;
+            const lengthString = Math.floor(songLength / 60) + ":" + Math.floor(songLength % 60);
+            composeMsg = [
+              "*Title* : ", song.title,
+              "\n*Artist* : ", song.artist,
+              "\n*Album* : ", song.album,
+              "\n*Released* : ", song.releaseDate.substring(0, 10),
+              "\n*Length* : ", lengthString,
+              "\n*Genre* : ", song.genre
+            ];
+            // Convert the array into text string
+            composeMsg.forEach(txt => { msgString += txt; });
             // Send the response to the sender
             client
-              .sendImage(message.from, songImgUrl, null, msgString)
-              .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
-              .catch(erro => { console.error("Error when sending character details: ", erro); });
-            }
-          else { // Send not found to sender
-              client
-                .reply(message.from, 
-                  "Character not found.. Sorry.\nCheck if the command syntax is right or not.\nDon't get confused by similar looking commands.", 
-                  message.id.toString())
-                .then(() => { console.log(error) })
-                .catch((erro) => { console.error("Error when sending error: ", erro); });
-          }
-        });
+              .sendImage(message.from, song.artwork, null, msgString)
+              .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------") })
+              .catch((erro) => { console.error("Error when sending error: ", erro); });
+          })
+          .catch(err => {
+            client
+              .reply(message.from, "Song not found\n-Add Artist too\n-Check the syntax and spelling", message.id.toString())
+              .then(() => { console.log(err) })
+              .catch((erro) => { console.error("Error when sending error: ", erro); });
+          });
+      break;
+      /////////////////////////////////////SONG LYRICS//////////////////////////////////
+      case ".lyrics":
+        RecievedMsgPermission = true;
+        musicInfo.searchLyrics(songParams, 600)
+          .then(song => {
+            composeMsg = [
+              "*Title* : ", query,
+              "\n-------------------------------------",
+              "\n*Lyrics* :\n", song.lyrics,
+            ];
+            // Convert the array into text string
+            composeMsg.forEach(txt => { msgString += txt; });
+            // Send the response to the sender
+            client
+              .reply(message.from, msgString, message.id.toString())
+              .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------") })
+              .catch((erro) => { console.error("Error when sending error: ", erro); });
+          })
+          .catch(err => {
+            client
+              .reply(message.from, "Lyrics not found\n-Add Artist too\n-Check the syntax and spelling", message.id.toString())
+              .then(() => { console.log(err) })
+              .catch((erro) => { console.error("Error when sending error: ", erro); });
+          });
       break;
       ///////////////////////////ANIME CHARACTER DETAIL- BY ID//////////////////////////
       case ".cid": 
@@ -527,8 +479,7 @@ function start(client) {
       case "Chariddetail": 
       case "chariddetail": 
         RecievedMsgPermission = true;
-        const charId = botQuery[1];
-        acb.get_character_by_id(charId)
+        acb.get_character_by_id(query)
           .then(data => {
             // Set the fields to be sent in message
             composeMsg = [
@@ -663,11 +614,21 @@ function start(client) {
           "\nSend 'MovieDetail <title>' | Short Command: *.md* <title>",
           "\nFor example:\n*MovieDetail Daredevil*",
           "\n--------------------------------------------------",
-          "\n2. For getting the Anime commands:",
+          "\n2. For getting the details of a song:",
+          "\nSend 'SongDetail <Song name> | Short Command: *.sd*",
+          "\nFor example:\n*SongDetail Faded*",
+          "\nIf you didn't get the desired result then put the name of the artist too",
+          "\nFor example:\n*SongDetail Faded Alan Walker*",
+          "\n--------------------------------------------------",
+          "\n3. For getting the lyrics of a song:",
+          "\nSend '.lyrics <Song name>",
+          "\nFor example:\n*.lyrics Faded*",
+          "\n--------------------------------------------------",
+          "\n4. For getting the Anime commands:",
           "\nSend 'AnimeHelp | Short Command: *.ahelp*",
           "\nFor example:\n*AnimeHelp*",
           "\n--------------------------------------------------",
-          "\n3. For getting other Commands:",
+          "\n5. For getting other Commands:",
           "\nSend 'HelpBot' | Short Command: *.help*",
           "\nFor example:\n*HelpBot*",
           "\n```There is no case sensitiviy for full commands```"
