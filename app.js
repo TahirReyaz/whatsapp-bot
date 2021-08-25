@@ -61,7 +61,7 @@ function start(client) {
               composeMsg = ["Ooops..", " Please try again"];
               console.log(response.data.insult);
             } else {
-              composeMsg = [ "Dear ", name, ", ", response.data.insult ];
+              composeMsg = [ "Dear ", query, ", ", response.data.insult ];
             }
             composeMsg.forEach( txt => { msgString += txt; });
             // Send the response to the sender
@@ -431,7 +431,10 @@ function start(client) {
               "\n*Album* : ", song.album,
               "\n*Released* : ", song.releaseDate.substring(0, 10),
               "\n*Length* : ", lengthString,
-              "\n*Genre* : ", song.genre
+              "\n*Genre* : ", song.genre,
+              "\n--------------------------------------------------",
+              "For lyrics of the song:\n Send '.lyrics' <Song name>'",
+              "For example:\n*.lyrics Faded*"
             ];
             // Convert the array into text string
             composeMsg.forEach(txt => { msgString += txt; });
@@ -457,7 +460,13 @@ function start(client) {
               "*Title* : ", query,
               "\n-------------------------------------",
               "\n*Lyrics* :\n", song.lyrics,
-            ];
+              "\n--------------------------------------------------",
+              "\nFor getting the details of a song:",
+              "\nSend 'SongDetail <Song name> | Short Command: *.sd*",
+              "\nFor example:\n*SongDetail Faded*",
+              "\nIf you didn't get the desired result then put the name of the artist too",
+              "\nFor example:\n*SongDetail Faded Alan Walker*",
+              ];
             // Convert the array into text string
             composeMsg.forEach(txt => { msgString += txt; });
             // Send the response to the sender
@@ -578,17 +587,17 @@ function start(client) {
           "\n--------------------------------------------------",
           "\n2. For roasting someone:",
           "\nSend 'BotRoast <Name>' | Short Command: *.roast* <Name>",
-          "\nFor example:\n*BotRoast Tahir*",
+          "\nFor example:\n*BotRoast John Doe*",
           "\n--------------------------------------------------",
-          "\n3. For getting Information related commands like wiki, dictionary etc.:",
+          "\n3. For getting Information related commands like _wiki, dictionary_ etc.:",
           "\nSend 'InfoHelp' | Short Command: *.ihelp*",
           "\nFor example:\n*InfoHelp*",
           "\n--------------------------------------------------",
-          "\n4. For getting Text based games related commands like truth or dare, Would you rather etc.:",
+          "\n4. For getting Text based games related commands like _truth or dare, Would you rather_ etc.:",
           "\nSend 'GameHelp' | Short Command: *.ghelp*",
           "\nFor example:\n*GameHelp*",
           "\n--------------------------------------------------",
-          "\n5. For getting Entertainment related commands like movie detail, anime detail etc.:",
+          "\n5. For getting Entertainment related commands like _movie, song, anime detail and lyrics_:",
           "\nSend 'EntHelp' | Short Command: *.ehelp*",
           "\nFor example:\n*EntHelp*",
           "\n```There is no case sensitiviy for full commands```"
