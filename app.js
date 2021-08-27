@@ -24,7 +24,8 @@ function start(client) {
     let composeMsg = [], msgString = "", RecievedMsgPermission = false;
     const queryCutter = botQuery[0] + " ";
     const query = data.substring(queryCutter.length);
-    const wikiEndpoint = "https://en.wikipedia.org/w/api.php?", params = {};
+    const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
+    let params = {};
     const songParams = {
       title: query
       // artist: "Kana Boon"
@@ -183,7 +184,7 @@ function start(client) {
             } else {
               client
                 .reply(message.from,
-                  "```Search Results Not Found```\nCheck the syntax and search term\nDon't get confused with similar commands\nCheck them by sending *InfoHelp*",
+                  "```Search Results Not Found```\n-Check the syntax and search term\n-Don't get confused with similar commands\n-Check them by sending *InfoHelp*",
                   message.id.toString()
                 )
                 .then(() => { console.log("Results Not found\n-------------------------")})
@@ -256,7 +257,7 @@ function start(client) {
               "\n *Episodes* : ", data.episodes,
               "\n *Aired* : ", data.aired,
               "\n *Genres* : ", genreString,
-              "\n *Synopsis* : ", data.synopsis.substring( 0, 450 ) + "..."
+              "\n *Synopsis* : ", data.synopsis.substring( 0, 500 ) + "..."
             ];
             composeMsg.forEach( txt => { msgString += txt; });
             // Send the response to the sender
