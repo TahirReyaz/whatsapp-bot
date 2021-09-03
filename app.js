@@ -128,39 +128,39 @@ function start(client) {
       case "englishdefine":
         RecievedMsgPermission = true;
         let defNexample = [], i;
-          // Get the response from the api
-          axios
-            .get("https://api.dictionaryapi.dev/api/v2/entries/en_US/" + query)
-            .then(function (response) {
-              // Set the fields of the message
-              response.data[0].meanings.forEach(meaning => {
-                defNexample = [
+        buttonsArray = [
+          {buttonId: 'ed', buttonText: {displayText: "EnglishDefine Inception"}, type: 1},
+          {buttonId: 'ihelp', buttonText: {displayText: ".ihelp"}, type: 1},
+          {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
+        ];
+        // Get the response from the api
+        axios
+          .get("https://api.dictionaryapi.dev/api/v2/entries/en_US/" + query)
+          .then(function (response) {
+            // Set the fields of the message
+            response.data[0].meanings.forEach(meaning => {
+              defNexample = [
                   meaning.partOfSpeech, " :  ", meaning.definitions[0].definition,
                   "\nFor Example  : ", meaning.definitions[0].example,
                   "\n---------------------------------------------------\n"
-                ];
-                // Store the definition and example in an array
-                for(i=0; i<defNexample.length; i++) { composeMsg.push(defNexample[i]) }
-              })
-              // Convert the array into text string
-              composeMsg.forEach(txt => { msgString += txt; });
-              buttonsArray = [
-                {buttonId: 'ed', buttonText: {displayText: "EnglishDefine Inception"}, type: 1},
-                {buttonId: 'ihelp', buttonText: {displayText: ".ihelp"}, type: 1},
-                {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
-              ]      
-              // Send the response to the sender
-              client
-                .sendButtons(message.from, msgString, buttonsArray, "Click on buttons for other menus and examples")              
-                .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
-                .catch((erro) => { console.error("Error when sending: ", erro); });
+              ];
+              // Store the definition and example in an array
+              for(i=0; i<defNexample.length; i++) { composeMsg.push(defNexample[i]) }
             })
-            .catch(function (err) {
-              client
-                .reply(message.from, "Word not found.. Sorry. Check if the Command Syntax was wrong", message.id.toString())
-                .then(() => { console.log(err) })
-                .catch((erro) => { console.error("Error when sending error: ", erro); });
-            });
+            // Convert the array into text string
+            composeMsg.forEach(txt => { msgString += txt; });
+            // Send the response to the sender
+            client
+              .sendButtons(message.from, msgString, buttonsArray, "Click on buttons for other menus and examples")              
+              .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
+              .catch((erro) => { console.error("Error when sending: ", erro); });
+          })
+          .catch(err => {
+            client
+              .sendButtons(message.from, "Word not found.. Sorry. Check if the Command Syntax was wrong", buttonsArray, "Click on buttons for other menus and examples")              
+              .then(() => { console.log(err) })
+              .catch((erro) => { console.error("Error when sending error: ", erro); });
+          });
       break;
       /////////////////////////////////WIKIPEDIA SEARCH/////////////////////////////////
       case ".wiki":
@@ -188,9 +188,7 @@ function start(client) {
                   "\n*Title* : ", wiki.title,
                   " - *Page ID* : ", wiki.pageid
                 );
-                buttonsArray.push(
-                  {buttonId: 'wyr' + wiki.pageid, buttonText: {displayText: ".wp " + wiki.pageid}, type: 1}
-                )
+                buttonsArray.push( {buttonId: 'wyr' + wiki.pageid, buttonText: {displayText: ".wp " + wiki.pageid}, type: 1} );
               });
               composeMsg.forEach( txt => { msgString += txt; });
               // Send the response to the sender
@@ -199,18 +197,18 @@ function start(client) {
                 .then(() => { console.log(`Sent description:\n"${msgString}"\n--------------------`)})
                 .catch(erro => { console.error("Error when wiki page IDs: ", erro); });
             } else {
+              buttonsArray = [
+                {buttonId: 'wiki', buttonText: {displayText: ".wiki Inception"}, type: 1},
+                {buttonId: 'ihelp', buttonText: {displayText: ".ihelp"}, type: 1},
+                {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
+              ];      
               client
-                .reply(message.from,
-                  "```Search Results Not Found```\n-Check the syntax and search term\n-Don't get confused with similar commands\n-Check them by sending *InfoHelp*",
-                  message.id.toString()
-                )
+                .sendButtons(message.from, `Searched query: ${query}\n_Search Results Not Found_\n-Check the syntax and search term\n-Don't get confused with similar commands\n-Check them by sending *InfoHelp*`, buttonsArray, msgString)              
                 .then(() => { console.log("Results Not found\n-------------------------")})
                 .catch(erro => { console.error("Error when sending error: ", erro); });
             }
           })
-          .catch(error => {
-            console.log(error);
-          })
+          .catch(error => { console.log(error); })
       break;
       //////////////////////////////////WIKIPEDIA PAGE//////////////////////////////////
       case ".wp":
@@ -228,6 +226,11 @@ function start(client) {
           exintro: true,
           explaintext: true,
         };
+        buttonsArray = [
+          {buttonId: 'wp', buttonText: {displayText: "WikiPage 14598"}, type: 1},
+          {buttonId: 'ihelp', buttonText: {displayText: "InfoHelp"}, type: 1},
+          {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
+        ];
         axios
           .get(wikiEndpoint, { params })
           .then(response => {
@@ -242,22 +245,17 @@ function start(client) {
               composeMsg.forEach( txt => { msgString += txt; });
               // Send the response to the sender
               client
-                .sendText(message.from, msgString)
+                .sendButtons(message.from, msgString, buttonsArray, "Chose the buttons for examples and menu")              
                 .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
                 .catch(erro => { console.error("Error when sending page details: ", erro); });
             } else {
               client
-                .reply(message.from,
-                  "```Page Not Found```\nCheck the syntax and page id\nDon't get confused with similar commands\nCheck them by sending *InfoHelp*",
-                  message.id.toString()
-                )
+                .sendButtons(message.from, `Searched query: ${query}\n_Page Not Found_\nCheck the syntax and page id\nDon't get confused with similar commands\nCheck them by sending *InfoHelp*`, buttonsArray, "Chose the buttons for examples and menu")              
                 .then(() => { console.log("Page Not found\n---------------------------")})
                 .catch(erro => { console.error("Error when sending error: ", erro); });
             }
           })
-          .catch(error => {
-            console.log(error);
-          });
+          .catch(error => { console.log(error); });
       break;
       ///////////////////////////////////ANIME DETAIL///////////////////////////////////
       case ".ad": 
@@ -285,8 +283,13 @@ function start(client) {
               .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
             })
           .catch(err => { // Send not found to sender
-              client
-                .reply(message.from, "Anime not found.. Sorry", message.id.toString())
+            buttonsArray = [
+              {buttonId: 'ad', buttonText: {displayText: "AnimeDetail Naruto"}, type: 1},
+              {buttonId: 'ahelp', buttonText: {displayText: "AnimeHelp"}, type: 1},
+              {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
+            ];      
+            client
+                .sendButtons(message.from, "Anime not found.. Sorry", buttonsArray, "Chose the buttons for examples and menu")              
                 .then(() => { console.log(err) })
                 .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
@@ -302,9 +305,7 @@ function start(client) {
             msgString = "Click on an Anime ID from the buttons to get its characters"; // composeMsg will be used as description of the button options
             data.forEach(result => {
               msgString += "\n*" + result.anime_id + "* - " + result.anime_name;
-              buttonsArray.push(
-                {buttonId: 'anime' + result.anime_id, buttonText: {displayText: ".ac " + result.anime_id}, type: 1}
-              )
+              buttonsArray.push( {buttonId: 'anime' + result.anime_id, buttonText: {displayText: ".ac " + result.anime_id}, type: 1} )
             });
             msgString+= "\nGet the IDs of characters of an anime by sending 'AnimeChars <id>\nFor example\n*AnimeChars 101671*" 
             // Send the response to the sender
@@ -314,8 +315,13 @@ function start(client) {
             .catch(erro => { console.error("Error when sending Anime search results:\n", erro); });
           })
           .catch(err => { // Send not found to sender
+            buttonsArray = [
+              {buttonId: 'aid', buttonText: {displayText: "AnimeIds Naruto"}, type: 1},
+              {buttonId: 'ahelp', buttonText: {displayText: "AnimeHelp"}, type: 1},
+              {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
+            ];      
             client
-              .reply(message.from, "Anime not found.. Sorry. Check if the command syntax is wrong", message.id.toString())
+              .sendButtons(message.from, "Anime not found.. Sorry. Check if the command syntax is wrong", buttonsArray, "Chose the buttons for examples and menu")              
               .then(() => { console.log(err) })
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
@@ -334,13 +340,18 @@ function start(client) {
             msgString += "\nGet details of a character by sending 'CharIdDetail <id>\nFor example\n*CharIdDetail 10820*";
             // Send the response to the sender
             client
-            .sendImage(message.from, data.anime_image, null, msgString)
-            .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
-            .catch(erro => { console.error("Error when sending character ids: ", erro); });
+              .sendImage(message.from, data.anime_image, null, msgString)
+              .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
+              .catch(erro => { console.error("Error when sending character ids: ", erro); });
           })
           .catch(err => { // Send not found to sender
+            buttonsArray = [
+              {buttonId: 'aid', buttonText: {displayText: "AnimeChars Naruto"}, type: 1},
+              {buttonId: 'ahelp', buttonText: {displayText: "AnimeHelp"}, type: 1},
+              {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
+            ];      
             client
-              .reply(message.from, "Anime not found.. Sorry", message.id.toString())
+              .sendButtons(message.from, "Anime not found.. Sorry", buttonsArray, "Chose the buttons for examples and menu")              
               .then(() => { console.log(err) })
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
@@ -390,6 +401,11 @@ function start(client) {
       case "Moviedetail":
       case "moviedetail":
         RecievedMsgPermission = true;
+        buttonsArray = [
+          {buttonId: 'md', buttonText: {displayText: "MovieDetail Inception"}, type: 1},
+          {buttonId: 'ehelp', buttonText: {displayText: "EntHelp"}, type: 1},
+          {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
+        ];      
         axios
         .get("https://www.omdbapi.com/?apikey=" + process.env.OMDB_API_KEY + "&t=" + query)
         .then( response => {
@@ -417,7 +433,7 @@ function start(client) {
           if(response.data.Response === "True") { // If the movie was found then send the details and poster
             if(response.data.Poster === "N/A") { // If there is no poster then send only the details
               client
-                .reply(message.from, msgString, message.id.toString())
+                .sendButtons(message.from, msgString, buttonsArray, "Chose the buttons for examples and menu")              
                 .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
                 .catch((erro) => { console.error("Error when sending: ", erro); });            
             } else { // If there is a poster then send the details with the poster           
@@ -426,19 +442,14 @@ function start(client) {
                 .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
                 .catch((erro) => { console.error("Error when sending: ", erro); });            
             }          
-          } else {
+          } else {  // If movie/ series is not found
             client
-              .reply(message.from, "Movie/ Series not found.. Sorry. Check the spelling", message.id.toString())
+              .sendButtons(message.from, "Movie/ Series not found.. Sorry. Check the spelling", buttonsArray, "Chose the buttons for examples and menu")              
               .then(() => { console.log(response.data.Error) })
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           }
         })
-        .catch(err => {
-          client
-            .reply(message.from, "Movie/ Series not found.. Sorry. Check if the Command Syntax was wrong", message.id.toString())
-            .then(() => { console.log(err) })
-            .catch((erro) => { console.error("Error when sending error: ", erro); });
-        });
+        .catch(err => { console.error("Error when getting movie: ", erro); });
       break;
       /////////////////////////////////////SONG DETAIL//////////////////////////////////
       case ".sd":
@@ -612,8 +623,13 @@ function start(client) {
               .catch(error => { console.error("Error when sending truth: ", error); });
           })
           .catch(err => { // Send not found to sender
+            buttonsArray = [
+              {buttonId: 'wyr', buttonText: {displayText: ".wyr"}, type: 1},
+              {buttonId: 'ghelp', buttonText: {displayText: "GameHelp"}, type: 1},
+              {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
+            ];      
             client
-              .reply(message.from, "Question not found.. Sorry\nTry again", message.id.toString())
+              .sendButtons(message.from, "Question not found.. Sorry\nTry again", buttonsArray, "Chose the buttons for examples and menu")              
               .then(() => { console.log(err) })
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
@@ -650,9 +666,9 @@ function start(client) {
         ];
         composeMsg.forEach(function (txt) { msgString += txt; });
         buttonsArray = [
-          {buttonId: 'ihelp', buttonText: {displayText: ".ihelp"}, type: 1},
-          {buttonId: 'ehelp', buttonText: {displayText: ".ehelp"}, type: 1},
-          {buttonId: 'ghelp', buttonText: {displayText: ".ghelp"}, type: 1}
+          {buttonId: 'ihelp', buttonText: {displayText: "InfoHelp"}, type: 1},
+          {buttonId: 'ehelp', buttonText: {displayText: "EntHelp"}, type: 1},
+          {buttonId: 'ghelp', buttonText: {displayText: "GameHelp"}, type: 1}
         ]
         // Send the message
         client
@@ -693,9 +709,9 @@ function start(client) {
         ];
         composeMsg.forEach(function (txt) { msgString += txt; });
         buttonsArray = [
-          {buttonId: 'md', buttonText: {displayText: ".md Inception"}, type: 1},
-          {buttonId: 'ehelp', buttonText: {displayText: ".ehelp"}, type: 1},
-          {buttonId: 'ahelp', buttonText: {displayText: ".ahelp"}, type: 1}
+          {buttonId: 'md', buttonText: {displayText: "MovieDetail Inception"}, type: 1},
+          {buttonId: 'ehelp', buttonText: {displayText: "EntHelp"}, type: 1},
+          {buttonId: 'ahelp', buttonText: {displayText: "AnimeHelp"}, type: 1}
         ]
         // Send the message
         client
