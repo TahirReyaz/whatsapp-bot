@@ -144,9 +144,14 @@ function start(client) {
               })
               // Convert the array into text string
               composeMsg.forEach(txt => { msgString += txt; });
+              buttonsArray = [
+                {buttonId: 'ed', buttonText: {displayText: "EnglishDefine Inception"}, type: 1},
+                {buttonId: 'ihelp', buttonText: {displayText: ".ihelp"}, type: 1},
+                {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
+              ]      
               // Send the response to the sender
               client
-                .reply(message.from, msgString, message.id.toString())
+                .sendButtons(message.from, msgString, buttonsArray, "Click on buttons for other menus and examples")              
                 .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
                 .catch((erro) => { console.error("Error when sending: ", erro); });
             })
@@ -545,9 +550,14 @@ function start(client) {
         }while(truthOrDareFile.truthNdares[truthid].type != "Truth")
         composeMsg = [ "Truth: ", truth, "\n", "Level: ", truthLevel];
         composeMsg.forEach( txt => { msgString += txt; });
+        buttonsArray = [
+          {buttonId: 'truth', buttonText: {displayText: ".truth"}, type: 1},
+          {buttonId: 'dare', buttonText: {displayText: ".dare"}, type: 1},
+          {buttonId: 'ghelp', buttonText: {displayText: ".ghelp"}, type: 1}
+        ]
         // Send the response to the sender
         client
-          .reply(message.from, msgString, message.id.toString())
+          .sendButtons(message.from, msgString, buttonsArray, "Click on the buttons for help and other games")              
           .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
           .catch(error => { console.error("Error when sending truth: ", error); });
       break;
@@ -565,9 +575,14 @@ function start(client) {
         }while(truthOrDareFile.truthNdares[dareId].type != "Dare")
         composeMsg = [ "Dare: ", dare, "\n", "Level: ", DareLevel];
         composeMsg.forEach( txt => { msgString += txt; });
+        buttonsArray = [
+          {buttonId: 'truth', buttonText: {displayText: ".truth"}, type: 1},
+          {buttonId: 'dare', buttonText: {displayText: ".dare"}, type: 1},
+          {buttonId: 'ghelp', buttonText: {displayText: ".ghelp"}, type: 1}
+        ]
         // Send the response to the sender
         client
-          .reply(message.from, msgString, message.id.toString())
+          .sendButtons(message.from, msgString, buttonsArray, "Click on the buttons for help and other games")              
           .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
           .catch(error => { console.error("Error when sending truth: ", error); });
       break;
@@ -581,7 +596,8 @@ function start(client) {
           .then(response => {
             buttonsArray = [
               {buttonId: 'wyr1', buttonText: {displayText: response.blue.question}, type: 1},
-              {buttonId: 'wyr2', buttonText: {displayText: response.red.question}, type: 1}
+              {buttonId: 'wyr2', buttonText: {displayText: response.red.question}, type: 1},
+              {buttonId: 'ghelp', buttonText: {displayText: ".ghelp"}, type: 1}
             ];
             composeMsg = [
               "Click on an option to choose it",
@@ -632,12 +648,15 @@ function start(client) {
           "\nFor example:\n*EntHelp*",
           "\n```There is no case sensitiviy for full commands```"
         ];
-        composeMsg.forEach(function (txt) {
-          msgString += txt;
-        });
+        composeMsg.forEach(function (txt) { msgString += txt; });
+        buttonsArray = [
+          {buttonId: 'ihelp', buttonText: {displayText: ".ihelp"}, type: 1},
+          {buttonId: 'ehelp', buttonText: {displayText: ".ehelp"}, type: 1},
+          {buttonId: 'ghelp', buttonText: {displayText: ".ghelp"}, type: 1}
+        ]
         // Send the message
         client
-          .reply(message.from, msgString, message.id.toString())
+          .sendButtons(message.from, msgString, buttonsArray, "Click on buttons for other menus and examples")              
           .then(() => { console.log("Sent message: ", msgString + "\n-------------------------"); })
           .catch((erro) => { console.error("Error when sending: ", erro); });
       break;
@@ -672,12 +691,15 @@ function start(client) {
           "\nFor example:\n*HelpBot*",
           "\n```There is no case sensitiviy for full commands```"
         ];
-        composeMsg.forEach(function (txt) {
-          msgString += txt;
-        });
+        composeMsg.forEach(function (txt) { msgString += txt; });
+        buttonsArray = [
+          {buttonId: 'md', buttonText: {displayText: ".md Inception"}, type: 1},
+          {buttonId: 'ehelp', buttonText: {displayText: ".ehelp"}, type: 1},
+          {buttonId: 'ahelp', buttonText: {displayText: ".ahelp"}, type: 1}
+        ]
         // Send the message
         client
-          .reply(message.from, msgString, message.id.toString())
+          .sendButtons(message.from, msgString, buttonsArray, "Click on buttons for other menus and examples")              
           .then(() => { console.log("Sent message: ", msgString + "\n-------------------------"); })
           .catch((erro) => { console.error("Error when sending: ", erro); });
       break;
@@ -710,12 +732,15 @@ function start(client) {
           "\nFor example:\n*HelpBot*",
           "\n```There is no case sensitiviy for full commands```"
         ];
-        composeMsg.forEach(function (txt) {
-          msgString += txt;
-        });
+        composeMsg.forEach(function (txt) { msgString += txt; });
+        buttonsArray = [
+          {buttonId: 'ed', buttonText: {displayText: ".ed table"}, type: 1},
+          {buttonId: 'wiki', buttonText: {displayText: ".wiki India"}, type: 1},
+          {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
+        ]
         // Send the message
         client
-          .reply(message.from, msgString, message.id.toString())
+          .sendButtons(message.from, msgString, buttonsArray, "Click on buttons for other menus and examples")              
           .then(() => { console.log("Sent message: ", msgString + "\n-------------------------"); })
           .catch((erro) => { console.error("Error when sending: ", erro); });
       break;
@@ -743,12 +768,15 @@ function start(client) {
           "\nFor example:\n*HelpBot*",
           "\n```There is no case sensitiviy for full commands```"
         ];
-        composeMsg.forEach(function (txt) {
-          msgString += txt;
-        });
+        buttonsArray = [
+          {buttonId: 'truth', buttonText: {displayText: ".truth"}, type: 1},
+          {buttonId: 'wyr', buttonText: {displayText: ".wyr"}, type: 1},
+          {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
+        ]
+        composeMsg.forEach(function (txt) { msgString += txt; });
         // Send the message
         client
-          .reply(message.from, msgString, message.id.toString())
+          .sendButtons(message.from, msgString, buttonsArray, "Click on buttons for other menus and examples")              
           .then(() => { console.log("Sent message: ", msgString + "\n-------------------------"); })
           .catch((erro) => { console.error("Error when sending: ", erro); });
       break;
@@ -785,12 +813,15 @@ function start(client) {
           "\nFor example:\n*HelpBot*",
           "\n```There is no case sensitiviy for full commands```"
         ];
-        composeMsg.forEach(function (txt) {
-          msgString += txt;
-        });
+        buttonsArray = [
+          {buttonId: 'ad', buttonText: {displayText: "AnimeDetail Naruto"}, type: 1},
+          {buttonId: 'aid', buttonText: {displayText: "AnimeIds Naruto"}, type: 1},
+          {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
+        ]
+        composeMsg.forEach(function (txt) { msgString += txt; });
         // Send the message
         client
-          .reply(message.from, msgString, message.id.toString())
+          .sendButtons(message.from, msgString, buttonsArray, "Click on buttons for other menus and examples")              
           .then(() => { console.log("Sent message: ", msgString + "\n-------------------------"); })
           .catch((erro) => { console.error("Error when sending: ", erro); });
       break;
