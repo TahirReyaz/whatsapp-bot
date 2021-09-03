@@ -239,7 +239,7 @@ function start(client) {
           })
           .catch(error => {
             console.log(error);
-          })
+          });
       break;
       ///////////////////////////////////ANIME DETAIL///////////////////////////////////
       case ".ad": 
@@ -288,8 +288,8 @@ function start(client) {
               .reply(message.from, msgString, message.id.toString())
               .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
               .catch(erro => { console.error("Error when sending Anime search results:\n", erro); });
-            })
-            .catch(err => { // Send not found to sender
+          })
+          .catch(err => { // Send not found to sender
               client
                 .reply(message.from, "Anime not found.. Sorry. Check if the command syntax is wrong", message.id.toString())
                 .then(() => { console.log(err) })
@@ -313,12 +313,12 @@ function start(client) {
             .sendImage(message.from, data.anime_image, null, msgString)
             .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
             .catch(erro => { console.error("Error when sending character ids: ", erro); });
-            })
-            .catch(err => { // Send not found to sender
-              client
-                .reply(message.from, "Anime not found.. Sorry", message.id.toString())
-                .then(() => { console.log(err) })
-                .catch((erro) => { console.error("Error when sending error: ", erro); });
+          })
+          .catch(err => { // Send not found to sender
+            client
+              .reply(message.from, "Anime not found.. Sorry", message.id.toString())
+              .then(() => { console.log(err) })
+              .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
       break;
       /////////////////////////ANIME CHARACTER DETAIL- BY SEARCH////////////////////////
@@ -351,13 +351,13 @@ function start(client) {
               .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
               .catch(erro => { console.error("Error when sending character details: ", erro); });
             })
-            .catch(err => { // Send not found to sender
-              client
-                .reply(message.from, 
-                  "Character not found.. Sorry.\nCheck if the command syntax is right or not.\nDon't get confused by similar looking commands.", 
-                  message.id.toString())
-                .then(() => { console.log(err) })
-                .catch((erro) => { console.error("Error when sending error: ", erro); });
+          .catch(err => { // Send not found to sender
+            client
+              .reply(message.from, 
+                "Character not found.. Sorry.\nCheck if the command syntax is right or not.\nDon't get confused by similar looking commands.", 
+                message.id.toString())
+              .then(() => { console.log(err) })
+              .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
       break;
       ////////////////////////////////////MOVIE DETAIL//////////////////////////////////
@@ -409,7 +409,7 @@ function start(client) {
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           }
         })
-        .catch(function (err) {
+        .catch(err => {
           client
             .reply(message.from, "Movie/ Series not found.. Sorry. Check if the Command Syntax was wrong", message.id.toString())
             .then(() => { console.log(err) })
@@ -504,12 +504,12 @@ function start(client) {
               .sendImage(message.from, data.character_image, null, msgString)
               .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
               .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
-            })
-            .catch(err => { // Send not found to sender
-              client
-                .reply(message.from, "Character not found.. Sorry", message.id.toString())
-                .then(() => { console.log(err) })
-                .catch((erro) => { console.error("Error when sending error: ", erro); });
+          })
+          .catch(err => { // Send not found to sender
+            client
+              .reply(message.from, "Character not found.. Sorry", message.id.toString())
+              .then(() => { console.log(err) })
+              .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
       break;
       ///////////////////////////////TRUTH OR DARE: TRUTH///////////////////////////////
@@ -558,8 +558,8 @@ function start(client) {
       case "Botwyr":
       case "botwyr":
         RecievedMsgPermission = true;
-        wyr().
-          then(response => {
+        wyr()
+          .then(response => {
             composeMsg = [
               "Would you rather:",
               "\n*A* : ", response.blue.question, "\nOr",
@@ -571,7 +571,13 @@ function start(client) {
               .reply(message.from, msgString, message.id.toString())
               .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
               .catch(error => { console.error("Error when sending truth: ", error); });
-        })
+          })
+          .catch(err => { // Send not found to sender
+            client
+              .reply(message.from, "Question not found.. Sorry\nTry again", message.id.toString())
+              .then(() => { console.log(err) })
+              .catch((erro) => { console.error("Error when sending error: ", erro); });
+          });
       break;
       /////////////////////////////////////BOT MENU/////////////////////////////////////
       case ".help":
@@ -770,18 +776,18 @@ function start(client) {
     if (message.body === 'send contact' && message.isGroupMsg === false) {
       client
         .sendContactVcard(message.from, message.to, 'Tahir')
-        .then((result) => {
-          console.log('Result: ', result); //return object success
-        })
-        .catch((erro) => {
-          console.error('Error when sending: ', erro); //return object error
-        });
+        .then((result) => {console.log('Result: ', result);})
+        .catch((erro) => {console.error('Error when sending: ', erro);});
     } else if (message.body === 'reply kro' && message.isGroupMsg === false) {
       client
-        .reply( message.from, "Are yaar tm so jao (Bot's words, not mine)", message.id.toString() );
+        .reply( message.from, "Are yaar tm so jao (Bot's words, not mine)", message.id.toString() )
+        .then((result) => {console.log('Result: ', result);})
+        .catch((erro) => {console.error('Error when sending: ', erro);});
     } else if (message.body === 'bhai ek help kr de' && message.isGroupMsg === false) {
       client
-      .startTyping(message.from);
+      .startTyping(message.from)
+      .then((result) => {console.log('Result: ', result);})
+      .catch((erro) => {console.error('Error when sending: ', erro);});
     }
     // Print the recived msg
     if(RecievedMsgPermission) {
