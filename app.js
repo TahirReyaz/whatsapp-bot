@@ -73,16 +73,6 @@ function start(client) {
           })
           .catch( error => { console.log(error); });
       break;
-      //////////////////////////////////////STICKER///////////////////////////////////////
-      case ".sticker":
-      case ".sparsh":
-        RecievedMsgPermission = true;
-        console.log(message);
-        // client
-        //   .sendImageAsSticker(message.from, './image.jpg')
-        //   .then((result) => { console.log('Result: ', result); })
-        //   .catch((erro) => { console.error('Error when sending: ', erro); });
-      break;
       /////////////////////////////////KANJI DEFINITION/////////////////////////////////
       case ".kd":
       case "KanjiDef":
@@ -848,16 +838,17 @@ function start(client) {
         .sendContactVcard(message.from, message.to, 'Tahir')
         .then((result) => {console.log('Result: ', result);})
         .catch((erro) => {console.error('Error when sending: ', erro);});
-    } else if (message.body === 'reply kro' && message.isGroupMsg === false) {
-      client
-        .reply( message.from, "Are yaar tm so jao (Bot's words, not mine)", message.id.toString() )
-        .then((result) => {console.log('Result: ', result);})
-        .catch((erro) => {console.error('Error when sending: ', erro);});
     } else if (message.body === 'bhai ek help kr de' && message.isGroupMsg === false) {
       client
       .startTyping(message.from)
       .then((result) => {console.log('Result: ', result);})
       .catch((erro) => {console.error('Error when sending: ', erro);});
+    } else if (message.type === "image" && ( message.caption === ".sticker" || message.caption === ".sparsh")) {
+      // console.log(message);
+      client
+        .sendImageAsSticker(message.from, message.body)              
+        .then(() => { console.log("Sticker sent\n-------------------------\n") })
+        .catch((erro) => { console.error("Error when sending: ", erro); });
     }
     // Print the recived msg
     if(RecievedMsgPermission) {
