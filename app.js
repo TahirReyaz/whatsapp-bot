@@ -21,7 +21,7 @@ function start(client) {
     // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
-    let composeMsg = [], msgString = "", RecievedMsgPermission = false;
+    let composeMsg = [], msgString = "", RecievedMsgPermission = false, buttonsArray= [];
     const queryCutter = botQuery[0] + " ";
     const query = data.substring(queryCutter.length);
     const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
@@ -38,7 +38,7 @@ function start(client) {
       case "hibot" :
         RecievedMsgPermission = true;
         client
-          .reply(message.from, "Bot dikha nhi ki mu utha kr chale aye.\nSend 'HelpBot' for commands", message.id.toString())
+          .reply(message.from, "No need to say hi to me, I am always here, reading every message you send to this guy😁.\nSend 'HelpBot' for commands", message.id.toString())
           .then(() => { console.log("Reply sent\n------------------------------"); })
           .catch((erro) => { console.error('Error when sending: ', erro); });
       break;
@@ -177,19 +177,21 @@ function start(client) {
             if(response.data.query) { // If the page is found then query exists
               const wikis = Object.values(response.data.query.pages)
               // Set the fields to be sent in message
-              composeMsg = ["Use the Page IDs for further details"];
+              composeMsg = ["Click on a Page ID from the buttons to read its details"]; // composeMsg will be used as description of the button options
               wikis.forEach(wiki => {
                 composeMsg.push(
                   "\n*Title* : ", wiki.title,
                   " - *Page ID* : ", wiki.pageid
                 );
+                buttonsArray.push(
+                  {buttonId: 'wyr' + wiki.pageid, buttonText: {displayText: ".wp " + wiki.pageid}, type: 1}
+                )
               });
-              composeMsg.push("\nSend 'wikiPage <Page ID>' for further details");
               composeMsg.forEach( txt => { msgString += txt; });
               // Send the response to the sender
               client
-                .reply(message.from, msgString, message.id.toString())
-                .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
+                .sendButtons(message.from, `Searched query: ${query}\nSend *wikiPage <Page id>*\nFor example:\n*wikiPage 14598*`, buttonsArray, msgString)              
+                .then(() => { console.log(`Sent description:\n"${msgString}"\n--------------------`)})
                 .catch(erro => { console.error("Error when wiki page IDs: ", erro); });
             } else {
               client
@@ -211,6 +213,7 @@ function start(client) {
       case "WikiPage":
       case "wikipage":
         RecievedMsgPermission = true;
+        console.log(message.id);
         params = {
           origin: "*",
           format: "json",
@@ -234,9 +237,9 @@ function start(client) {
               composeMsg.forEach( txt => { msgString += txt; });
               // Send the response to the sender
               client
-                .reply(message.from, msgString, message.id.toString())
+                .sendText(message.from, msgString)
                 .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
-                .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
+                .catch(erro => { console.error("Error when sending page details: ", erro); });
             } else {
               client
                 .reply(message.from,
@@ -291,19 +294,25 @@ function start(client) {
         RecievedMsgPermission = true;
         acb.get_anime_by_search(query)
           .then(data => {
-            data.forEach(result => {msgString += "\n*" + result.anime_id + "* - " + result.anime_name})
+            msgString = "Click on an Anime ID from the buttons to get its characters"; // composeMsg will be used as description of the button options
+            data.forEach(result => {
+              msgString += "\n*" + result.anime_id + "* - " + result.anime_name;
+              buttonsArray.push(
+                {buttonId: 'anime' + result.anime_id, buttonText: {displayText: ".ac " + result.anime_id}, type: 1}
+              )
+            });
             msgString+= "\nGet the IDs of characters of an anime by sending 'AnimeChars <id>\nFor example\n*AnimeChars 101671*" 
             // Send the response to the sender
             client
-              .reply(message.from, msgString, message.id.toString())
-              .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
-              .catch(erro => { console.error("Error when sending Anime search results:\n", erro); });
+            .sendButtons(message.from, `Searched query: ${query}\nFor getting character list send *AnimeChars <anime id>*\nFor example:\n*AnimeChars 101671*`, buttonsArray, msgString)              
+            .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
+            .catch(erro => { console.error("Error when sending Anime search results:\n", erro); });
           })
           .catch(err => { // Send not found to sender
-              client
-                .reply(message.from, "Anime not found.. Sorry. Check if the command syntax is wrong", message.id.toString())
-                .then(() => { console.log(err) })
-                .catch((erro) => { console.error("Error when sending error: ", erro); });
+            client
+              .reply(message.from, "Anime not found.. Sorry. Check if the command syntax is wrong", message.id.toString())
+              .then(() => { console.log(err) })
+              .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
       break;
       //////////////////////////////ANIME CHARACTERS IDs////////////////////////////////
@@ -570,7 +579,7 @@ function start(client) {
         RecievedMsgPermission = true;
         wyr()
           .then(response => {
-            const wyrButtons = [
+            buttonsArray = [
               {buttonId: 'wyr1', buttonText: {displayText: response.blue.question}, type: 1},
               {buttonId: 'wyr2', buttonText: {displayText: response.red.question}, type: 1}
             ];
@@ -582,7 +591,7 @@ function start(client) {
             composeMsg.forEach( txt => { msgString += txt; });
             // Send the response to the sender
             client
-              .sendButtons(message.from, "Would you rather:", wyrButtons, msgString)              
+              .sendButtons(message.from, "Would you rather:", buttonsArray, msgString)              
               .then(() => { console.log("Sent Wyr question:\n"+ response.blue.question + "\n" + response.red.question + "\n-------------------"); })
               .catch(error => { console.error("Error when sending truth: ", error); });
           })
@@ -805,7 +814,7 @@ function start(client) {
     }
     // Print the recived msg
     if(RecievedMsgPermission) {
-      console.log("Recieved Message: ", data);
+      console.log("Recieved Message: ", data, "\nType: ", message.type);
       RecievedMsgPermission = false;
     }
   });
