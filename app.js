@@ -73,6 +73,16 @@ function start(client) {
           })
           .catch( error => { console.log(error); });
       break;
+      //////////////////////////////////////STICKER///////////////////////////////////////
+      case ".sticker":
+      case ".sparsh":
+        RecievedMsgPermission = true;
+        console.log(message);
+        // client
+        //   .sendImageAsSticker(message.from, './image.jpg')
+        //   .then((result) => { console.log('Result: ', result); })
+        //   .catch((erro) => { console.error('Error when sending: ', erro); });
+      break;
       /////////////////////////////////KANJI DEFINITION/////////////////////////////////
       case ".kd":
       case "KanjiDef":
@@ -560,16 +570,20 @@ function start(client) {
         RecievedMsgPermission = true;
         wyr()
           .then(response => {
+            const wyrButtons = [
+              {buttonId: 'wyr1', buttonText: {displayText: response.blue.question}, type: 1},
+              {buttonId: 'wyr2', buttonText: {displayText: response.red.question}, type: 1}
+            ];
             composeMsg = [
-              "Would you rather:",
-              "\n*A* : ", response.blue.question, "\nOr",
-              "\n*B* : ", response.red.question
-            ]
-            composeMsg.forEach(txt => {msgString += txt}); 
+              "Click on an option to choose it",
+              "\nA: ", response.blue.question,
+              "\nB: ", response.red.question
+            ];
+            composeMsg.forEach( txt => { msgString += txt; });
             // Send the response to the sender
             client
-              .reply(message.from, msgString, message.id.toString())
-              .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
+              .sendButtons(message.from, "Would you rather:", wyrButtons, msgString)              
+              .then(() => { console.log("Sent Wyr question:\n"+ response.blue.question + "\n" + response.red.question + "\n-------------------"); })
               .catch(error => { console.error("Error when sending truth: ", error); });
           })
           .catch(err => { // Send not found to sender
