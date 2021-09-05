@@ -652,6 +652,10 @@ function start(client) {
           "\n5. For getting Entertainment related commands like _movie, song, anime detail and lyrics_:",
           "\nSend 'EntHelp' | Short Command: *.ehelp*",
           "\nFor example:\n*EntHelp*",
+          "\n--------------------------------------------------",
+          "\n6. For making stickers: ",
+          "\nSend the image or gif with caption *.sticker*",
+          "\n--------------------------------------------------",
           "\n```There is no case sensitiviy for full commands```"
         ];
         composeMsg.forEach(function (txt) { msgString += txt; });
@@ -850,6 +854,18 @@ function start(client) {
           const img = result.substring(23, result.length);
           client
             .sendImageAsSticker(message.from, img)              
+            .then(() => { console.log("Sticker sent\n-------------------------\n") })
+            .catch((erro) => { console.error("Error when sending sticker: ", erro); });    
+        })
+        .catch(erro => (console.log(erro)));
+    } else if (message.type === "video" && ( message.caption === ".sticker" || message.caption === ".sparsh")) {
+      client
+        .downloadMedia(message.id)
+        .then(result => {
+          console.log(result.substring(22, 50));
+          const gif = result.substring(22, result.length);
+          client
+            .sendImageAsStickerGif(message.from, gif)              
             .then(() => { console.log("Sticker sent\n-------------------------\n") })
             .catch((erro) => { console.error("Error when sending sticker: ", erro); });    
         })
