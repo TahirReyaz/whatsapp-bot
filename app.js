@@ -654,7 +654,8 @@ function start(client) {
           "\nFor example:\n*EntHelp*",
           "\n--------------------------------------------------",
           "\n6. For making stickers: ",
-          "\nSend the image or gif with caption *.sticker*",
+          "\nSend the image with caption *.sticker*",
+          "\n```Gifs and videos are not supported yet```",
           "\n--------------------------------------------------",
           "\n```There is no case sensitiviy for full commands```"
         ];
