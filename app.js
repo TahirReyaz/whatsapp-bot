@@ -844,11 +844,16 @@ function start(client) {
       .then((result) => {console.log('Result: ', result);})
       .catch((erro) => {console.error('Error when sending: ', erro);});
     } else if (message.type === "image" && ( message.caption === ".sticker" || message.caption === ".sparsh")) {
-      // console.log(message);
       client
-        .sendImageAsSticker(message.from, message.body)              
-        .then(() => { console.log("Sticker sent\n-------------------------\n") })
-        .catch((erro) => { console.error("Error when sending: ", erro); });
+        .downloadMedia(message.id)
+        .then(result => {
+          const img = result.substring(23, result.length);
+          client
+            .sendImageAsSticker(message.from, img)              
+            .then(() => { console.log("Sticker sent\n-------------------------\n") })
+            .catch((erro) => { console.error("Error when sending sticker: ", erro); });    
+        })
+        .catch(erro => (console.log(erro)));
     }
     // Print the recived msg
     if(RecievedMsgPermission) {
