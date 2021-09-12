@@ -24,6 +24,7 @@ function start(client) {
     let composeMsg = [], msgString = "", RecievedMsgPermission = false, buttonsArray= [];
     const queryCutter = botQuery[0] + " ";
     const query = data.substring(queryCutter.length);
+    const nsfwGrps = ["MEMES", "CATS", "WE", "OT4KU", "chaman", "pendicul"];
     const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
     let params = {};
     const songParams = {
@@ -48,11 +49,20 @@ function start(client) {
       case "Botroast":
       case "botroast":
         RecievedMsgPermission = true;
+        let roastPerm = false;
+        // Check if the group allows nsfw roats or not
+        nsfwGrps.forEach(grp => {
+          if(message.isGroupMsg && message.chat.name.search(grp) !== -1) {
+            roastPerm = true;
+          }
+        })
         axios
           .get("https://evilinsult.com/generate_insult.php?lang=en&type=json")
           .then(function (response) {
             // Abusive roasts
-            if (
+            if(!roastPerm) {
+              composeMsg = [ "This command is not supported in dms. If this is a group then there are people here who don't like it.\n```THEY AREN'T COOL ENOUGH.```" ];
+            } else if (
               response.data.number == "111" ||
               response.data.number === "119" ||
               response.data.number === "121" ||
@@ -61,8 +71,6 @@ function start(client) {
             ) {
               composeMsg = ["Ooops..", " Please try again"];
               console.log(response.data.insult);
-            } else if(message.isGroupMsg && (message.chat.name.search("HASHes") !== -1 || message.chat.name.search("Atulanand") !== -1 || message.chat.name.search("Bot") !== -1)) {
-              composeMsg = [ "This command is not supported in this group. There are people who don't like it." ];
             } else {
               composeMsg = [ "Dear ", query, ", ", response.data.insult ];
             }
@@ -863,16 +871,16 @@ function start(client) {
         .catch(erro => (console.log(erro)));
     } else if (message.type === "video" && ( message.caption === ".sticker" || message.caption === ".sparsh")) {
       client
-        .downloadMedia(message.id)
-        .then(result => {
-          console.log(result.substring(22, 50));
-          const gif = result.substring(22, result.length);
+        // .downloadMedia(message.id)
+        // .then(result => {
+          // console.log(result.substring(22, 50));
+          // const gif = result.substring(22, result.length);
           client
-            .sendImageAsStickerGif(message.from, gif)              
-            .then(() => { console.log("Sticker sent\n-------------------------\n") })
+            .reply(message.from, "gifs and videos are not supported yet", message.id.toString())              
+            .then(() => { console.log("gif not sent\n-------------------------\n") })
             .catch((erro) => { console.error("Error when sending sticker: ", erro); });    
-        })
-        .catch(erro => (console.log(erro)));
+        // })
+        // .catch(erro => (console.log(erro)));
     }
     // Print the recived msg
     if(RecievedMsgPermission) {
