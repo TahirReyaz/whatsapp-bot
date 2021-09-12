@@ -61,6 +61,8 @@ function start(client) {
             ) {
               composeMsg = ["Ooops..", " Please try again"];
               console.log(response.data.insult);
+            } else if(message.isGroupMsg && (message.chat.name.search("HASHes") !== -1 || message.chat.name.search("Atulanand") !== -1 || message.chat.name.search("Bot") !== -1)) {
+              composeMsg = [ "This command is not supported in this group. There are people who don't like it." ];
             } else {
               composeMsg = [ "Dear ", query, ", ", response.data.insult ];
             }
@@ -397,49 +399,49 @@ function start(client) {
           {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
         ];      
         axios
-        .get("https://www.omdbapi.com/?apikey=" + process.env.OMDB_API_KEY + "&t=" + query)
-        .then( response => {
-          // Set the fields of the message
-            composeMsg = [
-              "*Title* : ", response.data.Title,
-              "\n*Type* : ", response.data.Type,
-              "\n*Year* : ", response.data.Year,
-              "\n*Rated* : ", response.data.Rated,
-              "\n*Released* : ", response.data.Released,
-              "\n*Run-time* : ", response.data.Runtime,
-              "\n*Genre* : ", response.data.Genre,
-              "\n*Director* : ", response.data.Director,
-              "\n*Writer* : ", response.data.Writer,
-              "\n*Actors* : ", response.data.Actors,
-              "\n*Language* : ", response.data.Language,
-              "\n*Country* : ", response.data.Country,
-              "\n*Awards* : ", response.data.Awards,
-              "\n*IMDB rating* : ", response.data.imdbRating,
-              "\n*Plot* : ", response.data.Plot
-            ];
-          // Convert the array into text string
-          composeMsg.forEach(txt => { msgString += txt; });
-          // Send the response to the sender
-          if(response.data.Response === "True") { // If the movie was found then send the details and poster
-            if(response.data.Poster === "N/A") { // If there is no poster then send only the details
+          .get("https://www.omdbapi.com/?apikey=" + process.env.OMDB_API_KEY + "&t=" + query)
+          .then( response => {
+            // Set the fields of the message
+              composeMsg = [
+                "*Title* : ", response.data.Title,
+                "\n*Type* : ", response.data.Type,
+                "\n*Year* : ", response.data.Year,
+                "\n*Rated* : ", response.data.Rated,
+                "\n*Released* : ", response.data.Released,
+                "\n*Run-time* : ", response.data.Runtime,
+                "\n*Genre* : ", response.data.Genre,
+                "\n*Director* : ", response.data.Director,
+                "\n*Writer* : ", response.data.Writer,
+                "\n*Actors* : ", response.data.Actors,
+                "\n*Language* : ", response.data.Language,
+                "\n*Country* : ", response.data.Country,
+                "\n*Awards* : ", response.data.Awards,
+                "\n*IMDB rating* : ", response.data.imdbRating,
+                "\n*Plot* : ", response.data.Plot
+              ];
+            // Convert the array into text string
+            composeMsg.forEach(txt => { msgString += txt; });
+            // Send the response to the sender
+            if(response.data.Response === "True") { // If the movie was found then send the details and poster
+              if(response.data.Poster === "N/A") { // If there is no poster then send only the details
+                client
+                  .sendButtons(message.from, msgString, buttonsArray, "Chose the buttons for examples and menu")              
+                  .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
+                  .catch((erro) => { console.error("Error when sending: ", erro); });            
+              } else { // If there is a poster then send the details with the poster           
+                client
+                  .sendImage(message.from, response.data.Poster, null, msgString)
+                  .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
+                  .catch((erro) => { console.error("Error when sending: ", erro); });            
+              }          
+            } else {  // If movie/ series is not found
               client
-                .sendButtons(message.from, msgString, buttonsArray, "Chose the buttons for examples and menu")              
-                .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
-                .catch((erro) => { console.error("Error when sending: ", erro); });            
-            } else { // If there is a poster then send the details with the poster           
-              client
-                .sendImage(message.from, response.data.Poster, null, msgString)
-                .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
-                .catch((erro) => { console.error("Error when sending: ", erro); });            
-            }          
-          } else {  // If movie/ series is not found
-            client
-              .sendButtons(message.from, "Movie/ Series not found.. Sorry. Check the spelling", buttonsArray, "Chose the buttons for examples and menu")              
-              .then(() => { console.log(response.data.Error) })
-              .catch((erro) => { console.error("Error when sending error: ", erro); });
-          }
-        })
-        .catch(err => { console.error("Error when getting movie: ", erro); });
+                .sendButtons(message.from, "Movie/ Series not found.. Sorry. Check the spelling", buttonsArray, "Chose the buttons for examples and menu")              
+                .then(() => { console.log(response.data.Error) })
+                .catch((erro) => { console.error("Error when sending error: ", erro); });
+            }
+          })
+          .catch(err => { console.error("Error when getting movie: ", erro); });
       break;
       /////////////////////////////////////SONG DETAIL//////////////////////////////////
       case ".sd":
