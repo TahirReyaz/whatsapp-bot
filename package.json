@@ -14,7 +14,7 @@
     "dotenv": "^10.0.0",
     "mal-scraper": "^2.11.3",
     "music-info": "^1.2.1",
-    "venom-bot": "^3.1.4",
+    "venom-bot": "^3.1.12",
     "wyr": "^1.0.2"
   }
 }

@@ -17,21 +17,24 @@ venom
 
 // Start the client
 function start(client) {
+  let RecievedMsgPermission = false, buttonsArray= [];
+  const nsfwGrps = ["MEMES", "CATS", "WE", "OT4KU", "Chaman", "pendicul", "testing"];
+  const annoyGrps = ["MEMES", "CATS", "WE", "OT4KU", "Chaman", "pendicul", "testing"];
+  const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
+  let params = {};
   client.onMessage((message) => {
     // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
-    let composeMsg = [], msgString = "", RecievedMsgPermission = false, buttonsArray= [];
     const queryCutter = botQuery[0] + " ";
     const query = data.substring(queryCutter.length);
-    const nsfwGrps = ["MEMES", "CATS", "WE", "OT4KU", "chaman", "pendicul"];
-    const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
-    let params = {};
+    const songQuery = query.split("-");
+    let composeMsg = [], msgString = "";
     const songParams = {
-      title: query
-      // artist: "Kana Boon"
+      title: songQuery[0],
+      artist: songQuery[1]
     }
-
+  
     switch(botQuery[0]) {
       //////////////////////////////////////HI BOT//////////////////////////////////////
       case "HiBot" :
@@ -79,9 +82,49 @@ function start(client) {
             client
               .reply(message.from, msgString, message.id.toString())
               .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
-              .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
+              .catch(erro => { console.error("Error when sending the roast: ", erro); });
           })
           .catch( error => { console.log(error); });
+      break;
+      //////////////////////////////////////ROAST///////////////////////////////////////
+      case ".yall":
+      case ".y'all":
+      case ".all":
+      case ".every":
+      case ".everyone":
+        RecievedMsgPermission = true;
+        let annoyPerm = false;
+        // Check if the group allows annoying mentions or not
+        annoyGrps.forEach(grp => {
+          if(message.isGroupMsg && message.chat.name.search(grp) !== -1) {
+            annoyPerm = true;
+          }
+        })
+        if(!annoyPerm) {
+          msgString = [ "This command is not supported in dms. If this is a group then people get annoyed by useless mentioning." ];
+            // Send the response to the sender
+            client
+              .reply(message.from, msgString, message.id.toString())
+              .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
+              .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
+        } else {
+          msgString = [ `Tagging Everyone on request of\n${message.sender.pushname}\n` ];
+          // Send the response to the sender
+          client
+            .getGroupMembersIds(message.chat.groupMetadata.id)
+            .then(res => { 
+              let members= [];
+              res.forEach(member => {
+                members.push(member.user.toString());
+                msgString+= `@${member.user.toString()} , `;
+              })
+              client
+                .sendMentioned(message.from, msgString, members)
+                .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
+                .catch(erro => { console.log("Error when tagging: ", erro); });
+            })
+            .catch(erro => { console.error("Error when tagging: ", erro); });
+        }
       break;
       /////////////////////////////////KANJI DEFINITION/////////////////////////////////
       case ".kd":
@@ -493,7 +536,7 @@ function start(client) {
         musicInfo.searchLyrics(songParams, 600)
           .then(song => {
             composeMsg = [
-              "*Title* : ", query,
+              "*Searched* : ", query,
               "\n-------------------------------------",
               "\n*Lyrics* :\n", song.lyrics,
               "\n--------------------------------------------------",
@@ -651,19 +694,23 @@ function start(client) {
           "\nSend 'BotRoast <Name>' | Short Command: *.roast* <Name>",
           "\nFor example:\n*BotRoast John Doe*",
           "\n--------------------------------------------------",
-          "\n3. For getting Information related commands like _wiki, dictionary_ etc.:",
+          "\n3. For mentioning everyone:",
+          "\nSend '.everyone' | Short Command: *.yall*",
+          "\nFor example:\n*.everyone*",
+          "\n--------------------------------------------------",
+          "\n4. For getting Information related commands like _wiki, dictionary_ etc.:",
           "\nSend 'InfoHelp' | Short Command: *.ihelp*",
           "\nFor example:\n*InfoHelp*",
           "\n--------------------------------------------------",
-          "\n4. For getting Text based games related commands like _truth or dare, Would you rather_ etc.:",
+          "\n5. For getting Text based games related commands like _truth or dare, Would you rather_ etc.:",
           "\nSend 'GameHelp' | Short Command: *.ghelp*",
           "\nFor example:\n*GameHelp*",
           "\n--------------------------------------------------",
-          "\n5. For getting Entertainment related commands like _movie, song, anime detail and lyrics_:",
+          "\n6. For getting Entertainment related commands like _movie, song, anime detail and lyrics_:",
           "\nSend 'EntHelp' | Short Command: *.ehelp*",
           "\nFor example:\n*EntHelp*",
           "\n--------------------------------------------------",
-          "\n6. For making stickers: ",
+          "\n7. For making stickers: ",
           "\nSend the image with caption *.sticker*",
           "\n```Gifs and videos are not supported yet```",
           "\n--------------------------------------------------",
@@ -696,8 +743,8 @@ function start(client) {
           "\n2. For getting the details of a song:",
           "\nSend 'SongDetail <Song name>' | Short Command: *.sd* <Song name>",
           "\nFor example:\n*SongDetail Faded*",
-          "\nIf you didn't get the desired result then put the name of the artist too",
-          "\nFor example:\n*SongDetail Faded Alan Walker*",
+          "\nIf you didn't get the desired result then put the name of the artist too with a hyphen ( - )",
+          "\nFor example:\n*SongDetail Faded-Alan Walker*",
           "\n--------------------------------------------------",
           "\n3. For getting the lyrics of a song:",
           "\nSend '.lyrics <Song name>'",
@@ -884,7 +931,7 @@ function start(client) {
     }
     // Print the recived msg
     if(RecievedMsgPermission) {
-      console.log("Recieved Message: ", data, "\nType: ", message.type);
+      console.log("Recieved Message: ", data, "\nType: ", message.type, "\nName: ", message.sender.pushname);
       RecievedMsgPermission = false;
     }
   });
