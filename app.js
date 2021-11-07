@@ -27,7 +27,7 @@ function start(client) {
     const data = message.body;
     const botQuery = data.split(" ");
     const queryCutter = botQuery[0] + " ";
-    const query = data.substring(queryCutter.length);
+    const query = data.substring(queryCutter.length); // Get everything written after the command
     const songQuery = query.split("-");
     let composeMsg = [], msgString = "";
     const songParams = {
@@ -99,16 +99,23 @@ function start(client) {
           if(message.isGroupMsg && message.chat.name.search(grp) !== -1) {
             annoyPerm = true;
           }
-        })
+        });
         if(!annoyPerm) {
-          msgString = [ "This command is not supported in dms. If this is a group then people get annoyed by useless mentioning." ];
+          msgString = "This command is not supported in dms. If this is a group then people get annoyed by useless mentioning.";
             // Send the response to the sender
             client
               .reply(message.from, msgString, message.id.toString())
               .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
               .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
         } else {
-          msgString = [ `Tagging Everyone on request of\n${message.sender.pushname}\n` ];
+          composeMsg = [ 
+            "```Tagging Everyone on request of``` *", 
+            message.sender.pushname, 
+            "*\n\n----------------------------------------------------", 
+            query,
+            "\n\n----------------------------------------------------\n"
+          ];
+          composeMsg.forEach(txt => msgString+=txt);
           // Send the response to the sender
           client
             .getGroupMembersIds(message.chat.groupMetadata.id)
@@ -691,23 +698,25 @@ function start(client) {
           "\nSend ' *HiBot* ' (without the ')",
           "\n--------------------------------------------------",
           "\n2. For roasting someone:",
-          "\nSend 'BotRoast <Name>' | Short Command: *.roast* <Name>",
+          "\nSend '```BotRoast <Name>```' | Short Command: *.roast* <Name>",
           "\nFor example:\n*BotRoast John Doe*",
           "\n--------------------------------------------------",
           "\n3. For mentioning everyone:",
-          "\nSend '.everyone' | Short Command: *.yall*",
+          "\nSend '```.everyone```' | Short Command: *.yall*",
           "\nFor example:\n*.everyone*",
+          "\nWith msg: ```.everyone <msg>```",
+          "\nFor example: *.everyone Hello*",
           "\n--------------------------------------------------",
           "\n4. For getting Information related commands like _wiki, dictionary_ etc.:",
-          "\nSend 'InfoHelp' | Short Command: *.ihelp*",
+          "\nSend '```InfoHelp```' | Short Command: *.ihelp*",
           "\nFor example:\n*InfoHelp*",
           "\n--------------------------------------------------",
           "\n5. For getting Text based games related commands like _truth or dare, Would you rather_ etc.:",
-          "\nSend 'GameHelp' | Short Command: *.ghelp*",
+          "\nSend '```GameHelp```' | Short Command: *.ghelp*",
           "\nFor example:\n*GameHelp*",
           "\n--------------------------------------------------",
           "\n6. For getting Entertainment related commands like _movie, song, anime detail and lyrics_:",
-          "\nSend 'EntHelp' | Short Command: *.ehelp*",
+          "\nSend '```EntHelp```' | Short Command: *.ehelp*",
           "\nFor example:\n*EntHelp*",
           "\n--------------------------------------------------",
           "\n7. For making stickers: ",
