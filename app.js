@@ -24,13 +24,10 @@ venom
 function start(client) {
   let RecievedMsgPermission = false, buttonsArray= [];
   const nsfwGrps = ["MEMES", "CATS", "WE", "OT4KU", "Chaman", "pendicul", "testing"];
-  const annoyGrps = ["MEMES", "CATS", "WE", "Chaman", "CS Team", "pendicul", "testing"];
+  const annoyGrps = ["MEMES", "CATS", "WE", "Chaman", "CS Team", "BDAY", "Fleet*8", "pendicul", "testing"];
   const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
   let params = {};
   client.onAnyMessage((message) => {
-    console.log('-------------------------------')
-    console.log(message);
-    console.log('-------------------------------')
     // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
@@ -959,31 +956,73 @@ function start(client) {
       .then((result) => {console.log('Result: ', result);})
       .catch((erro) => {console.error('Error when sending: ', erro);});
     } else if (message.type === "image" && ( message.caption === ".sticker" || message.caption === ".sparsh")) {
+      console.log('\nSaw an image');
+      console.log('\nmessage id: ' + message.id);
       client
-        .downloadMedia(message.id)
-        .then(result => {
-          const img = result.substring(23, result.length);
-          client
-            .sendImageAsSticker(message.from, img)              
-            .then(() => { console.log("Sticker sent\n-------------------------\n") })
-            .catch((erro) => { console.error("Error when sending sticker: ", erro); });    
-        })
-        .catch(erro => (console.log(erro)));
+        .reply(message.from, "*Somry*\n\nThe sticker command is not working right now. Due to issues in the venom-bot package. I'll fix it as soon as the develepors fix the issue.\n\nContact the sticker maker of your group if you still want a sticker or DO IT YOURSELF", message.id.toString())              
+        .then(() => { console.log("gif not sent\n-------------------------\n") })
+        .catch((erro) => { console.error("Error when sending sticker: ", erro); });    
+
+      // console.log(message);
+      // .then(res => console.log(Buffer.from(res).toString('base64').substring(0, 100)));
+      // client
+      // .decryptFile(message)
+      // .then(result => {
+      //   // const img = result.substring(23, result.length);
+      //   const img = Buffer.from(result).toString('base64');
+      //   const imgTrimmed = img.substring(23, img.length);
+      //   console.log('\ndownloaded it');
+      //   console.log(img.substring(0, 100));
+      //   // console.log('\nresult: ' + result);
+      //   client
+      //     .sendImageAsSticker(message.from, imgTrimmed)              
+      //     .then(() => { console.log("Sticker sent\n-------------------------\n") })
+      //     .catch((erro) => { console.error("Error when sending sticker: \n" + erro); });    
+      // })
+      // .catch(erro => console.log(erro));
+      // client
+      //   .downloadMedia(message.id)
+      //   .then(result => {
+      //     const img = result.substring(23, result.length);
+      //     console.log('\ndownloaded it');
+      //     console.log('\nresult: ' + result);
+      //     client
+      //       .sendImageAsSticker(message.from, img)              
+      //       .then(() => { console.log("Sticker sent\n-------------------------\n") })
+      //       .catch((erro) => { console.error("Error when sending sticker: \n" + erro); });    
+      //   })
+      //   .catch(errorGranzia => {
+      //     console.log('In catch block of download media')
+      //     console.log(errorGranzia)
+      //   });
     } else if (message.type === "video" && ( message.caption === ".sticker" || message.caption === ".sparsh")) {
       client
+      .reply(message.from, "gifs and videos are not supported yet", message.id.toString())              
+      .then(() => { console.log("gif not sent\n-------------------------\n") })
+      .catch((erro) => { console.error("Error when sending sticker: ", erro); });    
+      // client
         // .downloadMedia(message.id)
         // .then(result => {
           // console.log(result.substring(22, 50));
           // const gif = result.substring(22, result.length);
-          client
-            .reply(message.from, "gifs and videos are not supported yet", message.id.toString())              
-            .then(() => { console.log("gif not sent\n-------------------------\n") })
-            .catch((erro) => { console.error("Error when sending sticker: ", erro); });    
         // })
         // .catch(erro => (console.log(erro)));
+    // } else if (message.isMedia === true || message.isMMS === true) {
+    //   client
+    //     .decryptFile(message)
+    //     .then(res => console.log(Buffer.from(res).toString('base64').substring(0, 100)));
+      // const buffer = client.decryptFile(message);
+      // console.log(buffer);
+      // At this point you can do whatever you want with the buffer
+      // Most likely you want to write it into a file
+      // const fileName = `some-file-name.${mime.extension(message.mimetype)}`;
+      // await fs.writeFile(fileName, buffer, (err) => {
+      //   ...
+      // });
     }
     // Print the recived msg
     if(RecievedMsgPermission) {
+      console.log('------------------------------------------\n');
       console.log("Recieved Message: ", data, "\nType: ", message.type, "\nName: ", message.sender.pushname);
       RecievedMsgPermission = false;
     }
