@@ -11,9 +11,14 @@ require('dotenv').config();
 
 // Create the client
 venom
-  .create()
+  .create({
+    session: 'session-name', //name of session
+    multidevice: false // for version not multidevice use false.(default: true)
+  })
   .then((client) => start(client))
-  .catch((erro) => { console.log(erro); });
+  .catch((erro) => {
+    console.log(erro);
+  });
 
 // Start the client
 function start(client) {
@@ -22,7 +27,10 @@ function start(client) {
   const annoyGrps = ["MEMES", "CATS", "WE", "Chaman", "CS Team", "pendicul", "testing"];
   const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
   let params = {};
-  client.onMessage((message) => {
+  client.onAnyMessage((message) => {
+    console.log('-------------------------------')
+    console.log(message);
+    console.log('-------------------------------')
     // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
@@ -901,6 +909,42 @@ function start(client) {
           .sendButtons(message.from, msgString, buttonsArray, "Click on buttons for other menus and examples")              
           .then(() => { console.log("Sent message: ", msgString + "\n-------------------------"); })
           .catch((erro) => { console.error("Error when sending: ", erro); });
+      break;
+      case ".list":
+        // Send List menu
+        //This function does not work for Bussines contacts
+        const list = [
+          {
+            title: "Pasta",
+            rows: [
+              {
+                title: "Ravioli Lasagna",
+                description: "Made with layers of frozen cheese",
+              }
+            ]
+          },
+          {
+            title: "Dessert",
+            rows: [
+              {
+                title: "Baked Ricotta Cake",
+                description: "Sweets pecan baklava rolls",
+              },
+              {
+                title: "Lemon Meringue Pie",
+                description: "Pastry filled with lemonand meringue.",
+              }
+            ]
+          }
+        ];
+
+        client.sendListMenu(message.from, 'Title', 'subTitle', 'Description', 'menu', list)
+        .then((result) => {
+          console.log('Result: ', result); //return object success
+        })
+        .catch((erro) => {
+          console.error('Error when sending: ', erro); //return object error
+        });
       break;
     }
     ////////////////////////////////MISCELLANEOUS FEATURES//////////////////////////////
