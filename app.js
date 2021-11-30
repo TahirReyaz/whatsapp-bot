@@ -24,7 +24,7 @@ venom
 function start(client) {
   let RecievedMsgPermission = false, buttonsArray= [];
   const nsfwGrps = ["MEMES", "CATS", "WE", "OT4KU", "Chaman", "pendicul", "testing"];
-  const annoyGrps = ["MEMES", "CATS", "WE", "Chaman", "CS Team", "BDAY", "Fleet*8*", "pendicul", "testing"];
+  const annoyGrps = ["CATS", "WE", "Chaman", "CS Team", "BDAY", "pendicul", "testing"];
   const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
   let params = {};
   client.onAnyMessage((message) => {
