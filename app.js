@@ -1,12 +1,15 @@
 // Supports ES6
 // import { create, Whatsapp } from 'venom-bot';
 const venom = require("venom-bot");
+const { useragentOverride } = require('venom-bot/dist/config/WAuserAgente');
+const { makeOptions, magix, timeout } = require('venom-bot/dist/api/helpers/decrypt');
 const truthOrDareFile = require("./data/truth-or-dare.json");
 const axios = require("axios");
 const malScraper = require("mal-scraper");
 const acb = require("acb-api");
 const musicInfo = require("music-info");
 const wyr = require("wyr");
+const openai = require('openai-grammaticalcorrection')
 require('dotenv').config();
 
 // Create the client
@@ -218,6 +221,22 @@ function start(client) {
           });
       break;
       /////////////////////////////////WIKIPEDIA SEARCH/////////////////////////////////
+      case ".gram":
+      case ".grammer":
+      case ".ayaz":
+        RecievedMsgPermission = true;
+        openai.APIkey(process.env.OPENAI_API_KEY);
+        (async () => {
+          const data = await openai.GetError(query);
+          txt = data.choices[0].text;
+          console.log(data);
+          client
+            .reply(message.from, txt, message.id.toString())
+            .then(() => { console.log('Sent message: ' + txt + '\n') })
+            .catch((erro) => { console.error("Error when correcting grammer: ", erro); });
+        })();
+      break;
+      /////////////////////////////////WIKIPEDIA SEARCH/////////////////////////////////
       case ".wiki":
         RecievedMsgPermission = true;
         params = {
@@ -328,7 +347,7 @@ function start(client) {
               "\n *Episodes* : ", data.episodes,
               "\n *Aired* : ", data.aired,
               "\n *Genres* : ", genreString,
-              "\n *Synopsis* : ", data.synopsis.substring( 0, 500 ) + "..."
+              "\n *Synopsis* : ", data.synopsis
             ];
             composeMsg.forEach( txt => { msgString += txt; });
             // Send the response to the sender
@@ -957,11 +976,11 @@ function start(client) {
       .catch((erro) => {console.error('Error when sending: ', erro);});
     } else if (message.type === "image" && ( message.caption === ".sticker" || message.caption === ".sparsh")) {
       console.log('\nSaw an image');
-      console.log('\nmessage id: ' + message.id);
-      client
-        .reply(message.from, "*Somry*\n\nThe sticker command is not working right now. Due to issues in the venom-bot package. I'll fix it as soon as the develepors fix the issue.\n\nContact the sticker maker of your group if you still want a sticker or DO IT YOURSELF", message.id.toString())              
-        .then(() => { console.log("gif not sent\n-------------------------\n") })
-        .catch((erro) => { console.error("Error when sending sticker: ", erro); });    
+      // console.log('\nmessage id: ' + message.id);
+      // client
+      //   .reply(message.from, "*Somry*\n\nThe sticker command is not working right now. Due to issues in the venom-bot package. I'll fix it as soon as the develepors fix the issue.\n\nContact the sticker maker of your group if you still want a sticker or DO IT YOURSELF", message.id.toString())              
+      //   .then(() => { console.log("gif not sent\n-------------------------\n") })
+      //   .catch((erro) => { console.error("Error when sending sticker: ", erro); });    
 
       // console.log(message);
       // .then(res => console.log(Buffer.from(res).toString('base64').substring(0, 100)));
@@ -980,21 +999,21 @@ function start(client) {
       //     .catch((erro) => { console.error("Error when sending sticker: \n" + erro); });    
       // })
       // .catch(erro => console.log(erro));
-      // client
-      //   .downloadMedia(message.id)
-      //   .then(result => {
-      //     const img = result.substring(23, result.length);
-      //     console.log('\ndownloaded it');
-      //     console.log('\nresult: ' + result);
-      //     client
-      //       .sendImageAsSticker(message.from, img)              
-      //       .then(() => { console.log("Sticker sent\n-------------------------\n") })
-      //       .catch((erro) => { console.error("Error when sending sticker: \n" + erro); });    
-      //   })
-      //   .catch(errorGranzia => {
-      //     console.log('In catch block of download media')
-      //     console.log(errorGranzia)
-      //   });
+      client
+        .downloadMedia(message.id)
+        .then(result => {
+          const img = result.substring(23, result.length);
+          console.log('\ndownloaded it');
+          console.log('\nresult:----------------\n' + result.substring(0, 300));
+          client
+            .sendImageAsSticker(message.from, img)              
+            .then(() => { console.log("Sticker sent\n-------------------------\n") })
+            .catch((erro) => { console.error("Error when sending sticker: \n" + erro); });    
+        })
+        .catch(errorGranzia => {
+          console.log('In catch block of download media')
+          console.log(errorGranzia)
+        });
     } else if (message.type === "video" && ( message.caption === ".sticker" || message.caption === ".sparsh")) {
       client
       .reply(message.from, "gifs and videos are not supported yet", message.id.toString())              
