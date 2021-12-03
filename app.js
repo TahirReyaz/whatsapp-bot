@@ -976,11 +976,11 @@ function start(client) {
       .catch((erro) => {console.error('Error when sending: ', erro);});
     } else if (message.type === "image" && ( message.caption === ".sticker" || message.caption === ".sparsh")) {
       console.log('\nSaw an image');
-      // console.log('\nmessage id: ' + message.id);
-      // client
-      //   .reply(message.from, "*Somry*\n\nThe sticker command is not working right now. Due to issues in the venom-bot package. I'll fix it as soon as the develepors fix the issue.\n\nContact the sticker maker of your group if you still want a sticker or DO IT YOURSELF", message.id.toString())              
-      //   .then(() => { console.log("gif not sent\n-------------------------\n") })
-      //   .catch((erro) => { console.error("Error when sending sticker: ", erro); });    
+      console.log('\nmessage id: ' + message.id);
+      client
+        .reply(message.from, "*Somry*\n\nThe sticker command is not working right now. Due to issues in the venom-bot package. I'll fix it as soon as the develepors fix the issue.\nSomeone has commented a workaround, I'll look into it and fixed it when I feel so.\n\nContact the sticker maker of your group if you still want a sticker or\nDO IT YOURSELF", message.id.toString())              
+        .then(() => { console.log("gif not sent\n-------------------------\n") })
+        .catch((erro) => { console.error("Error when sending sticker: ", erro); });    
 
       // console.log(message);
       // .then(res => console.log(Buffer.from(res).toString('base64').substring(0, 100)));
@@ -999,21 +999,21 @@ function start(client) {
       //     .catch((erro) => { console.error("Error when sending sticker: \n" + erro); });    
       // })
       // .catch(erro => console.log(erro));
-      client
-        .downloadMedia(message.id)
-        .then(result => {
-          const img = result.substring(23, result.length);
-          console.log('\ndownloaded it');
-          console.log('\nresult:----------------\n' + result.substring(0, 300));
-          client
-            .sendImageAsSticker(message.from, img)              
-            .then(() => { console.log("Sticker sent\n-------------------------\n") })
-            .catch((erro) => { console.error("Error when sending sticker: \n" + erro); });    
-        })
-        .catch(errorGranzia => {
-          console.log('In catch block of download media')
-          console.log(errorGranzia)
-        });
+      // client
+      //   .downloadMedia(message.id)
+      //   .then(result => {
+      //     const img = result.substring(23, result.length);
+      //     console.log('\ndownloaded it');
+      //     console.log('\nresult:----------------\n' + result.substring(0, 300));
+      //     client
+      //       .sendImageAsSticker(message.from, img)              
+      //       .then(() => { console.log("Sticker sent\n-------------------------\n") })
+      //       .catch((erro) => { console.error("Error when sending sticker: \n" + erro); });    
+      //   })
+      //   .catch(errorGranzia => {
+      //     console.log('In catch block of download media')
+      //     console.log(errorGranzia)
+      //   });
     } else if (message.type === "video" && ( message.caption === ".sticker" || message.caption === ".sparsh")) {
       client
       .reply(message.from, "gifs and videos are not supported yet", message.id.toString())              
