@@ -31,17 +31,20 @@ function start(client) {
   const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
   let params = {};
   let counter = 0;
+  let op1count = 0, op2count=0, totalVotes=0;
+  let pollMsg = "", op1msg = "", op2msg = "";
+  let op1percent = 0, op2percent = 0;
   client.onAnyMessage((message) => {
     // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
     const queryCutter = botQuery[0] + " ";
     const query = data.substring(queryCutter.length); // Get everything written after the command
-    const songQuery = query.split("-");
+    const queryPart = query.split("-");
     let composeMsg = [], msgString = "";
     const songParams = {
-      title: songQuery[0],
-      artist: songQuery[1]
+      title: queryPart[0],
+      artist: queryPart[1]
     }
   
     switch(botQuery[0]) {
@@ -334,20 +337,20 @@ function start(client) {
           })
           .catch(error => { console.log(error); });
       break;
-      ///////////////////////////////Testing///////////////////////////////
+      /////////////////////////////////////Testing///////////////////////////////
       case ".reply":
         client
           .returnReply(message)
           .then(res => console.log(res))
           .catch(err => console.log(err));
-      ///////////////////////////////+1 counter///////////////////////////////
+      ///////////////////////////////////+1 COUNTER///////////////////////////////
       case "+1":
         RecievedMsgPermission = true;
         if(query === "reset") {
           counter = 0;
           composeMsg = ["Counter reset"];
         } else {
-          counter += 1;
+          counter++;
           composeMsg = [
             "Counting +1s\n",
             "-------------------\n",
@@ -358,13 +361,79 @@ function start(client) {
           {buttonId: '+1', buttonText: {displayText: "+1"}, type: 1},
           {buttonId: 'reset', buttonText: {displayText: "+1 reset"}, type: 1}
         ]
-        // Send the response to the sender
+        // Send the response to the sender if count is more than 1
         if(counter !== 1) {
           client
             .sendButtons(message.from, msgString, buttonsArray, "You can click on the button for further counting.\nOr just count as usual")              
             .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
             .catch(error => { console.error("Error when sending truth: ", error); });
           }
+      break;
+      //////////////////////////////////////POLL///////////////////////////////
+      case ".poll":
+        RecievedMsgPermission = true;
+        if(query === "end") {
+          composeMsg = [
+            "```Closed the poll on request of``` *", 
+            message.sender.pushname,
+            "*\n----------------------------------\n*",
+            pollMsg,
+            "*\nResult:",
+            "\n1. ", op1msg, " (", op1percent, "%)",
+            "\n2. ", op2msg, " (", op2percent, "%)",
+            "\nTotal votes: ", totalVotes
+          ];
+          composeMsg.forEach( txt => { msgString += txt; });
+          op1count = 0, op2count=0, totalVotes=0;
+          pollMsg = "", op1msg = "", op2msg = "";
+          op1percent = 0, op2percent = 0;
+          console.log("Ended the poll");
+          client
+            .sendText(message.from, msgString)
+            .then(() => { console.log('Sent message: ' + msgString + '\n------------------\n') })
+            .catch((erro) => { console.error("Error while ending the poll: ", erro); });
+          break;
+        }
+        if(queryPart[0] === "op1") {
+          op1count++;
+          totalVotes++;
+        } else if (queryPart[0] === "op2") {
+          op2count++;
+          totalVotes++;
+        } else if (totalVotes === 0) {
+          pollMsg = queryPart[0];
+          op1msg = queryPart[1];
+          op2msg = queryPart[2];
+          op1percent = 0;
+          op2percent = 0;
+        }
+        if(totalVotes !== 0) {
+          op1percent = (op1count/totalVotes) * 100;
+          op2percent = (op2count/totalVotes) * 100;
+          op1percent = op1percent.toFixed(2);
+          op2percent = op2percent.toFixed(2);
+        }
+        composeMsg = [
+          "```Started poll on request of``` *", 
+          message.sender.pushname,
+          "*\n----------------------------------\n*",
+          pollMsg,
+          "*\nOptions:",
+          "\n1. ", op1msg, " (", op1percent, "%)",
+          "\n2. ", op2msg, " (", op2percent, "%)",
+          "\nTotal votes: ", totalVotes
+        ];
+        composeMsg.forEach( txt => { msgString += txt; });
+        buttonsArray = [
+          {buttonId: 'opt1', buttonText: {displayText: ".poll op1-" + op1msg}, type: 1},
+          {buttonId: 'opt2', buttonText: {displayText: ".poll op2-" + op2msg}, type: 1},
+          {buttonId: 'reset', buttonText: {displayText: ".poll end"}, type: 1}
+        ]
+        // Send the response to the sender if count is more than 1
+        client
+          .sendButtons(message.from, msgString, buttonsArray, "You can click on the buttons for voting.")              
+          .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
+          .catch(error => { console.error("Error when sending truth: ", error); });
       break;
       ///////////////////////////////////ANIME DETAIL///////////////////////////////////
       case ".ad": 
@@ -756,9 +825,9 @@ function start(client) {
           "1. For just getting a reply:",
           "\nSend ' *HiBot* ' (without the ')",
           "\n--------------------------------------------------",
-          "\n2. For roasting someone:",
-          "\nSend '```BotRoast <Name>```' | Short Command: *.roast* <Name>",
-          "\nFor example:\n*BotRoast John Doe*",
+          "\n2. For creating a Poll:",
+          "\nSend \n```.poll <message>-<option1>-<option2>```",
+          "\nFor example:\n.poll Do you drink tea or coffee?-Tea-Coffee",
           "\n--------------------------------------------------",
           "\n3. For mentioning everyone:",
           "\nSend '```.everyone```' | Short Command: *.yall*",
@@ -781,6 +850,10 @@ function start(client) {
           "\n7. For making stickers: ",
           "\nSend the image with caption *.sticker*",
           "\n```Gifs and videos are not supported yet```",
+          "\n--------------------------------------------------",
+          "\n8. For roasting someone:",
+          "\nSend '```BotRoast <Name>```' | Short Command: *.roast* <Name>",
+          "\nFor example:\n*BotRoast John Doe*",
           "\n--------------------------------------------------",
           "\n```There is no case sensitiviy for full commands```"
         ];
