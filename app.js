@@ -30,6 +30,7 @@ function start(client) {
   const annoyGrps = ["CATS", "WE", "Chaman", "CS Team", "BDAY", "pendicul", "testing"];
   const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
   let params = {};
+  let counter = 0;
   client.onAnyMessage((message) => {
     // variables and constants required to make the data readable
     const data = message.body;
@@ -99,6 +100,7 @@ function start(client) {
       case ".y'all":
       case ".all":
       case ".every":
+      case "@everyone":
       case ".everyone":
         RecievedMsgPermission = true;
         let annoyPerm = false;
@@ -121,7 +123,7 @@ function start(client) {
             message.sender.pushname, 
             "*\n\n----------------------------------------------------\n", 
             query,
-            "\n\n----------------------------------------------------\n"
+            "\n----------------------------------------------------\n"
           ];
           composeMsg.forEach(txt => msgString+=txt);
           // Send the response to the sender
@@ -220,19 +222,20 @@ function start(client) {
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
       break;
-      /////////////////////////////////WIKIPEDIA SEARCH/////////////////////////////////
+      //////////////////////////TRANSLATE AND CORRECT GRAMMAR/////////////////////////////////
       case ".gram":
-      case ".grammer":
+      case ".grammar":
       case ".ayaz":
         RecievedMsgPermission = true;
         openai.APIkey(process.env.OPENAI_API_KEY);
         (async () => {
           const data = await openai.GetError(query);
-          txt = data.choices[0].text;
+          txt = "Grammar correction/ Translation:\n";
+          txt += data.choices[0].text;
           console.log(data);
           client
             .reply(message.from, txt, message.id.toString())
-            .then(() => { console.log('Sent message: ' + txt + '\n') })
+            .then(() => { console.log('Sent message: ' + txt + '\n------------------\n') })
             .catch((erro) => { console.error("Error when correcting grammer: ", erro); });
         })();
       break;
@@ -330,6 +333,38 @@ function start(client) {
             }
           })
           .catch(error => { console.log(error); });
+      break;
+      ///////////////////////////////Testing///////////////////////////////
+      case ".reply":
+        client
+          .returnReply(message)
+          .then(res => console.log(res))
+          .catch(err => console.log(err));
+      ///////////////////////////////+1 counter///////////////////////////////
+      case "+1":
+        RecievedMsgPermission = true;
+        if(query === "reset") {
+          counter = 0;
+          composeMsg = ["Counter reset"];
+        } else {
+          counter += 1;
+          composeMsg = [
+            "Counting +1s\n",
+            "-------------------\n",
+            "Current count: +", counter];
+        }
+        composeMsg.forEach( txt => { msgString += txt; });
+        buttonsArray = [
+          {buttonId: '+1', buttonText: {displayText: "+1"}, type: 1},
+          {buttonId: 'reset', buttonText: {displayText: "+1 reset"}, type: 1}
+        ]
+        // Send the response to the sender
+        if(counter !== 1) {
+          client
+            .sendButtons(message.from, msgString, buttonsArray, "You can click on the button for further counting.\nOr just count as usual")              
+            .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
+            .catch(error => { console.error("Error when sending truth: ", error); });
+          }
       break;
       ///////////////////////////////////ANIME DETAIL///////////////////////////////////
       case ".ad": 
