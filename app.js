@@ -31,9 +31,9 @@ function start(client) {
   const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
   let params = {};
   let counter = 0;
-  let op1count = 0, op2count=0, totalVotes=0;
+  let op1count = 0, op2count=0, totalVotes=0, pollActive = false;
   let pollMsg = "", op1msg = "", op2msg = "";
-  let op1percent = 0, op2percent = 0;
+  let op1percent = 0, op2percent = 0, pollerId = "";
   client.onAnyMessage((message) => {
     // variables and constants required to make the data readable
     const data = message.body;
@@ -372,10 +372,18 @@ function start(client) {
       //////////////////////////////////////POLL///////////////////////////////
       case ".poll":
         RecievedMsgPermission = true;
-        if(query === "end") {
+        if(!queryPart[2] && !pollActive) {
+          msgString = "Enter the command properly";
+          client
+            .sendText(message.from, msgString)
+            .then(() => { console.log('Sent message: ' + msgString + '\n------------------\n') })
+            .catch((erro) => { console.error("Error while ending the poll: ", erro); });
+          break;
+        }
+        if(query === "end" && pollerId === message.from) {
           composeMsg = [
             "```Closed the poll on request of``` *", 
-            message.sender.pushname,
+            message.sender.verifiedName,
             "*\n----------------------------------\n*",
             pollMsg,
             "*\nResult:",
@@ -387,7 +395,14 @@ function start(client) {
           op1count = 0, op2count=0, totalVotes=0;
           pollMsg = "", op1msg = "", op2msg = "";
           op1percent = 0, op2percent = 0;
-          console.log("Ended the poll");
+          pollActive= false;
+          client
+            .sendText(message.from, msgString)
+            .then(() => { console.log('Sent message: ' + msgString + '\n------------------\n') })
+            .catch((erro) => { console.error("Error while ending the poll: ", erro); });
+          break;
+        } else if(query === "end" && pollerId !== message.from) {
+          msgString = "Only the creater of the poll can end it";
           client
             .sendText(message.from, msgString)
             .then(() => { console.log('Sent message: ' + msgString + '\n------------------\n') })
@@ -406,6 +421,8 @@ function start(client) {
           op2msg = queryPart[2];
           op1percent = 0;
           op2percent = 0;
+          pollerId = message.from;
+          pollActive = true;
         }
         if(totalVotes !== 0) {
           op1percent = (op1count/totalVotes) * 100;
@@ -415,7 +432,7 @@ function start(client) {
         }
         composeMsg = [
           "```Started poll on request of``` *", 
-          message.sender.pushname,
+          message.sender.verifiedName,
           "*\n----------------------------------\n*",
           pollMsg,
           "*\nOptions:",
