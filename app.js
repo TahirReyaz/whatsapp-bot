@@ -28,6 +28,7 @@ function start(client) {
   let RecievedMsgPermission = false, buttonsArray= [];
   const nsfwGrps = ["MEMES", "CATS", "WE", "OT4KU", "Chaman", "pendicul", "testing"];
   const annoyGrps = ["CATS", "WE", "Chaman", "CS Team", "BDAY", "pendicul", "testing"];
+  const countGrps = ["Unofficial", "OT4KU", "Straw Hat", "CATS", "WE", "Chaman", "CS Team", "BDAY", "pendicul", "testing"];
   const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
   let params = {};
   let counter = 0;
@@ -132,7 +133,6 @@ function start(client) {
           ];
           composeMsg.forEach(txt => msgString+=txt);
           // Send the response to the sender
-          console.log("About to send");
           client
             .getGroupMembersIds(message.chat.groupMetadata.id)
             .then(res => { 
@@ -346,6 +346,16 @@ function start(client) {
       ///////////////////////////////////+1 COUNTER///////////////////////////////
       case "+1":
         RecievedMsgPermission = true;
+        let countPerm = false;
+        countGrps.forEach(grp => {
+          if(message.isGroupMsg && message.chat.name.search(grp) !== -1) {
+            countPerm = true;
+          }
+        });
+        if(!countPerm) {
+          break;
+        }
+
         if(query === "reset") {
           counter = 0;
           composeMsg = ["Counter reset👌"];
@@ -372,6 +382,22 @@ function start(client) {
       //////////////////////////////////////POLL///////////////////////////////
       case ".poll":
         RecievedMsgPermission = true;
+        let pollPerm = false;
+        countGrps.forEach(grp => {
+          if(message.isGroupMsg && message.chat.name.search(grp) !== -1) {
+            pollPerm = true;
+          }
+        });
+        if(!pollPerm) {
+          msgString = "This command is not supported in dms.😁\nIf this is a group then maybe the members won't like the spam.";
+          // Send the response to the sender
+          client
+            .sendText(message.from, msgString)
+            .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
+            .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
+          break;
+        }
+
         if(!queryPart[2] && !pollActive) {
           msgString = "Enter the command properly🤦‍♂️\n\nOr maybe the poll has ended😅";
           client
