@@ -192,7 +192,6 @@ function start(client) {
       case "Englishdefine":
       case "englishdefine":
         RecievedMsgPermission = true;
-        let defNexample = [], i;
         buttonsArray = [
           {buttonId: 'ed', buttonText: {displayText: "EnglishDefine Inception"}, type: 1},
           {buttonId: 'ihelp', buttonText: {displayText: ".ihelp"}, type: 1},
@@ -204,15 +203,16 @@ function start(client) {
           .then(response => {
             // Set the fields of the message
             response.data[0].meanings.forEach(meaning => {
-              defNexample = [
-                  meaning.partOfSpeech, " :  ", meaning.definitions[0].definition,
-                  "\nFor Example  : ", meaning.definitions[0].example,
-                  "\n---------------------------------------------------\n"
-              ];
-              // Store the definition and example in an array
-              for(i=0; i<defNexample.length; i++) { composeMsg.push(defNexample[i]) }
-            })
-            // Convert the array into text string
+              composeMsg.push("*", meaning.partOfSpeech, "*\n\n");
+              meaning.definitions.forEach(def => {
+                composeMsg.push(
+                  "*Definition*: ", def.definition, 
+                  "\n*For Example*: ", def.example ? def.example : "Not Available😕",
+                  "\n\n"
+                );
+              });
+              composeMsg.push("\n---------------------------------------------------\n");
+            });
             composeMsg.forEach(txt => { msgString += txt; });
             // Send the response to the sender
             client
@@ -235,11 +235,10 @@ function start(client) {
         openai.APIkey(process.env.OPENAI_API_KEY);
         (async () => {
           const data = await openai.GetError(query);
-          txt = "Grammar correction/ Translation:\n";
-          txt += data.choices[0].text;
-          console.log(data);
+          msgString = "Grammar correction/ Translation:\n--------------------\n";
+          msgString += data.choices[0].text;
           client
-            .reply(message.from, txt, message.id.toString())
+            .reply(message.from, msgString, message.id.toString())
             .then(() => { console.log('Sent message: ' + txt + '\n------------------\n') })
             .catch((erro) => { console.error("Error when correcting grammer: ", erro); });
         })();
