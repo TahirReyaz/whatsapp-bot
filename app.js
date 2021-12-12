@@ -40,7 +40,7 @@ function start(client) {
     const botQuery = data.split(" ");
     const queryCutter = botQuery[0] + " ";
     const queryWithDesc = data.substring(queryCutter.length).split("\n"); // Get everything written after the command
-    const query = queryWithDesc[0];
+    let query = queryWithDesc[0];
     const queryPart = query.split("-");
     let composeMsg = [], msgString = "", list= [];
     const songParams = {
@@ -55,7 +55,7 @@ function start(client) {
       case "hibot" :
         RecievedMsgPermission = true;
         client
-          .reply(message.from, "No need to say hi to me, I am always here, reading every message you send to this guy😁.\nSend 'HelpBot' for commands", message.id.toString())
+          .reply(message.from, "No need to say hi to me, I am always here, reading every message you send to this guy.😁\nSend 'HelpBot' for commands", message.id.toString())
           .then(() => { console.log("Reply sent\n------------------------------"); })
           .catch((erro) => { console.error('Error when sending: ', erro); });
       break;
@@ -108,7 +108,7 @@ function start(client) {
       case ".everyone":
         RecievedMsgPermission = true;
         let annoyPerm = false;
-        query = queryWithDesc;
+        query = data.substring(queryCutter.length);
         // Check if the group allows annoying mentions or not
         annoyGrps.forEach(grp => {
           if(message.isGroupMsg && message.chat.name.search(grp) !== -1) {
@@ -116,7 +116,7 @@ function start(client) {
           }
         });
         if(!annoyPerm) {
-          msgString = "This command is not supported in dms. If this is a group then people get annoyed by useless mentioning.";
+          msgString = "This command is not supported in dms.😁 If this is a group then people get annoyed by useless mentioning.😔";
             // Send the response to the sender
             client
               .reply(message.from, msgString, message.id.toString())
@@ -124,21 +124,22 @@ function start(client) {
               .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
         } else {
           composeMsg = [ 
-            "```Tagging Everyone on request of``` *", 
+            "‼```Tagging Everyone on request of``` *", 
             message.sender.pushname, 
-            "*\n\n----------------------------------------------------\n", 
-            query,
+            "‼*\n", query ? "\n----------------------------------------------------\n" : "", 
+            query ? query : "",
             "\n----------------------------------------------------\n"
           ];
           composeMsg.forEach(txt => msgString+=txt);
           // Send the response to the sender
+          console.log("About to send");
           client
             .getGroupMembersIds(message.chat.groupMetadata.id)
             .then(res => { 
               let members= [];
               res.forEach(member => {
                 members.push(member.user.toString());
-                msgString+= `@${member.user.toString()} , `;
+                msgString+= `@${member.user.toString()} | `;
               })
               client
                 .sendMentioned(message.from, msgString, members)
@@ -237,9 +238,10 @@ function start(client) {
           const data = await openai.GetError(query);
           msgString = "Grammar correction/ Translation:\n--------------------\n";
           msgString += data.choices[0].text;
+          msgString += "😌"
           client
             .reply(message.from, msgString, message.id.toString())
-            .then(() => { console.log('Sent message: ' + txt + '\n------------------\n') })
+            .then(() => { console.log('Sent message: ' + msgString + '\n------------------\n') })
             .catch((erro) => { console.error("Error when correcting grammer: ", erro); });
         })();
       break;
@@ -263,9 +265,9 @@ function start(client) {
             if(response.data.query) { // If the page is found then query exists
               const wikis = Object.values(response.data.query.pages)
               // Set the fields to be sent in message
-              composeMsg = ["Checkout the bottom menu to read the page details"]; // composeMsg will be used as description of the button options
+              composeMsg = ["Checkout the bottom menu to read the page details👇"]; // composeMsg will be used as description of the button options
               list = [{
-                title: "Search Results",
+                title: "Search Results👌",
                 rows: []
               }];
               wikis.forEach(wiki => {
@@ -346,11 +348,11 @@ function start(client) {
         RecievedMsgPermission = true;
         if(query === "reset") {
           counter = 0;
-          composeMsg = ["Counter reset"];
+          composeMsg = ["Counter reset👌"];
         } else {
           counter++;
           composeMsg = [
-            "Counting +1s\n",
+            "Counting +1s💪\n",
             "-------------------\n",
             "Current count: +", counter];
         }
@@ -371,7 +373,7 @@ function start(client) {
       case ".poll":
         RecievedMsgPermission = true;
         if(!queryPart[2] && !pollActive) {
-          msgString = "Enter the command properly";
+          msgString = "Enter the command properly🤦‍♂️\n\nOr maybe the poll has ended😅";
           client
             .sendText(message.from, msgString)
             .then(() => { console.log('Sent message: ' + msgString + '\n------------------\n') })
@@ -480,7 +482,7 @@ function start(client) {
               "\n*Aired* : ", data.aired,
               "\n*Genres* : ", genreString,
               "\n*Status* : ", data.status,
-              "\n*Duration* : ", data.duration,
+              "\n*Duration*🕑 : ", data.duration,
               "\n*Duration* : ", data.duration,
               "\n*Rating* : ", data.rating,
               "\n\n*Main Characters* : ", charString,
