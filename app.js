@@ -39,9 +39,10 @@ function start(client) {
     const data = message.body;
     const botQuery = data.split(" ");
     const queryCutter = botQuery[0] + " ";
-    const query = data.substring(queryCutter.length); // Get everything written after the command
+    const queryWithDesc = data.substring(queryCutter.length).split("\n"); // Get everything written after the command
+    const query = queryWithDesc[0];
     const queryPart = query.split("-");
-    let composeMsg = [], msgString = "";
+    let composeMsg = [], msgString = "", list= [];
     const songParams = {
       title: queryPart[0],
       artist: queryPart[1]
@@ -107,6 +108,7 @@ function start(client) {
       case ".everyone":
         RecievedMsgPermission = true;
         let annoyPerm = false;
+        query = queryWithDesc;
         // Check if the group allows annoying mentions or not
         annoyGrps.forEach(grp => {
           if(message.isGroupMsg && message.chat.name.search(grp) !== -1) {
@@ -159,9 +161,9 @@ function start(client) {
           .then(function (res) {
             const kanjiData = res.data;
             let meaningString = "", kunString = "", onString = "", i;
-            for(i=0; i< kanjiData.meanings.length; i++) { meaningString += kanjiData.meanings[i] + " , " }
-            for(i=0; i< kanjiData.kun_readings.length; i++) { kunString += kanjiData.kun_readings[i] + " , " }
-            for(i=0; i< kanjiData.on_readings.length; i++) { onString += kanjiData.on_readings[i] + " , " }
+            for(i=0; i< kanjiData.meanings.length; i++) { meaningString += kanjiData.meanings[i] + " | " }
+            for(i=0; i< kanjiData.kun_readings.length; i++) { kunString += kanjiData.kun_readings[i] + " | " }
+            for(i=0; i< kanjiData.on_readings.length; i++) { onString += kanjiData.on_readings[i] + " | " }
             // Set the fields to be sent in message
             composeMsg = [
               " *Kanji* : ", query,
@@ -220,7 +222,7 @@ function start(client) {
           })
           .catch(err => {
             client
-              .sendButtons(message.from, "Word not found.. Sorry. Check if the Command Syntax was wrong", buttonsArray, "Click on buttons for other menus and examples")              
+              .sendButtons(message.from, err.response.data.message, buttonsArray, "Click on buttons for other menus and examples")              
               .then(() => { console.log(err) })
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
@@ -262,20 +264,23 @@ function start(client) {
             if(response.data.query) { // If the page is found then query exists
               const wikis = Object.values(response.data.query.pages)
               // Set the fields to be sent in message
-              composeMsg = ["Click on a Page ID from the buttons to read its details"]; // composeMsg will be used as description of the button options
+              composeMsg = ["Checkout the bottom menu to read the page details"]; // composeMsg will be used as description of the button options
+              list = [{
+                title: "Search Results",
+                rows: []
+              }];
               wikis.forEach(wiki => {
                 composeMsg.push(
                   "\n*Title* : ", wiki.title,
                   " - *Page ID* : ", wiki.pageid
                 );
-                buttonsArray.push( {buttonId: 'wyr' + wiki.pageid, buttonText: {displayText: ".wp " + wiki.pageid}, type: 1} );
+                list[0].rows.push({
+                  title: `WikiPage ${wiki.pageid}`,
+                  description: wiki.title,
+                })
               });
               composeMsg.forEach( txt => { msgString += txt; });
-              // Send the response to the sender
-              client
-                .sendButtons(message.from, `Searched query: ${query}\nSend *wikiPage <Page id>*\nFor example:\n*wikiPage 14598*`, buttonsArray, msgString)              
-                .then(() => { console.log(`Sent description:\n"${msgString}"\n--------------------`)})
-                .catch(erro => { console.error("Error when wiki page IDs: ", erro); });
+              sendListMenu(message.from, 'Search Results', 'subTitle', msgString, 'Results', list);
             } else {
               buttonsArray = [
                 {buttonId: 'wiki', buttonText: {displayText: ".wiki Inception"}, type: 1},
@@ -874,17 +879,134 @@ function start(client) {
           "\n--------------------------------------------------",
           "\n```There is no case sensitiviy for full commands```"
         ];
-        composeMsg.forEach(function (txt) { msgString += txt; });
-        buttonsArray = [
-          {buttonId: 'ihelp', buttonText: {displayText: "InfoHelp"}, type: 1},
-          {buttonId: 'ehelp', buttonText: {displayText: "EntHelp"}, type: 1},
-          {buttonId: 'ghelp', buttonText: {displayText: "GameHelp"}, type: 1}
-        ]
-        // Send the message
-        client
-          .sendButtons(message.from, msgString, buttonsArray, "Click on buttons for other menus and examples")              
-          .then(() => { console.log("Sent message: ", msgString + "\n-------------------------"); })
-          .catch((erro) => { console.error("Error when sending: ", erro); });
+        composeMsg.forEach(txt => { msgString += txt; });
+
+        // Configuring the list menu
+        list = [
+          {
+            title: "General Commands",
+            rows: [
+              {
+                title: "HiBot ",
+                description: "For just getting a reply",
+              },
+              {
+                title: ".poll <message>-<option 1>-<option 2>",
+                description: "\nFor creating polls",
+              },
+              {
+                title: "@everyone <message>",
+                description: "For tagging everyone like discord",
+              },
+              {
+                title: "InfoHelp ",
+                description: "For getting help and commands related to Info",
+              },
+              {
+                title: "GameHelp ",
+                description: "For getting help and commands related to Games",
+              },
+              {
+                title: "EntHelp ",
+                description: "For getting help and commands related to Entertainment and Media",
+              },
+              {
+                title: "AnimeHelp ",
+                description: "For getting help and commands related to Anime",
+              },
+              {
+                title: ".roast John Doe",
+                description: "For Roasting someone. Use this wisely.",
+              }
+            ]
+          },
+          {
+            title: "Info Related Commands",
+            rows: [
+              {
+                title: "EnglishDefine Table",
+                description: "For getting the definition of an English word",
+              },
+              {
+                title: ".wiki Indian Population",
+                description: "For searching a term on Wikipedia",
+              },
+              {
+                title: "wikiPage 14598",
+                description: "For getting the details of wiki page.",
+              },
+              {
+                title: "KanjiDefine 空",
+                description: "For readings and meaning of a Kanji.",
+              }
+            ]
+          },
+          {
+            title: "Entertainment and Media Related Commands",
+            rows: [
+              {
+                title: "MovieDetail Inception",
+                description: "For getting the details of a Movie/ Series",
+              },
+              {
+                title: "SongDetail Faded-Alan Walker",
+                description: "Details of a song",
+              },
+              {
+                title: ".lyrics Faded-Alan Walker",
+                description: "Lyrics of a song",
+              },
+              {
+                title: "AnimeHelp ",
+                description: "For getting help and list of Anime related commands",
+              }
+            ]
+          },
+          {
+            title: "Game Commands",
+            rows: [
+              {
+                title: "BotDare ",
+                description: "For getting a dare",
+              },
+              {
+                title: "BotTruth ",
+                description: "For getting a truth question",
+              },
+              {
+                title: "BotWyr ",
+                description: "For getting a 'Would You Rather' question",
+              }
+            ]
+          },
+          {
+            title: "Anime Commands",
+            rows: [
+              {
+                title: "AnimeDetail Naruto",
+                description: "For getting the details of an Anime",
+              },
+              {
+                title: "CharDetail Kakashi",
+                description: "For getting details of an Anime Charater by Search",
+              },
+              {
+                title: "CharIdDetail 10820",
+                description: "For getting details of an Anime Charater by ID",
+              },
+              {
+                title: "AnimeIds Naruto",
+                description: "For getting Character IDs of an anime",
+              },
+              {
+                title: "AnimeChars 100053",
+                description: "For getting Character ID and list.",
+              }
+            ]
+          }
+        ];
+
+        sendListMenu(message.from, 'Welcome to THE BOT', 'Help and all commands', msgString, 'Commands', list);
       break;
       ////////////////////////////////ENTERTAINMENT MENU////////////////////////////////
       case ".ehelp":
@@ -917,17 +1039,36 @@ function start(client) {
           "\nFor example:\n*HelpBot*",
           "\n```There is no case sensitiviy for full commands```"
         ];
-        composeMsg.forEach(function (txt) { msgString += txt; });
-        buttonsArray = [
-          {buttonId: 'md', buttonText: {displayText: "MovieDetail Inception"}, type: 1},
-          {buttonId: 'ehelp', buttonText: {displayText: "EntHelp"}, type: 1},
-          {buttonId: 'ahelp', buttonText: {displayText: "AnimeHelp"}, type: 1}
-        ]
-        // Send the message
-        client
-          .sendButtons(message.from, msgString, buttonsArray, "Click on buttons for other menus and examples")              
-          .then(() => { console.log("Sent message: ", msgString + "\n-------------------------"); })
-          .catch((erro) => { console.error("Error when sending: ", erro); });
+        composeMsg.forEach(txt => { msgString += txt; });
+        list = [
+          {
+            title: "Entertainment and Media Related Commands",
+            rows: [
+              {
+                title: "MovieDetail Inception",
+                description: "For getting the details of a Movie/ Series",
+              },
+              {
+                title: "SongDetail Faded-Alan Walker",
+                description: "Details of a song",
+              },
+              {
+                title: ".lyrics Faded-Alan Walker",
+                description: "Lyrics of a song",
+              },
+              {
+                title: "AnimeHelp ",
+                description: "For getting help and list of Anime related commands",
+              },
+              {
+                title: "HelpBot ",
+                description: "For getting help and list of all commands.",
+              }
+            ]
+          }
+        ];
+
+        sendListMenu(message.from, 'Entertainment and Media related commands', 'subTitle', msgString, 'Commands', list);
       break;
       /////////////////////////////////INFORMATION MENU/////////////////////////////////
       case ".ihelp":
@@ -958,17 +1099,36 @@ function start(client) {
           "\nFor example:\n*HelpBot*",
           "\n```There is no case sensitiviy for full commands```"
         ];
-        composeMsg.forEach(function (txt) { msgString += txt; });
-        buttonsArray = [
-          {buttonId: 'ed', buttonText: {displayText: ".ed table"}, type: 1},
-          {buttonId: 'wiki', buttonText: {displayText: ".wiki India"}, type: 1},
-          {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
-        ]
-        // Send the message
-        client
-          .sendButtons(message.from, msgString, buttonsArray, "Click on buttons for other menus and examples")              
-          .then(() => { console.log("Sent message: ", msgString + "\n-------------------------"); })
-          .catch((erro) => { console.error("Error when sending: ", erro); });
+        composeMsg.forEach(txt => { msgString += txt; });
+        list = [
+          {
+            title: "Info Related Commands",
+            rows: [
+              {
+                title: "EnglishDefine Table",
+                description: "For getting the definition of an English word",
+              },
+              {
+                title: ".wiki Indian Population",
+                description: "For searching a term on Wikipedia",
+              },
+              {
+                title: "wikiPage 14598",
+                description: "For getting the details of wiki page.",
+              },
+              {
+                title: "KanjiDefine 空",
+                description: "For readings and meaning of a Kanji.",
+              },
+              {
+                title: "HelpBot ",
+                description: "For getting help and list of all commands.",
+              }
+            ]
+          }
+        ];
+
+        sendListMenu(message.from, 'Info related commands', 'subTitle', msgString, 'Commands', list);
       break;
       ////////////////////////////////////GAMES MENU///////////////////////////////////
       case ".ghelp":
@@ -994,17 +1154,32 @@ function start(client) {
           "\nFor example:\n*HelpBot*",
           "\n```There is no case sensitiviy for full commands```"
         ];
-        buttonsArray = [
-          {buttonId: 'truth', buttonText: {displayText: ".truth"}, type: 1},
-          {buttonId: 'wyr', buttonText: {displayText: ".wyr"}, type: 1},
-          {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
-        ]
-        composeMsg.forEach(function (txt) { msgString += txt; });
-        // Send the message
-        client
-          .sendButtons(message.from, msgString, buttonsArray, "Click on buttons for other menus and examples")              
-          .then(() => { console.log("Sent message: ", msgString + "\n-------------------------"); })
-          .catch((erro) => { console.error("Error when sending: ", erro); });
+        composeMsg.forEach(txt => { msgString += txt; });
+        list = [
+          {
+            title: "Game Commands",
+            rows: [
+              {
+                title: "BotDare ",
+                description: "For getting a dare",
+              },
+              {
+                title: "BotTruth ",
+                description: "For getting a truth question",
+              },
+              {
+                title: "BotWyr ",
+                description: "For getting a 'Would You Rather' question",
+              },
+              {
+                title: "HelpBot ",
+                description: "For getting help and list of all commands.",
+              }
+            ]
+          }
+        ];
+
+        sendListMenu(message.from, 'Commands for Games', 'subTitle', msgString, 'Commands', list);
       break;
       ///////////////////////////////////ANIME MENU////////////////////////////////////
       case ".ahelp":
@@ -1039,53 +1214,222 @@ function start(client) {
           "\nFor example:\n*HelpBot*",
           "\n```There is no case sensitiviy for full commands```"
         ];
-        buttonsArray = [
-          {buttonId: 'ad', buttonText: {displayText: "AnimeDetail Naruto"}, type: 1},
-          {buttonId: 'aid', buttonText: {displayText: "AnimeIds Naruto"}, type: 1},
-          {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
-        ]
         composeMsg.forEach(function (txt) { msgString += txt; });
-        // Send the message
-        client
-          .sendButtons(message.from, msgString, buttonsArray, "Click on buttons for other menus and examples")              
-          .then(() => { console.log("Sent message: ", msgString + "\n-------------------------"); })
-          .catch((erro) => { console.error("Error when sending: ", erro); });
-      break;
-      case ".list":
-        // Send List menu
-        //This function does not work for Bussines contacts
-        const list = [
+        list = [
           {
-            title: "Pasta",
+            title: "Anime Commands",
             rows: [
               {
-                title: "Ravioli Lasagna",
-                description: "Made with layers of frozen cheese",
-              }
-            ]
-          },
-          {
-            title: "Dessert",
-            rows: [
-              {
-                title: "Baked Ricotta Cake",
-                description: "Sweets pecan baklava rolls",
+                title: "AnimeDetail Naruto",
+                description: "For getting the details of an Anime",
               },
               {
-                title: "Lemon Meringue Pie",
-                description: "Pastry filled with lemonand meringue.",
+                title: "CharDetail Kakashi",
+                description: "For getting details of an Anime Charater by Search",
+              },
+              {
+                title: "CharIdDetail 10820",
+                description: "For getting details of an Anime Charater by ID",
+              },
+              {
+                title: "AnimeIds Naruto",
+                description: "For getting Character IDs of an anime",
+              },
+              {
+                title: "AnimeChars 100053",
+                description: "For getting Character ID and list.",
+              },
+              {
+                title: "HelpBot ",
+                description: "For getting help and list of all commands.",
               }
             ]
           }
         ];
 
-        client.sendListMenu(message.from, 'Title', 'subTitle', 'Description', 'menu', list)
-        .then((result) => {
-          console.log('Result: ', result); //return object success
-        })
-        .catch((erro) => {
-          console.error('Error when sending: ', erro); //return object error
-        });
+        sendListMenu(message.from, 'Anime related commands', 'subTitle', msgString, 'Commands', list);
+      break;
+      case ".list":
+        //This function does not work for Bussines contacts
+        composeMsg = [
+          "1. For just getting a reply:",
+          "\nSend ' *HiBot* ' (without the ')",
+          "\n--------------------------------------------------",
+          "\n2. For creating a Poll:",
+          "\nSend \n```.poll <message>-<option1>-<option2>```",
+          "\nFor example:\n.poll Do you drink tea or coffee?-Tea-Coffee",
+          "\n--------------------------------------------------",
+          "\n3. For mentioning everyone:",
+          "\nSend '```.everyone```' | Short Command: *.yall*",
+          "\nFor example:\n*.everyone*",
+          "\nWith msg: ```.everyone <msg>```",
+          "\nFor example: *.everyone Hello*",
+          "\n--------------------------------------------------",
+          "\n4. For getting Information related commands like _wiki, dictionary_ etc.:",
+          "\nSend '```InfoHelp```' | Short Command: *.ihelp*",
+          "\nFor example:\n*InfoHelp*",
+          "\n--------------------------------------------------",
+          "\n5. For getting Text based games related commands like _truth or dare, Would you rather_ etc.:",
+          "\nSend '```GameHelp```' | Short Command: *.ghelp*",
+          "\nFor example:\n*GameHelp*",
+          "\n--------------------------------------------------",
+          "\n6. For getting Entertainment related commands like _movie, song, anime detail and lyrics_:",
+          "\nSend '```EntHelp```' | Short Command: *.ehelp*",
+          "\nFor example:\n*EntHelp*",
+          "\n--------------------------------------------------",
+          "\n7. For making stickers: ",
+          "\nSend the image with caption *.sticker*",
+          "\n```Gifs and videos are not supported yet```",
+          "\n--------------------------------------------------",
+          "\n8. For roasting someone:",
+          "\nSend '```BotRoast <Name>```' | Short Command: *.roast* <Name>",
+          "\nFor example:\n*BotRoast John Doe*",
+          "\n--------------------------------------------------",
+          "\n```There is no case sensitiviy for full commands```"
+        ];
+        composeMsg.forEach(function (txt) { msgString += txt; });
+
+        list = [
+          {
+            title: "General Commands",
+            rows: [
+              {
+                title: "HiBot ",
+                description: "For just getting a reply",
+              },
+              {
+                title: ".poll <message>-<option 1>-<option 2>",
+                description: "\nFor creating polls",
+              },
+              {
+                title: "@everyone <message>",
+                description: "For tagging everyone like discord",
+              },
+              {
+                title: "InfoHelp ",
+                description: "For getting help and commands related to Info",
+              },
+              {
+                title: "GameHelp ",
+                description: "For getting help and commands related to Games",
+              },
+              {
+                title: "EntHelp ",
+                description: "For getting help and commands related to Entertainment and Media",
+              },
+              {
+                title: "AnimeHelp ",
+                description: "For getting help and commands related to Anime",
+              },
+              {
+                title: ".roast John Doe",
+                description: "For Roasting someone. Use this wisely.",
+              }
+            ]
+          },
+          {
+            title: "Info Related Commands",
+            rows: [
+              {
+                title: "EnglishDefine Table",
+                description: "For getting the definition of an English word",
+              },
+              {
+                title: ".wiki Indian Population",
+                description: "For searching a term on Wikipedia",
+              },
+              {
+                title: "wikiPage 14598",
+                description: "For getting the details of wiki page.",
+              },
+              {
+                title: "KanjiDefine 空",
+                description: "For readings and meaning of a Kanji.",
+              },
+              {
+                title: "HelpBot ",
+                description: "For getting help and list of all commands.",
+              }
+            ]
+          },
+          {
+            title: "Entertainment and Media Related Commands",
+            rows: [
+              {
+                title: "MovieDetail Inception",
+                description: "For getting the details of a Movie/ Series",
+              },
+              {
+                title: "SongDetail Faded-Alan Walker",
+                description: "Details of a song",
+              },
+              {
+                title: ".lyrics Faded-Alan Walker",
+                description: "Lyrics of a song",
+              },
+              {
+                title: "AnimeHelp ",
+                description: "For getting help and list of Anime related commands",
+              },
+              {
+                title: "HelpBot ",
+                description: "For getting help and list of all commands.",
+              }
+            ]
+          },
+          {
+            title: "Game Commands",
+            rows: [
+              {
+                title: "BotDare ",
+                description: "For getting a dare",
+              },
+              {
+                title: "BotTruth ",
+                description: "For getting a truth question",
+              },
+              {
+                title: "BotWyr ",
+                description: "For getting a 'Would You Rather' question",
+              },
+              {
+                title: "HelpBot ",
+                description: "For getting help and list of all commands.",
+              }
+            ]
+          },
+          {
+            title: "Anime Commands",
+            rows: [
+              {
+                title: "AnimeDetail Naruto",
+                description: "For getting the details of an Anime",
+              },
+              {
+                title: "CharDetail Kakashi",
+                description: "For getting details of an Anime Charater by Search",
+              },
+              {
+                title: "CharIdDetail 10820",
+                description: "For getting details of an Anime Charater by ID",
+              },
+              {
+                title: "AnimeIds Naruto",
+                description: "For getting Character IDs of an anime",
+              },
+              {
+                title: "AnimeChars 100053",
+                description: "For getting Character ID and list.",
+              },
+              {
+                title: "HelpBot ",
+                description: "For getting help and list of all commands.",
+              }
+            ]
+          }
+        ];
+
+        sendListMenu(message.from, 'Welcome to THE BOT', 'subTitle', msgString, 'Commands', list);
       break;
     }
     ////////////////////////////////MISCELLANEOUS FEATURES//////////////////////////////
@@ -1164,11 +1508,26 @@ function start(client) {
       //   ...
       // });
     }
-    // Print the recived msg
+    // Print the recieved msg
     if(RecievedMsgPermission) {
       console.log('------------------------------------------\n');
       console.log("Recieved Message: ", data, "\nType: ", message.type, "\nName: ", message.sender.pushname);
       RecievedMsgPermission = false;
     }
   });
+
+  //////////////////////////// FUNCTIONS ///////////////////////////
+
+  const sendButtons = (sender, msg, buttons, description) => {
+    client
+    .sendButtons(sender, msg, buttons, description)              
+    .then(() => { console.log("Sent message: ", msg + "\n-------------------------"); })
+    .catch((erro) => { console.error("Error when sending: ", erro); });
+  }
+
+  const sendListMenu = (sender, title, subtitle, desc, menuName, list) => {
+    client.sendListMenu(sender, title, subtitle, desc, menuName, list)
+    .then((result) => { console.log('Result: ', result); })
+    .catch((erro) => { console.error('Error when sending: ', erro); });
+  }
 }
