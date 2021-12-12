@@ -201,7 +201,7 @@ function start(client) {
         // Get the response from the api
         axios
           .get("https://api.dictionaryapi.dev/api/v2/entries/en_US/" + query)
-          .then(function (response) {
+          .then(response => {
             // Set the fields of the message
             response.data[0].meanings.forEach(meaning => {
               defNexample = [
@@ -222,7 +222,7 @@ function start(client) {
           })
           .catch(err => {
             client
-              .sendButtons(message.from, err.response.data.message, buttonsArray, "Click on buttons for other menus and examples")              
+              .sendButtons(message.from, err.response.data.message + "\n\n" + err.response.data.resolution, buttonsArray, "Click on buttons for other menus and examples")              
               .then(() => { console.log(err) })
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
@@ -277,7 +277,7 @@ function start(client) {
                 list[0].rows.push({
                   title: `WikiPage ${wiki.pageid}`,
                   description: wiki.title,
-                })
+                });
               });
               composeMsg.forEach( txt => { msgString += txt; });
               sendListMenu(message.from, 'Search Results', 'subTitle', msgString, 'Results', list);
@@ -342,12 +342,6 @@ function start(client) {
           })
           .catch(error => { console.log(error); });
       break;
-      /////////////////////////////////////Testing///////////////////////////////
-      case ".reply":
-        client
-          .returnReply(message)
-          .then(res => console.log(res))
-          .catch(err => console.log(err));
       ///////////////////////////////////+1 COUNTER///////////////////////////////
       case "+1":
         RecievedMsgPermission = true;
@@ -465,15 +459,34 @@ function start(client) {
         RecievedMsgPermission = true;
         malScraper.getInfoFromName(query)
           .then((data) => {
-            let genreString = "", i;
-            for(i=0; i< data.genres.length; i++) {genreString += data.genres[i] + ", "}
+            let genreString = "", staffString = "", charString = "";
+            data.genres.forEach(genre => {
+              genreString += genre + " | ";
+            });
+            data.staff.forEach(person => {
+              staffString+= `${person.name} (${person.role}) | `;
+            });
+            data.characters.forEach(char => {
+              if(char.role === 'Main') {
+                charString+= char.name + " | ";
+              }
+            });
             // Set the fields to be sent in message
             composeMsg = [
-              " *Title* : ", data.title,
-              "\n *Episodes* : ", data.episodes,
-              "\n *Aired* : ", data.aired,
-              "\n *Genres* : ", genreString,
-              "\n *Synopsis* : ", data.synopsis
+              "*Title* : ", data.title,
+              "\n*English Title* : ", data.englishTitle,
+              "\n*Japanese Title* : ", data.japaneseTitle,
+              "\n*Episodes* : ", data.episodes,
+              "\n*Type* : ", data.type,
+              "\n*Aired* : ", data.aired,
+              "\n*Genres* : ", genreString,
+              "\n*Status* : ", data.status,
+              "\n*Duration* : ", data.duration,
+              "\n*Duration* : ", data.duration,
+              "\n*Rating* : ", data.rating,
+              "\n\n*Main Characters* : ", charString,
+              "\n\n*Staff* : ", staffString,
+              "\n\n*Synopsis* : ", data.synopsis
             ];
             composeMsg.forEach( txt => { msgString += txt; });
             // Send the response to the sender
@@ -503,16 +516,21 @@ function start(client) {
         acb.get_anime_by_search(query)
           .then(data => {
             msgString = "Click on an Anime ID from the buttons to get its characters"; // composeMsg will be used as description of the button options
+            list = [{
+              title: "Search Results",
+              rows: []
+            }];
+
             data.forEach(result => {
               msgString += "\n*" + result.anime_id + "* - " + result.anime_name;
-              buttonsArray.push( {buttonId: 'anime' + result.anime_id, buttonText: {displayText: ".ac " + result.anime_id}, type: 1} )
+              list[0].rows.push({
+                title: `AnimeChars ${result.anime_id}`,
+                description: result.anime_name,
+              })
             });
             msgString+= "\nGet the IDs of characters of an anime by sending 'AnimeChars <id>\nFor example\n*AnimeChars 101671*" 
-            // Send the response to the sender
-            client
-            .sendButtons(message.from, `Searched query: ${query}\nFor getting character list send *AnimeChars <anime id>*\nFor example:\n*AnimeChars 101671*`, buttonsArray, msgString)              
-            .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
-            .catch(erro => { console.error("Error when sending Anime search results:\n", erro); });
+
+            sendListMenu(message.from, 'Checkout the bottom menu for getting character of the Animes', 'Help and all commands', msgString, 'Commands', list);
           })
           .catch(err => { // Send not found to sender
             buttonsArray = [
@@ -572,12 +590,16 @@ function start(client) {
               "\n*Description* : ", data[0].desc
             ];
             if(data.length > 1) {
-              let idString = "";
-              data.forEach(result => {idString += "\n*" + result.id + "* - " + result.anime_name}) 
-                composeMsg.push (
-                "\n\n*IDs of characters with similar name:*", idString,
-                "\nGet Details of other characters by sending *CharIdDetail <id>*"
-              );
+              list = [{
+                title: "Search Results",
+                rows: []
+              }];
+              data.forEach(result => {
+                list[0].rows.push({
+                  title: `CharIdDetail ${result.id}`,
+                  description: result.anime_name
+                });
+              });
             }
             composeMsg.forEach( txt => { msgString += txt; });
             // Send the response to the sender
@@ -585,6 +607,8 @@ function start(client) {
               .sendImage(message.from, data[0].character_image, null, msgString)
               .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
               .catch(erro => { console.error("Error when sending character details: ", erro); });
+
+            sendListMenu(message.from, 'Characters with similar Names', 'subTitle', 'Checkout the menu', 'Results', list);
             })
           .catch(err => { // Send not found to sender
             client
@@ -1248,188 +1272,6 @@ function start(client) {
         ];
 
         sendListMenu(message.from, 'Anime related commands', 'subTitle', msgString, 'Commands', list);
-      break;
-      case ".list":
-        //This function does not work for Bussines contacts
-        composeMsg = [
-          "1. For just getting a reply:",
-          "\nSend ' *HiBot* ' (without the ')",
-          "\n--------------------------------------------------",
-          "\n2. For creating a Poll:",
-          "\nSend \n```.poll <message>-<option1>-<option2>```",
-          "\nFor example:\n.poll Do you drink tea or coffee?-Tea-Coffee",
-          "\n--------------------------------------------------",
-          "\n3. For mentioning everyone:",
-          "\nSend '```.everyone```' | Short Command: *.yall*",
-          "\nFor example:\n*.everyone*",
-          "\nWith msg: ```.everyone <msg>```",
-          "\nFor example: *.everyone Hello*",
-          "\n--------------------------------------------------",
-          "\n4. For getting Information related commands like _wiki, dictionary_ etc.:",
-          "\nSend '```InfoHelp```' | Short Command: *.ihelp*",
-          "\nFor example:\n*InfoHelp*",
-          "\n--------------------------------------------------",
-          "\n5. For getting Text based games related commands like _truth or dare, Would you rather_ etc.:",
-          "\nSend '```GameHelp```' | Short Command: *.ghelp*",
-          "\nFor example:\n*GameHelp*",
-          "\n--------------------------------------------------",
-          "\n6. For getting Entertainment related commands like _movie, song, anime detail and lyrics_:",
-          "\nSend '```EntHelp```' | Short Command: *.ehelp*",
-          "\nFor example:\n*EntHelp*",
-          "\n--------------------------------------------------",
-          "\n7. For making stickers: ",
-          "\nSend the image with caption *.sticker*",
-          "\n```Gifs and videos are not supported yet```",
-          "\n--------------------------------------------------",
-          "\n8. For roasting someone:",
-          "\nSend '```BotRoast <Name>```' | Short Command: *.roast* <Name>",
-          "\nFor example:\n*BotRoast John Doe*",
-          "\n--------------------------------------------------",
-          "\n```There is no case sensitiviy for full commands```"
-        ];
-        composeMsg.forEach(function (txt) { msgString += txt; });
-
-        list = [
-          {
-            title: "General Commands",
-            rows: [
-              {
-                title: "HiBot ",
-                description: "For just getting a reply",
-              },
-              {
-                title: ".poll <message>-<option 1>-<option 2>",
-                description: "\nFor creating polls",
-              },
-              {
-                title: "@everyone <message>",
-                description: "For tagging everyone like discord",
-              },
-              {
-                title: "InfoHelp ",
-                description: "For getting help and commands related to Info",
-              },
-              {
-                title: "GameHelp ",
-                description: "For getting help and commands related to Games",
-              },
-              {
-                title: "EntHelp ",
-                description: "For getting help and commands related to Entertainment and Media",
-              },
-              {
-                title: "AnimeHelp ",
-                description: "For getting help and commands related to Anime",
-              },
-              {
-                title: ".roast John Doe",
-                description: "For Roasting someone. Use this wisely.",
-              }
-            ]
-          },
-          {
-            title: "Info Related Commands",
-            rows: [
-              {
-                title: "EnglishDefine Table",
-                description: "For getting the definition of an English word",
-              },
-              {
-                title: ".wiki Indian Population",
-                description: "For searching a term on Wikipedia",
-              },
-              {
-                title: "wikiPage 14598",
-                description: "For getting the details of wiki page.",
-              },
-              {
-                title: "KanjiDefine 空",
-                description: "For readings and meaning of a Kanji.",
-              },
-              {
-                title: "HelpBot ",
-                description: "For getting help and list of all commands.",
-              }
-            ]
-          },
-          {
-            title: "Entertainment and Media Related Commands",
-            rows: [
-              {
-                title: "MovieDetail Inception",
-                description: "For getting the details of a Movie/ Series",
-              },
-              {
-                title: "SongDetail Faded-Alan Walker",
-                description: "Details of a song",
-              },
-              {
-                title: ".lyrics Faded-Alan Walker",
-                description: "Lyrics of a song",
-              },
-              {
-                title: "AnimeHelp ",
-                description: "For getting help and list of Anime related commands",
-              },
-              {
-                title: "HelpBot ",
-                description: "For getting help and list of all commands.",
-              }
-            ]
-          },
-          {
-            title: "Game Commands",
-            rows: [
-              {
-                title: "BotDare ",
-                description: "For getting a dare",
-              },
-              {
-                title: "BotTruth ",
-                description: "For getting a truth question",
-              },
-              {
-                title: "BotWyr ",
-                description: "For getting a 'Would You Rather' question",
-              },
-              {
-                title: "HelpBot ",
-                description: "For getting help and list of all commands.",
-              }
-            ]
-          },
-          {
-            title: "Anime Commands",
-            rows: [
-              {
-                title: "AnimeDetail Naruto",
-                description: "For getting the details of an Anime",
-              },
-              {
-                title: "CharDetail Kakashi",
-                description: "For getting details of an Anime Charater by Search",
-              },
-              {
-                title: "CharIdDetail 10820",
-                description: "For getting details of an Anime Charater by ID",
-              },
-              {
-                title: "AnimeIds Naruto",
-                description: "For getting Character IDs of an anime",
-              },
-              {
-                title: "AnimeChars 100053",
-                description: "For getting Character ID and list.",
-              },
-              {
-                title: "HelpBot ",
-                description: "For getting help and list of all commands.",
-              }
-            ]
-          }
-        ];
-
-        sendListMenu(message.from, 'Welcome to THE BOT', 'subTitle', msgString, 'Commands', list);
       break;
     }
     ////////////////////////////////MISCELLANEOUS FEATURES//////////////////////////////
