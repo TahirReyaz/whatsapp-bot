@@ -34,7 +34,7 @@ function start(client) {
   let counter = 0;
   let op1count = 0, op2count=0, totalVotes=0, pollActive = false;
   let pollMsg = "", op1msg = "", op2msg = "";
-  let op1percent = 0, op2percent = 0, pollerId = "";
+  let op1percent = 0, op2percent = 0, pollerId = "", pollerName= "";
   client.onAnyMessage((message) => {
     // variables and constants required to make the data readable
     const data = message.body;
@@ -56,7 +56,7 @@ function start(client) {
       case "hibot" :
         RecievedMsgPermission = true;
         client
-          .reply(message.from, "No need to say hi to me, I am always here, reading every message you send to this guy.😁\nSend 'HelpBot' for commands", message.id.toString())
+          .reply(message.chatId, "No need to say hi to me, I am always here, reading every message you send to this guy.😁\nSend 'HelpBot' for commands", message.id.toString())
           .then(() => { console.log("Reply sent\n------------------------------"); })
           .catch((erro) => { console.error('Error when sending: ', erro); });
       break;
@@ -94,7 +94,7 @@ function start(client) {
             composeMsg.forEach( txt => { msgString += txt; });
             // Send the response to the sender
             client
-              .reply(message.from, msgString, message.id.toString())
+              .reply(message.chatId, msgString, message.id.toString())
               .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
               .catch(erro => { console.error("Error when sending the roast: ", erro); });
           })
@@ -120,13 +120,13 @@ function start(client) {
           msgString = "This command is not supported in dms.😁 If this is a group then people get annoyed by useless mentioning.😔";
             // Send the response to the sender
             client
-              .reply(message.from, msgString, message.id.toString())
+              .reply(message.chatId, msgString, message.id.toString())
               .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
               .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
         } else {
           composeMsg = [ 
             "‼```Tagging Everyone on request of``` *", 
-            message.sender.pushname, 
+            message.sender.displayName, 
             "‼*\n", query ? "\n----------------------------------------------------\n" : "", 
             query ? query : "",
             "\n----------------------------------------------------\n"
@@ -142,7 +142,7 @@ function start(client) {
                 msgString+= `@${member.user.toString()} | `;
               })
               client
-                .sendMentioned(message.from, msgString, members)
+                .sendMentioned(message.chatId, msgString, members)
                 .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
                 .catch(erro => { console.log("Error when tagging: ", erro); });
             })
@@ -175,13 +175,13 @@ function start(client) {
             composeMsg.forEach(function (txt) { msgString += txt; });
             // Send the response to the sender
             client
-              .reply(message.from, msgString, message.id.toString())
+              .reply(message.chatId, msgString, message.id.toString())
               .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
               .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
           })
           .catch(err => { // Send not found to sender
             client
-              .reply(message.from, "Word not found.. Sorry", message.id.toString())
+              .reply(message.chatId, "Word not found.. Sorry", message.id.toString())
               .then(() => { console.log(err) })
               .catch((erro) => { console.error("Error when sending error: ", erro); });
         });
@@ -217,13 +217,13 @@ function start(client) {
             composeMsg.forEach(txt => { msgString += txt; });
             // Send the response to the sender
             client
-              .sendButtons(message.from, msgString, buttonsArray, "Click on buttons for other menus and examples")              
+              .sendButtons(message.chatId, msgString, buttonsArray, "Click on buttons for other menus and examples")              
               .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
               .catch((erro) => { console.error("Error when sending: ", erro); });
           })
           .catch(err => {
             client
-              .sendButtons(message.from, err.response.data.message + "\n\n" + err.response.data.resolution, buttonsArray, "Click on buttons for other menus and examples")              
+              .sendButtons(message.chatId, err.response.data.message + "\n\n" + err.response.data.resolution, buttonsArray, "Click on buttons for other menus and examples")              
               .then(() => { console.log(err) })
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
@@ -240,7 +240,7 @@ function start(client) {
           msgString += data.choices[0].text;
           msgString += "😌"
           client
-            .reply(message.from, msgString, message.id.toString())
+            .reply(message.chatId, msgString, message.id.toString())
             .then(() => { console.log('Sent message: ' + msgString + '\n------------------\n') })
             .catch((erro) => { console.error("Error when correcting grammer: ", erro); });
         })();
@@ -281,7 +281,7 @@ function start(client) {
                 });
               });
               composeMsg.forEach( txt => { msgString += txt; });
-              sendListMenu(message.from, 'Search Results', 'subTitle', msgString, 'Results', list);
+              sendListMenu(message.chatId, 'Search Results', 'subTitle', msgString, 'Results', list);
             } else {
               buttonsArray = [
                 {buttonId: 'wiki', buttonText: {displayText: ".wiki Inception"}, type: 1},
@@ -289,7 +289,7 @@ function start(client) {
                 {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
               ];      
               client
-                .sendButtons(message.from, `Searched query: ${query}\n_Search Results Not Found_\n-Check the syntax and search term\n-Don't get confused with similar commands\n-Check them by sending *InfoHelp*`, buttonsArray, msgString)              
+                .sendButtons(message.chatId, `Searched query: ${query}\n_Search Results Not Found_\n-Check the syntax and search term\n-Don't get confused with similar commands\n-Check them by sending *InfoHelp*`, buttonsArray, msgString)              
                 .then(() => { console.log("Results Not found\n-------------------------")})
                 .catch(erro => { console.error("Error when sending error: ", erro); });
             }
@@ -331,12 +331,12 @@ function start(client) {
               composeMsg.forEach( txt => { msgString += txt; });
               // Send the response to the sender
               client
-                .sendButtons(message.from, msgString, buttonsArray, "Chose the buttons for examples and menu")              
+                .sendButtons(message.chatId, msgString, buttonsArray, "Chose the buttons for examples and menu")              
                 .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
                 .catch(erro => { console.error("Error when sending page details: ", erro); });
             } else {
               client
-                .sendButtons(message.from, `Searched query: ${query}\n_Page Not Found_\nCheck the syntax and page id\nDon't get confused with similar commands\nCheck them by sending *InfoHelp*`, buttonsArray, "Chose the buttons for examples and menu")              
+                .sendButtons(message.chatId, `Searched query: ${query}\n_Page Not Found_\nCheck the syntax and page id\nDon't get confused with similar commands\nCheck them by sending *InfoHelp*`, buttonsArray, "Chose the buttons for examples and menu")              
                 .then(() => { console.log("Page Not found\n---------------------------")})
                 .catch(erro => { console.error("Error when sending error: ", erro); });
             }
@@ -374,12 +374,12 @@ function start(client) {
         // Send the response to the sender if count is more than 1
         if(counter !== 1) {
           client
-            .sendButtons(message.from, msgString, buttonsArray, "You can click on the button for further counting.\nOr just count as usual")              
+            .sendButtons(message.chatId, msgString, buttonsArray, "You can click on the button for further counting.\nOr just count as usual")              
             .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
             .catch(error => { console.error("Error when sending truth: ", error); });
           }
       break;
-      //////////////////////////////////////POLL///////////////////////////////
+      ///////////////////////////////////// POLL //////////////////////////////
       case ".poll":
         RecievedMsgPermission = true;
         let pollPerm = false;
@@ -392,7 +392,7 @@ function start(client) {
           msgString = "This command is not supported in dms.😁\nIf this is a group then maybe the members won't like the spam.";
           // Send the response to the sender
           client
-            .sendText(message.from, msgString)
+            .sendText(message.chatId, msgString)
             .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
             .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
           break;
@@ -401,15 +401,15 @@ function start(client) {
         if(!queryPart[2] && !pollActive) {
           msgString = "Enter the command properly🤦‍♂️\n\nOr maybe the poll has ended😅";
           client
-            .sendText(message.from, msgString)
+            .sendText(message.chatId, msgString)
             .then(() => { console.log('Sent message: ' + msgString + '\n------------------\n') })
             .catch((erro) => { console.error("Error while ending the poll: ", erro); });
           break;
         }
-        if(query === "end" && pollerId === message.from) {
+        if(query === "end" && pollerId === message.chatId) {
           composeMsg = [
             "```Closed the poll on request of``` *", 
-            message.sender.verifiedName,
+            message.sender.displayName,
             "*\n----------------------------------\n*",
             pollMsg,
             "*\nResult:",
@@ -423,14 +423,14 @@ function start(client) {
           op1percent = 0, op2percent = 0;
           pollActive= false;
           client
-            .sendText(message.from, msgString)
+            .sendText(message.chatId, msgString)
             .then(() => { console.log('Sent message: ' + msgString + '\n------------------\n') })
             .catch((erro) => { console.error("Error while ending the poll: ", erro); });
           break;
-        } else if(query === "end" && pollerId !== message.from) {
-          msgString = "Only the creater of the poll can end it";
+        } else if(query === "end" && pollerId !== message.chatId) {
+          msgString = `Only the creater of the poll ${pollerName} can end it`;
           client
-            .sendText(message.from, msgString)
+            .sendText(message.chatId, msgString)
             .then(() => { console.log('Sent message: ' + msgString + '\n------------------\n') })
             .catch((erro) => { console.error("Error while ending the poll: ", erro); });
           break;
@@ -447,7 +447,8 @@ function start(client) {
           op2msg = queryPart[2];
           op1percent = 0;
           op2percent = 0;
-          pollerId = message.from;
+          pollerId = message.chatId;
+          pollerName = message.displayName;
           pollActive = true;
         }
         if(totalVotes !== 0) {
@@ -458,7 +459,7 @@ function start(client) {
         }
         composeMsg = [
           "```Started poll on request of``` *", 
-          message.sender.verifiedName,
+          message.sender.displayName,
           "*\n----------------------------------\n*",
           pollMsg,
           "*\nOptions:",
@@ -474,7 +475,7 @@ function start(client) {
         ]
         // Send the response to the sender if count is more than 1
         client
-          .sendButtons(message.from, msgString, buttonsArray, "You can click on the buttons for voting.")              
+          .sendButtons(message.chatId, msgString, buttonsArray, "You can click on the buttons for voting.")              
           .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
           .catch(error => { console.error("Error when sending truth: ", error); });
       break;
@@ -486,6 +487,7 @@ function start(client) {
         RecievedMsgPermission = true;
         malScraper.getInfoFromName(query)
           .then((data) => {
+            console.log(data);
             let genreString = "", staffString = "", charString = "";
             data.genres.forEach(genre => {
               genreString += genre + " | ";
@@ -518,7 +520,7 @@ function start(client) {
             composeMsg.forEach( txt => { msgString += txt; });
             // Send the response to the sender
             client
-              .sendImage(message.from, data.picture, null, msgString)
+              .sendImage(message.chatId, data.picture, null, msgString)
               .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
               .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
             })
@@ -529,7 +531,7 @@ function start(client) {
               {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
             ];      
             client
-                .sendButtons(message.from, "Anime not found.. Sorry", buttonsArray, "Chose the buttons for examples and menu")              
+                .sendButtons(message.chatId, "Anime not found.. Sorry", buttonsArray, "Chose the buttons for examples and menu")              
                 .then(() => { console.log(err) })
                 .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
@@ -557,7 +559,7 @@ function start(client) {
             });
             msgString+= "\nGet the IDs of characters of an anime by sending 'AnimeChars <id>\nFor example\n*AnimeChars 101671*" 
 
-            sendListMenu(message.from, 'Checkout the bottom menu for getting character of the Animes', 'Help and all commands', msgString, 'Commands', list);
+            sendListMenu(message.chatId, 'Checkout the bottom menu for getting character of the Animes', 'Help and all commands', msgString, 'Commands', list);
           })
           .catch(err => { // Send not found to sender
             buttonsArray = [
@@ -566,7 +568,7 @@ function start(client) {
               {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
             ];      
             client
-              .sendButtons(message.from, "Anime not found.. Sorry. Check if the command syntax is wrong", buttonsArray, "Chose the buttons for examples and menu")              
+              .sendButtons(message.chatId, "Anime not found.. Sorry. Check if the command syntax is wrong", buttonsArray, "Chose the buttons for examples and menu")              
               .then(() => { console.log(err) })
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
@@ -585,7 +587,7 @@ function start(client) {
             msgString += "\nGet details of a character by sending 'CharIdDetail <id>\nFor example\n*CharIdDetail 10820*";
             // Send the response to the sender
             client
-              .sendImage(message.from, data.anime_image, null, msgString)
+              .sendImage(message.chatId, data.anime_image, null, msgString)
               .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
               .catch(erro => { console.error("Error when sending character ids: ", erro); });
           })
@@ -596,7 +598,7 @@ function start(client) {
               {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
             ];      
             client
-              .sendButtons(message.from, "Anime not found.. Sorry", buttonsArray, "Chose the buttons for examples and menu")              
+              .sendButtons(message.chatId, "Anime not found.. Sorry", buttonsArray, "Chose the buttons for examples and menu")              
               .then(() => { console.log(err) })
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
@@ -631,15 +633,15 @@ function start(client) {
             composeMsg.forEach( txt => { msgString += txt; });
             // Send the response to the sender
             client
-              .sendImage(message.from, data[0].character_image, null, msgString)
+              .sendImage(message.chatId, data[0].character_image, null, msgString)
               .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
               .catch(erro => { console.error("Error when sending character details: ", erro); });
 
-            sendListMenu(message.from, 'Characters with similar Names', 'subTitle', 'Checkout the menu', 'Results', list);
+            sendListMenu(message.chatId, 'Characters with similar Names', 'subTitle', 'Checkout the menu', 'Results', list);
             })
           .catch(err => { // Send not found to sender
             client
-              .reply(message.from, 
+              .reply(message.chatId, 
                 "Character not found.. Sorry.\nCheck if the command syntax is right or not.\nDon't get confused by similar looking commands.", 
                 message.id.toString())
               .then(() => { console.log(err) })
@@ -684,18 +686,18 @@ function start(client) {
             if(response.data.Response === "True") { // If the movie was found then send the details and poster
               if(response.data.Poster === "N/A") { // If there is no poster then send only the details
                 client
-                  .sendButtons(message.from, msgString, buttonsArray, "Chose the buttons for examples and menu")              
+                  .sendButtons(message.chatId, msgString, buttonsArray, "Chose the buttons for examples and menu")              
                   .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
                   .catch((erro) => { console.error("Error when sending: ", erro); });            
               } else { // If there is a poster then send the details with the poster           
                 client
-                  .sendImage(message.from, response.data.Poster, null, msgString)
+                  .sendImage(message.chatId, response.data.Poster, null, msgString)
                   .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
                   .catch((erro) => { console.error("Error when sending: ", erro); });            
               }          
             } else {  // If movie/ series is not found
               client
-                .sendButtons(message.from, "Movie/ Series not found.. Sorry. Check the spelling", buttonsArray, "Chose the buttons for examples and menu")              
+                .sendButtons(message.chatId, "Movie/ Series not found.. Sorry. Check the spelling", buttonsArray, "Chose the buttons for examples and menu")              
                 .then(() => { console.log(response.data.Error) })
                 .catch((erro) => { console.error("Error when sending error: ", erro); });
             }
@@ -727,13 +729,13 @@ function start(client) {
             composeMsg.forEach(txt => { msgString += txt; });
             // Send the response to the sender
             client
-              .sendImage(message.from, song.artwork, null, msgString)
+              .sendImage(message.chatId, song.artwork, null, msgString)
               .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------") })
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           })
           .catch(err => {
             client
-              .reply(message.from, "Song not found\n-Add Artist too\n-Check the syntax and spelling", message.id.toString())
+              .reply(message.chatId, "Song not found\n-Add Artist too\n-Check the syntax and spelling", message.id.toString())
               .then(() => { console.log(err) })
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
@@ -758,13 +760,13 @@ function start(client) {
             composeMsg.forEach(txt => { msgString += txt; });
             // Send the response to the sender
             client
-              .reply(message.from, msgString, message.id.toString())
+              .reply(message.chatId, msgString, message.id.toString())
               .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------") })
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           })
           .catch(err => {
             client
-              .reply(message.from, "Lyrics not found\n-Add Artist too\n-Check the syntax and spelling", message.id.toString())
+              .reply(message.chatId, "Lyrics not found\n-Add Artist too\n-Check the syntax and spelling", message.id.toString())
               .then(() => { console.log(err) })
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
@@ -787,13 +789,13 @@ function start(client) {
             composeMsg.forEach( txt => { msgString += txt; });
             // Send the response to the sender
             client
-              .sendImage(message.from, data.character_image, null, msgString)
+              .sendImage(message.chatId, data.character_image, null, msgString)
               .then(() => { console.log("Sent message: \n" + msgString + "\n--------------------"); })
               .catch(erro => { console.error("Error when sending kanji definition: ", erro); });
           })
           .catch(err => { // Send not found to sender
             client
-              .reply(message.from, "Character not found.. Sorry", message.id.toString())
+              .reply(message.chatId, "Character not found.. Sorry", message.id.toString())
               .then(() => { console.log(err) })
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
@@ -819,7 +821,7 @@ function start(client) {
         ]
         // Send the response to the sender
         client
-          .sendButtons(message.from, msgString, buttonsArray, "Click on the buttons for help and other games")              
+          .sendButtons(message.chatId, msgString, buttonsArray, "Click on the buttons for help and other games")              
           .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
           .catch(error => { console.error("Error when sending truth: ", error); });
       break;
@@ -844,7 +846,7 @@ function start(client) {
         ]
         // Send the response to the sender
         client
-          .sendButtons(message.from, msgString, buttonsArray, "Click on the buttons for help and other games")              
+          .sendButtons(message.chatId, msgString, buttonsArray, "Click on the buttons for help and other games")              
           .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
           .catch(error => { console.error("Error when sending truth: ", error); });
       break;
@@ -869,7 +871,7 @@ function start(client) {
             composeMsg.forEach( txt => { msgString += txt; });
             // Send the response to the sender
             client
-              .sendButtons(message.from, "Would you rather:", buttonsArray, msgString)              
+              .sendButtons(message.chatId, "Would you rather:", buttonsArray, msgString)              
               .then(() => { console.log("Sent Wyr question:\n"+ response.blue.question + "\n" + response.red.question + "\n-------------------"); })
               .catch(error => { console.error("Error when sending truth: ", error); });
           })
@@ -880,7 +882,7 @@ function start(client) {
               {buttonId: 'help', buttonText: {displayText: ".help"}, type: 1}
             ];      
             client
-              .sendButtons(message.from, "Question not found.. Sorry\nTry again", buttonsArray, "Chose the buttons for examples and menu")              
+              .sendButtons(message.chatId, "Question not found.. Sorry\nTry again", buttonsArray, "Chose the buttons for examples and menu")              
               .then(() => { console.log(err) })
               .catch((erro) => { console.error("Error when sending error: ", erro); });
           });
@@ -1057,7 +1059,7 @@ function start(client) {
           }
         ];
 
-        sendListMenu(message.from, 'Welcome to THE BOT', 'Help and all commands', msgString, 'Commands', list);
+        sendListMenu(message.chatId, 'Welcome to THE BOT', 'Help and all commands', msgString, 'Commands', list);
       break;
       ////////////////////////////////ENTERTAINMENT MENU////////////////////////////////
       case ".ehelp":
@@ -1119,7 +1121,7 @@ function start(client) {
           }
         ];
 
-        sendListMenu(message.from, 'Entertainment and Media related commands', 'subTitle', msgString, 'Commands', list);
+        sendListMenu(message.chatId, 'Entertainment and Media related commands', 'subTitle', msgString, 'Commands', list);
       break;
       /////////////////////////////////INFORMATION MENU/////////////////////////////////
       case ".ihelp":
@@ -1179,7 +1181,7 @@ function start(client) {
           }
         ];
 
-        sendListMenu(message.from, 'Info related commands', 'subTitle', msgString, 'Commands', list);
+        sendListMenu(message.chatId, 'Info related commands', 'subTitle', msgString, 'Commands', list);
       break;
       ////////////////////////////////////GAMES MENU///////////////////////////////////
       case ".ghelp":
@@ -1230,7 +1232,7 @@ function start(client) {
           }
         ];
 
-        sendListMenu(message.from, 'Commands for Games', 'subTitle', msgString, 'Commands', list);
+        sendListMenu(message.chatId, 'Commands for Games', 'subTitle', msgString, 'Commands', list);
       break;
       ///////////////////////////////////ANIME MENU////////////////////////////////////
       case ".ahelp":
@@ -1298,25 +1300,25 @@ function start(client) {
           }
         ];
 
-        sendListMenu(message.from, 'Anime related commands', 'subTitle', msgString, 'Commands', list);
+        sendListMenu(message.chatId, 'Anime related commands', 'subTitle', msgString, 'Commands', list);
       break;
     }
     ////////////////////////////////MISCELLANEOUS FEATURES//////////////////////////////
     if (message.body === 'send contact' && message.isGroupMsg === false) {
       client
-        .sendContactVcard(message.from, message.to, 'Tahir')
+        .sendContactVcard(message.chatId, message.to, 'Tahir')
         .then((result) => {console.log('Result: ', result);})
         .catch((erro) => {console.error('Error when sending: ', erro);});
     } else if (message.body === 'bhai ek help kr de' && message.isGroupMsg === false) {
       client
-      .startTyping(message.from)
+      .startTyping(message.chatId)
       .then((result) => {console.log('Result: ', result);})
       .catch((erro) => {console.error('Error when sending: ', erro);});
     } else if (message.type === "image" && ( message.caption === ".sticker" || message.caption === ".sparsh")) {
       console.log('\nSaw an image');
       console.log('\nmessage id: ' + message.id);
       client
-        .reply(message.from, "*Somry*\n\nThe sticker command is not working right now. Due to issues in the venom-bot package. I'll fix it as soon as the develepors fix the issue.\nSomeone has commented a workaround, I'll look into it and fixed it when I feel so.\n\nContact the sticker maker of your group if you still want a sticker or\nDO IT YOURSELF", message.id.toString())              
+        .reply(message.chatId, "*Somry*\n\nThe sticker command is not working right now. Due to issues in the venom-bot package. I'll fix it as soon as the develepors fix the issue.\nSomeone has commented a workaround, I'll look into it and fixed it when I feel so.\n\nContact the sticker maker of your group if you still want a sticker or\nDO IT YOURSELF", message.id.toString())              
         .then(() => { console.log("gif not sent\n-------------------------\n") })
         .catch((erro) => { console.error("Error when sending sticker: ", erro); });    
 
@@ -1332,7 +1334,7 @@ function start(client) {
       //   console.log(img.substring(0, 100));
       //   // console.log('\nresult: ' + result);
       //   client
-      //     .sendImageAsSticker(message.from, imgTrimmed)              
+      //     .sendImageAsSticker(message.chatId, imgTrimmed)              
       //     .then(() => { console.log("Sticker sent\n-------------------------\n") })
       //     .catch((erro) => { console.error("Error when sending sticker: \n" + erro); });    
       // })
@@ -1344,7 +1346,7 @@ function start(client) {
       //     console.log('\ndownloaded it');
       //     console.log('\nresult:----------------\n' + result.substring(0, 300));
       //     client
-      //       .sendImageAsSticker(message.from, img)              
+      //       .sendImageAsSticker(message.chatId, img)              
       //       .then(() => { console.log("Sticker sent\n-------------------------\n") })
       //       .catch((erro) => { console.error("Error when sending sticker: \n" + erro); });    
       //   })
@@ -1354,7 +1356,7 @@ function start(client) {
       //   });
     } else if (message.type === "video" && ( message.caption === ".sticker" || message.caption === ".sparsh")) {
       client
-      .reply(message.from, "gifs and videos are not supported yet", message.id.toString())              
+      .reply(message.chatId, "gifs and videos are not supported yet", message.id.toString())              
       .then(() => { console.log("gif not sent\n-------------------------\n") })
       .catch((erro) => { console.error("Error when sending sticker: ", erro); });    
       // client
