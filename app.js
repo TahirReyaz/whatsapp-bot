@@ -33,7 +33,7 @@ function start(client) {
   let params = {};
   let counter = 0;
   let op1count = 0, op2count=0, totalVotes=0, pollActive = false;
-  let pollMsg = "", op1msg = "", op2msg = "";
+  let pollMsg = "", op1msg = "", op2msg = "", pollVoters = [];
   let op1percent = 0, op2percent = 0, pollerId = "", pollerName= "";
   client.onAnyMessage((message) => {
     // variables and constants required to make the data readable
@@ -55,10 +55,12 @@ function start(client) {
       case "Hibot" :
       case "hibot" :
         RecievedMsgPermission = true;
-        client
-          .reply(message.chatId, "No need to say hi to me, I am always here, reading every message you send to this guy.😁\nSend 'HelpBot' for commands", message.id.toString())
-          .then(() => { console.log("Reply sent\n------------------------------"); })
-          .catch((erro) => { console.error('Error when sending: ', erro); });
+        sendReply(
+          message.chatId,
+          "No need to say hi to me, I am always here, reading every message you send to this guy.😁\nSend 'HelpBot' for commands",
+          message.id.toString(),
+          'Error when sending: '
+        );
       break;
       //////////////////////////////////////ROAST///////////////////////////////////////
       case ".roast":
@@ -302,7 +304,6 @@ function start(client) {
       case "WikiPage":
       case "wikipage":
         RecievedMsgPermission = true;
-        console.log(message.id);
         params = {
           origin: "*",
           format: "json",
@@ -390,7 +391,6 @@ function start(client) {
         });
         if(!pollPerm) {
           msgString = "This command is not supported in dms.😁\nIf this is a group then maybe the members won't like the spam.";
-          // Send the response to the sender
           client
             .sendText(message.chatId, msgString)
             .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
@@ -406,7 +406,7 @@ function start(client) {
             .catch((erro) => { console.error("Error while ending the poll: ", erro); });
           break;
         }
-        if(query === "end" && pollerId === message.chatId) {
+        if(query === "end" && pollerId === message.sender.id) {
           composeMsg = [
             "```Closed the poll on request of``` *", 
             message.sender.displayName,
@@ -422,33 +422,45 @@ function start(client) {
           pollMsg = "", op1msg = "", op2msg = "";
           op1percent = 0, op2percent = 0;
           pollActive= false;
+          pollVoters = [];
           client
             .sendText(message.chatId, msgString)
             .then(() => { console.log('Sent message: ' + msgString + '\n------------------\n') })
             .catch((erro) => { console.error("Error while ending the poll: ", erro); });
           break;
-        } else if(query === "end" && pollerId !== message.chatId) {
-          msgString = `Only the creater of the poll ${pollerName} can end it`;
-          client
-            .sendText(message.chatId, msgString)
-            .then(() => { console.log('Sent message: ' + msgString + '\n------------------\n') })
-            .catch((erro) => { console.error("Error while ending the poll: ", erro); });
+        } else if(query === "end" && pollerId !== message.sender.id) {
+          msgString = `Only the creater of the poll (${pollerName}) can end it`;
+          sendText(message.chatId, msgString, "Error while ending the poll: ");
           break;
         }
         if(queryPart[0] === "op1") {
-          op1count++;
-          totalVotes++;
+          if(!pollVoters.includes(message.sender.id)) {
+            op1count++;
+            totalVotes++;
+            pollVoters.push(message.sender.id);
+          } else {
+            msgString = `${message.sender.verifiedName ? message.sender.verifiedName : message.sender.displayName}, You have voted already!!`;
+            sendText(message.chatId, msgString, "Error while sending warning");
+            break;
+          }
         } else if (queryPart[0] === "op2") {
-          op2count++;
-          totalVotes++;
+          if(!pollVoters.includes(message.sender.id)) {
+            op2count++;
+            totalVotes++;
+            pollVoters.push(message.sender.id);
+          } else {
+            msgString = `${message.sender.verifiedName ? message.sender.verifiedName : message.sender.displayName}, You have voted already!!`;
+            sendText(message.chatId, msgString, "Error while sending warning");
+            break;
+          }
         } else if (totalVotes === 0) {
           pollMsg = queryPart[0];
           op1msg = queryPart[1];
           op2msg = queryPart[2];
           op1percent = 0;
           op2percent = 0;
-          pollerId = message.chatId;
-          pollerName = message.displayName;
+          pollerId = message.sender.id;
+          pollerName = message.sender.verifiedName ? message.sender.verifiedName : message.sender.displayName;
           pollActive = true;
         }
         if(totalVotes !== 0) {
@@ -459,7 +471,7 @@ function start(client) {
         }
         composeMsg = [
           "```Started poll on request of``` *", 
-          message.sender.displayName,
+          pollerName,
           "*\n----------------------------------\n*",
           pollMsg,
           "*\nOptions:",
@@ -472,10 +484,14 @@ function start(client) {
           {buttonId: 'opt1', buttonText: {displayText: ".poll op1-" + op1msg}, type: 1},
           {buttonId: 'opt2', buttonText: {displayText: ".poll op2-" + op2msg}, type: 1},
           {buttonId: 'reset', buttonText: {displayText: ".poll end"}, type: 1}
-        ]
-        // Send the response to the sender if count is more than 1
+        ];
         client
-          .sendButtons(message.chatId, msgString, buttonsArray, "You can click on the buttons for voting.")              
+          .sendButtons(
+            message.chatId, 
+            msgString, 
+            buttonsArray, 
+            "You can click on the buttons for voting.\nIf buttons are not availabe- Send '.poll op1' or '.poll op2' to vote or '.poll end' to end the poll."
+          )              
           .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
           .catch(error => { console.error("Error when sending truth: ", error); });
       break;
@@ -1382,7 +1398,12 @@ function start(client) {
     // Print the recieved msg
     if(RecievedMsgPermission) {
       console.log('------------------------------------------\n');
-      console.log("Recieved Message: ", data, "\nType: ", message.type, "\nName: ", message.sender.pushname);
+      console.log(
+        "Recieved Message: ", data, 
+        "\nType: ", message.type, 
+        "\nName: ", message.sender.displayName,
+        "\nID: ", message.sender.id
+        );
       RecievedMsgPermission = false;
     }
   });
@@ -1400,5 +1421,19 @@ function start(client) {
     client.sendListMenu(sender, title, subtitle, desc, menuName, list)
     .then((result) => { console.log('Result: ', result); })
     .catch((erro) => { console.error('Error when sending: ', erro); });
+  }
+
+  const sendText = (sender, text, errMsg) => {
+    client
+      .sendText(sender, text)
+      .then(() => { console.log('Sent message: ' + text + '\n------------------\n') })
+      .catch((erro) => { console.error(errMsg, erro); });
+  }
+
+  const sendReply = (sender, text, messageId, errMsg) => {
+    client
+      .reply(sender, text, messageId)
+      .then(() => { console.log("Reply sent:\n" + text + "\n------------------------------"); })
+      .catch((erro) => { console.error(errMsg, erro); });
   }
 }
