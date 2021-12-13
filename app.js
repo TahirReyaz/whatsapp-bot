@@ -28,7 +28,7 @@ function start(client) {
   let RecievedMsgPermission = false, buttonsArray= [];
   const nsfwGrps = ["MEMES", "CATS", "WE", "OT4KU", "Chaman", "pendicul", "testing"];
   const annoyGrps = ["CATS", "WE", "Chaman", "CS Team", "BDAY", "pendicul", "testing"];
-  const countGrps = ["Unofficial", "OT4KU", "Straw Hat", "CATS", "WE", "Chaman", "CS Team", "BDAY", "pendicul", "testing"];
+  const pollGrps = ["Unofficial", "OT4KU", "Straw Hat", "CATS", "WE", "Chaman", "CS Team", "BDAY", "pendicul", "testing"];
   const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
   let params = {};
   let counter = 0;
@@ -345,46 +345,46 @@ function start(client) {
           .catch(error => { console.log(error); });
       break;
       ///////////////////////////////////+1 COUNTER///////////////////////////////
-      case "+1":
-        RecievedMsgPermission = true;
-        let countPerm = false;
-        countGrps.forEach(grp => {
-          if(message.isGroupMsg && message.chat.name.search(grp) !== -1) {
-            countPerm = true;
-          }
-        });
-        if(!countPerm) {
-          break;
-        }
+      // case "+1":
+      //   RecievedMsgPermission = true;
+      //   let countPerm = false;
+      //   pollGrps.forEach(grp => {
+      //     if(message.isGroupMsg && message.chat.name.search(grp) !== -1) {
+      //       countPerm = true;
+      //     }
+      //   });
+      //   if(!countPerm) {
+      //     break;
+      //   }
 
-        if(query === "reset") {
-          counter = 0;
-          composeMsg = ["Counter reset👌"];
-        } else {
-          counter++;
-          composeMsg = [
-            "Counting +1s💪\n",
-            "-------------------\n",
-            "Current count: +", counter];
-        }
-        composeMsg.forEach( txt => { msgString += txt; });
-        buttonsArray = [
-          {buttonId: '+1', buttonText: {displayText: "+1"}, type: 1},
-          {buttonId: 'reset', buttonText: {displayText: "+1 reset"}, type: 1}
-        ]
-        // Send the response to the sender if count is more than 1
-        if(counter !== 1) {
-          client
-            .sendButtons(message.chatId, msgString, buttonsArray, "You can click on the button for further counting.\nOr just count as usual")              
-            .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
-            .catch(error => { console.error("Error when sending truth: ", error); });
-          }
-      break;
+      //   if(query === "reset") {
+      //     counter = 0;
+      //     composeMsg = ["Counter reset👌"];
+      //   } else {
+      //     counter++;
+      //     composeMsg = [
+      //       "Counting +1s💪\n",
+      //       "-------------------\n",
+      //       "Current count: +", counter];
+      //   }
+      //   composeMsg.forEach( txt => { msgString += txt; });
+      //   buttonsArray = [
+      //     {buttonId: '+1', buttonText: {displayText: "+1"}, type: 1},
+      //     {buttonId: 'reset', buttonText: {displayText: "+1 reset"}, type: 1}
+      //   ]
+      //   // Send the response to the sender if count is more than 1
+      //   if(counter !== 1) {
+      //     client
+      //       .sendButtons(message.chatId, msgString, buttonsArray, "You can click on the button for further counting.\nOr just count as usual")              
+      //       .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
+      //       .catch(error => { console.error("Error when sending truth: ", error); });
+      //     }
+      // break;
       ///////////////////////////////////// POLL //////////////////////////////
       case ".poll":
         RecievedMsgPermission = true;
         let pollPerm = false;
-        countGrps.forEach(grp => {
+        pollGrps.forEach(grp => {
           if(message.isGroupMsg && message.chat.name.search(grp) !== -1) {
             pollPerm = true;
           }
