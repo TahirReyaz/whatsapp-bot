@@ -112,7 +112,7 @@ function start(client) {
         let roastPerm = false;
         // Check if the group allows nsfw roats or not
         nsfwGrps.forEach((grp) => {
-          if (message.chat.name.search(grp) !== -1) {
+          if (message.isGroupMsg || message.chat.name.search(grp) !== -1) {
             roastPerm = true;
           }
         });
