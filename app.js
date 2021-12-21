@@ -112,19 +112,30 @@ function start(client) {
         let roastPerm = false;
         // Check if the group allows nsfw roats or not
         nsfwGrps.forEach((grp) => {
-          if (message.isGroupMsg || message.chat.name.search(grp) !== -1) {
+          if (message.chat.name.search(grp) !== -1 || !message.isGroupMsg) {
             roastPerm = true;
           }
         });
+        if (!roastPerm) {
+          composeMsg = [
+            "This command is not supported here. There are people here who don't like it.\n```THEY AREN'T COOL ENOUGH.```",
+          ];
+          composeMsg.forEach((txt) => {
+            msgString += txt;
+          });
+          sendReply(
+            message.chatId,
+            msgString,
+            message.id.toString(),
+            "Error while sending roast"
+          );
+          break;
+        }
         axios
           .get("https://evilinsult.com/generate_insult.php?lang=en&type=json")
           .then(function (response) {
             // Abusive roasts
-            if (!roastPerm) {
-              composeMsg = [
-                "There are people here who don't like it.\n```THEY AREN'T COOL ENOUGH.```",
-              ];
-            } else if (
+            if (
               response.data.number == "111" ||
               response.data.number === "119" ||
               response.data.number === "121" ||
@@ -132,9 +143,7 @@ function start(client) {
               response.data.number === "11"
             ) {
               composeMsg = [
-                "Ooops..",
-                " Please try again",
-                "The roast was too severe",
+                "Ooops.. Please try again\nThe roast was too severe",
               ];
               console.log(response.data.insult);
             } else {
@@ -168,6 +177,7 @@ function start(client) {
       case ".everyone":
         RecievedMsgPermission = true;
         let annoyPerm = false;
+        // message.chat.groupMetaData.participants.forEach(participant => participant.isAdmin ? perm = true)
         query = data.substring(queryCutter.length);
         // Check if the group allows annoying mentions or not
         annoyGrps.forEach((grp) => {
