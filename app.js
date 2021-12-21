@@ -122,7 +122,7 @@ function start(client) {
             // Abusive roasts
             if (!roastPerm) {
               composeMsg = [
-                "This command is not supported in dms. If this is a group then there are people here who don't like it.\n```THEY AREN'T COOL ENOUGH.```",
+                "There are people here who don't like it.\n```THEY AREN'T COOL ENOUGH.```",
               ];
             } else if (
               response.data.number == "111" ||
