@@ -380,6 +380,23 @@ function start(client) {
               });
           });
         break;
+      /////////////////////////////TALK WITH AI/////////////////////////////////
+      case ".talk":
+        RecievedMsgPermission = true;
+        query = data.substring(queryCutter.length);
+        openai.APIkey(process.env.OPENAI_API_KEY);
+        (async () => {
+          const data = await openai.GetResponse(query);
+          msgString =
+            "You are talking with an AI\nIt said:\n-----------------------\n" + data.choices[0].text;
+          sendReply(
+            message.chatId,
+            msgString,
+            message.id.toString(),
+            "Error when sending AI response: "
+          );
+        })();
+        break;
       //////////////////////////TRANSLATE AND CORRECT GRAMMAR/////////////////////////////////
       case ".gram":
       case ".grammar":
@@ -391,20 +408,20 @@ function start(client) {
         openai.APIkey(process.env.OPENAI_API_KEY);
         (async () => {
           const data = await openai.GetError(query);
-          msgString =
-            "Grammar correction/ Translation:\n--------------------\n";
-          msgString += data.choices[0].text;
-          msgString += "😌";
-          client
-            .reply(message.chatId, msgString, message.id.toString())
-            .then(() => {
-              console.log(
-                "Sent message: " + msgString + "\n------------------\n"
-              );
-            })
-            .catch((erro) => {
-              console.error("Error when correcting grammer: ", erro);
-            });
+          composeMsg = [
+            botQuery[0] === ".tran" || botQuery[0] === ".translate" ? "Translation:" : "Grammar correction:",
+            "\n--------------------\n",
+            data.choices[0].text, " 😌"
+          ];
+          composeMsg.forEach(txt => {
+            msgString += txt;
+          });
+          sendReply(
+            message.chatId,
+            msgString,
+            message.id.toString(),
+            "Error when correcting grammer: "
+          );
         })();
         break;
       /////////////////////////////////WIKIPEDIA SEARCH/////////////////////////////////
