@@ -15,7 +15,7 @@
     "mal-scraper": "^2.11.3",
     "music-info": "^1.2.1",
     "openai-grammaticalcorrection": "^1.1.0",
-    "venom-bot": "^4.0.3",
+    "venom-bot": "^4.0.4",
     "wyr": "^1.0.2"
   }
 }

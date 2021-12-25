@@ -89,7 +89,6 @@ function start(client) {
       title: queryPart[0],
       artist: queryPart[1],
     };
-
     switch (botQuery[0]) {
       //////////////////////////////////////HI BOT//////////////////////////////////////
       case "HiBot":
@@ -205,7 +204,9 @@ function start(client) {
         } else {
           composeMsg = [
             "‼```Tagging Everyone on request of``` *",
-            message.sender.displayName,
+            message.sender.verifiedName
+              ? message.sender.verifiedName
+              : message.sender.notifyName,
             "‼*\n",
             query
               ? "\n----------------------------------------------------\n"
@@ -388,7 +389,8 @@ function start(client) {
         (async () => {
           const data = await openai.GetResponse(query);
           msgString =
-            "You are talking with an AI\nIt said:\n-----------------------\n" + data.choices[0].text;
+            "You are talking with an AI\nIt said:\n-----------------------\n" +
+            data.choices[0].text;
           sendReply(
             message.chatId,
             msgString,
@@ -409,11 +411,14 @@ function start(client) {
         (async () => {
           const data = await openai.GetError(query);
           composeMsg = [
-            botQuery[0] === ".tran" || botQuery[0] === ".translate" ? "Translation:" : "Grammar correction:",
+            botQuery[0] === ".tran" || botQuery[0] === ".translate"
+              ? "Translation:"
+              : "Grammar correction:",
             "\n--------------------\n",
-            data.choices[0].text, " 😌"
+            data.choices[0].text,
+            " 😌",
           ];
-          composeMsg.forEach(txt => {
+          composeMsg.forEach((txt) => {
             msgString += txt;
           });
           sendReply(
@@ -700,9 +705,9 @@ function start(client) {
           op2percent = 0;
           pollerGrp = message.chatId;
           pollerId = message.sender.id;
-          pollerName = message.sender.displayName
-            ? message.sender.displayName
-            : message.sender.verifiedName;
+          pollerName = message.sender.verifiedName
+            ? message.sender.verifiedName
+            : message.sender.notifyName,
           pollActive = true;
         }
         if (totalVotes !== 0) {
@@ -1996,12 +2001,21 @@ function start(client) {
       message.type === "image" &&
       (message.caption === ".sticker" || message.caption === ".sparsh")
     ) {
-      console.log("\nSaw an image");
-      console.log("\nmessage id: " + message.id);
+      const previewImg = message.mediaData.preview._b64;
+      // console.log("\nresult:----------------\n" + previewImg.substring(0, 300));
+      client
+        .sendImageAsSticker(message.chatId, previewImg)
+        .then(() => {
+          console.log("Sticker sent\n-------------------------\n");
+        })
+        .catch((erro) => {
+          console.error("Error when sending sticker: \n" + erro);
+        });
+
       client
         .reply(
           message.chatId,
-          "*Somry*\n\nThe sticker command is not working right now. Due to issues in the venom-bot package. I'll fix it as soon as the develepors fix the issue.\nSomeone has commented a workaround, I'll look into it and fixed it when I feel so.\n\nContact the sticker maker of your group if you still want a sticker or\nDO IT YOURSELF",
+          "*Somry* for the poor quality of the sticker the sticker command is not working properly. Due to issues in the venom-bot package. I'll fix it as soon as the develepors fix the issue.\nSomeone has commented a workaround, I'll look into it and fixed it when I feel so.\n\nContact the sticker maker of your group if you still want a sticker or\nDO IT YOURSELF",
           message.id.toString()
         )
         .then(() => {
@@ -2028,20 +2042,25 @@ function start(client) {
       //     .catch((erro) => { console.error("Error when sending sticker: \n" + erro); });
       // })
       // .catch(erro => console.log(erro));
+
       // client
-      //   .downloadMedia(message.id)
-      //   .then(result => {
+      //   .downloadMedia(message)
+      //   .then((result) => {
       //     const img = result.substring(23, result.length);
-      //     console.log('\ndownloaded it');
-      //     console.log('\nresult:----------------\n' + result.substring(0, 300));
+      //     console.log("\ndownloaded it");
+      //     console.log("\nresult:----------------\n" + result.substring(0, 300));
       //     client
       //       .sendImageAsSticker(message.chatId, img)
-      //       .then(() => { console.log("Sticker sent\n-------------------------\n") })
-      //       .catch((erro) => { console.error("Error when sending sticker: \n" + erro); });
+      //       .then(() => {
+      //         console.log("Sticker sent\n-------------------------\n");
+      //       })
+      //       .catch((erro) => {
+      //         console.error("Error when sending sticker: \n" + erro);
+      //       });
       //   })
-      //   .catch(errorGranzia => {
-      //     console.log('In catch block of download media')
-      //     console.log(errorGranzia)
+      //   .catch((error) => {
+      //     console.log("In catch block of download media");
+      //     console.log(error);
       //   });
     } else if (
       message.type === "video" &&
