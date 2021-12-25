@@ -14,7 +14,7 @@
     "dotenv": "^10.0.0",
     "mal-scraper": "^2.11.3",
     "music-info": "^1.2.1",
-    "openai-grammaticalcorrection": "^1.0.5",
+    "openai-grammaticalcorrection": "^1.0.6",
     "venom-bot": "^4.0.3",
     "wyr": "^1.0.2"
   }

@@ -383,8 +383,11 @@ function start(client) {
       //////////////////////////TRANSLATE AND CORRECT GRAMMAR/////////////////////////////////
       case ".gram":
       case ".grammar":
+      case ".tran":
+      case ".translate":
       case ".ayaz":
         RecievedMsgPermission = true;
+        query = data.substring(queryCutter.length);
         openai.APIkey(process.env.OPENAI_API_KEY);
         (async () => {
           const data = await openai.GetError(query);
@@ -504,24 +507,12 @@ function start(client) {
           origin: "*",
           format: "json",
           action: "query",
-          prop: "extracts",
+          prop: "pageimages|extracts",
+          pithumbsize: 400,
           pageids: query,
           exintro: true,
           explaintext: true,
         };
-        buttonsArray = [
-          {
-            buttonId: "wp",
-            buttonText: { displayText: "WikiPage 14598" },
-            type: 1,
-          },
-          {
-            buttonId: "ihelp",
-            buttonText: { displayText: "InfoHelp" },
-            type: 1,
-          },
-          { buttonId: "help", buttonText: { displayText: ".help" }, type: 1 },
-        ];
         axios
           .get(wikiEndpoint, { params })
           .then((response) => {
@@ -530,46 +521,39 @@ function start(client) {
               const wiki = Object.values(response.data.query.pages);
               // Set the fields to be sent in message
               composeMsg = [
-                "*Page ID* : ",
+                "*Image File name* :\n",
+                wiki[0].pageimage ? wiki[0].pageimage : "_No image found_ ☹",
+                "\n*Page ID* : ",
                 wiki[0].pageid,
                 "\n*Title* : ",
                 wiki[0].title,
                 "\n*Info* : ",
-                wiki[0].extract, //.substring(0, 400)
+                wiki[0].extract,
               ];
               composeMsg.forEach((txt) => {
                 msgString += txt;
               });
               // Send the response to the sender
-              client
-                .sendButtons(
+              if (wiki[0].thumbnail) {
+                sendImage(
+                  message.chatId,
+                  wiki[0].thumbnail.source,
+                  msgString,
+                  "Error when sending page details: "
+                );
+              } else {
+                sendText(
                   message.chatId,
                   msgString,
-                  buttonsArray,
-                  "Chose the buttons for examples and menu"
-                )
-                .then(() => {
-                  console.log(
-                    "Sent message: \n" + msgString + "\n--------------------"
-                  );
-                })
-                .catch((erro) => {
-                  console.error("Error when sending page details: ", erro);
-                });
+                  "Error when sending page details: "
+                );
+              }
             } else {
-              client
-                .sendButtons(
-                  message.chatId,
-                  `Searched query: ${query}\n_Page Not Found_\nCheck the syntax and page id\nDon't get confused with similar commands\nCheck them by sending *InfoHelp*`,
-                  buttonsArray,
-                  "Chose the buttons for examples and menu"
-                )
-                .then(() => {
-                  console.log("Page Not found\n---------------------------");
-                })
-                .catch((erro) => {
-                  console.error("Error when sending error: ", erro);
-                });
+              sendText(
+                message.chatId,
+                `Searched query: ${query}\n_Page Not Found_\nCheck the syntax and page id\nDon't get confused with similar commands\nCheck them by sending *InfoHelp*`,
+                "Error when sending page not found"
+              );
             }
           })
           .catch((error) => {
@@ -595,7 +579,7 @@ function start(client) {
           break;
         }
 
-        if (message.chatId !== pollerGrp && pollActive) {
+        if (message.chatId !== pollerGrp && pollActive && !message.fromMe) {
           msgString =
             "There is already a poll going on in another group.\nWait for it to end😅";
           sendText(message.chatId, msgString, "Error when sending warning: ");
@@ -1992,18 +1976,6 @@ function start(client) {
           console.error("Error when sending: ", erro);
         });
     } else if (
-      message.body === "bhai ek help kr de" &&
-      message.isGroupMsg === false
-    ) {
-      client
-        .startTyping(message.chatId)
-        .then((result) => {
-          console.log("Result: ", result);
-        })
-        .catch((erro) => {
-          console.error("Error when sending: ", erro);
-        });
-    } else if (
       message.type === "image" &&
       (message.caption === ".sticker" || message.caption === ".sparsh")
     ) {
@@ -2016,7 +1988,7 @@ function start(client) {
           message.id.toString()
         )
         .then(() => {
-          console.log("gif not sent\n-------------------------\n");
+          console.log("Sticker not sent\n-------------------------\n");
         })
         .catch((erro) => {
           console.error("Error when sending sticker: ", erro);
@@ -2152,6 +2124,17 @@ function start(client) {
         console.log(
           "Reply sent:\n" + text + "\n------------------------------"
         );
+      })
+      .catch((erro) => {
+        console.error(errMsg, erro);
+      });
+  };
+
+  const sendImage = (sender, img, text, errMsg) => {
+    client
+      .sendImage(sender, img, null, text)
+      .then(() => {
+        console.log("Sent message: \n" + text + "\n--------------------");
       })
       .catch((erro) => {
         console.error(errMsg, erro);
