@@ -507,37 +507,13 @@ function start(client) {
                 list
               );
             } else {
-              buttonsArray = [
-                {
-                  buttonId: "wiki",
-                  buttonText: { displayText: ".wiki Inception" },
-                  type: 1,
-                },
-                {
-                  buttonId: "ihelp",
-                  buttonText: { displayText: ".ihelp" },
-                  type: 1,
-                },
-                {
-                  buttonId: "help",
-                  buttonText: { displayText: ".help" },
-                  type: 1,
-                },
-              ];
-              client
-                .sendButtons(
-                  message.chatId,
-                  `Searched query: ${query}\n_Search Results Not Found_\n-Check the syntax and search term\n-Don't get confused with similar commands\n-Check them by sending *InfoHelp*`,
-                  buttonsArray,
-                  msgString
-                )
-                .then(() => {
-                  console.log("Results Not found\n-------------------------");
-                })
-                .catch((erro) => {
-                  console.error("Error when sending error: ", erro);
-                });
-            }
+              sendReply(
+                message.chatId,
+                "Not found",
+                message.id.toString(),
+                "Error when sending Not found: "
+              );
+              }
           })
           .catch((error) => {
             console.log(error);
