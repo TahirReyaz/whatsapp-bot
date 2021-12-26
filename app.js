@@ -59,6 +59,7 @@ function start(client) {
     "testing",
   ];
   const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
+  const mathsEndpoint = "http://api.mathjs.org/v4/?expr=";
   let params = {},
     // counter = 0,
     op1count = 0,
@@ -101,6 +102,29 @@ function start(client) {
           message.id.toString(),
           "Error when sending: "
         );
+        break;
+      ////////////////////////////////////CALCULATE//////////////////////////////////////
+      case ".calc":
+        RecievedMsgPermission = true;
+        axios
+          .get(mathsEndpoint + encodeURIComponent(query) + "&precision=3")
+          .then((response) => {
+            sendReply(
+              message.chatId,
+              response.data.toString(),
+              message.id.toString(),
+              "Error when sending: "
+            );
+          })
+          .catch((error) => {
+            console.log(error.response.data);
+            sendReply(
+              message.chatId,
+              error.response.data,
+              message.id.toString(),
+              "Error when sending: "
+            );
+          });
         break;
       //////////////////////////////////////ROAST///////////////////////////////////////
       case ".roast":
@@ -167,7 +191,7 @@ function start(client) {
             console.log(error);
           });
         break;
-      //////////////////////////////////////ROAST///////////////////////////////////////
+      ///////////////////////////////////TAG EVERYONE///////////////////////////////////////
       case ".yall":
       case ".y'all":
       case ".all":
@@ -705,10 +729,10 @@ function start(client) {
           op2percent = 0;
           pollerGrp = message.chatId;
           pollerId = message.sender.id;
-          pollerName = message.sender.verifiedName
+          (pollerName = message.sender.verifiedName
             ? message.sender.verifiedName
-            : message.sender.notifyName,
-          pollActive = true;
+            : message.sender.notifyName),
+            (pollActive = true);
         }
         if (totalVotes !== 0) {
           op1percent = (op1count / totalVotes) * 100;
@@ -1538,31 +1562,31 @@ function start(client) {
           "\nSend \n```.poll <message>-<option1>-<option2>```",
           "\nFor example:\n.poll Do you drink tea or coffee?-Tea-Coffee",
           "\n--------------------------------------------------",
-          "\n3. For mentioning everyone:",
+          "\n3. For talking with an AI:",
+          "\nSend \n```.talk <message>```",
+          "\nFor example:\n.talk Who are you?",
+          "\n--------------------------------------------------",
+          "\n4. For mentioning everyone:",
           "\nSend '```.everyone```' | Short Command: *.yall*",
           "\nFor example:\n*.everyone*",
           "\nWith msg: ```.everyone <msg>```",
           "\nFor example: *.everyone Hello*",
           "\n--------------------------------------------------",
-          "\n4. For getting Information related commands like _wiki, dictionary_ etc.:",
+          "\n5. For getting Information related commands like _wiki, dictionary_ etc.:",
           "\nSend '```InfoHelp```' | Short Command: *.ihelp*",
           "\nFor example:\n*InfoHelp*",
           "\n--------------------------------------------------",
-          "\n5. For getting Text based games related commands like _truth or dare, Would you rather_ etc.:",
+          "\n6. For getting Text based games related commands like _truth or dare, Would you rather_ etc.:",
           "\nSend '```GameHelp```' | Short Command: *.ghelp*",
           "\nFor example:\n*GameHelp*",
           "\n--------------------------------------------------",
-          "\n6. For getting Entertainment related commands like _movie, song, anime detail and lyrics_:",
+          "\n7. For getting Entertainment related commands like _movie, song, anime detail and lyrics_:",
           "\nSend '```EntHelp```' | Short Command: *.ehelp*",
           "\nFor example:\n*EntHelp*",
           "\n--------------------------------------------------",
-          "\n7. For making stickers: ",
+          "\n8. For making stickers: ",
           "\nSend the image with caption *.sticker*",
           "\n```Gifs and videos are not supported yet```",
-          "\n--------------------------------------------------",
-          "\n8. For roasting someone:",
-          "\nSend '```BotRoast <Name>```' | Short Command: *.roast* <Name>",
-          "\nFor example:\n*BotRoast John Doe*",
           "\n--------------------------------------------------",
           "\n```There is no case sensitiviy for full commands```",
         ];
@@ -1584,6 +1608,10 @@ function start(client) {
                 description: "\nFor creating polls",
               },
               {
+                title: ".talk Who are you",
+                description: "\nFor talking with an AI",
+              },
+              {
                 title: "@everyone <message>",
                 description: "For tagging everyone like discord",
               },
@@ -1603,10 +1631,6 @@ function start(client) {
               {
                 title: "AnimeHelp ",
                 description: "For getting help and commands related to Anime",
-              },
-              {
-                title: ".roast John Doe",
-                description: "For Roasting someone. Use this wisely.",
               },
             ],
           },
@@ -1799,11 +1823,18 @@ function start(client) {
           "\nSend 'wikiPage <page ID>' | Short Command: *.wp* <page ID>",
           "\nFor example:\n*wikiPage 14598*",
           "\n--------------------------------------------------",
-          "\n4. For getting the details of a Kanji:",
+          "\n4. For calculating:",
+          "\nSend '.calc <expression>'",
+          "\nFor example:\n*.calc 5*34*",
+          "\nFor using multiple expressions:",
+          "\nSend '.calc <expressions as array>",
+          "\nFor example:\n*.calc [5+2, 4*6, a= 24, a+3]*",
+          "\n--------------------------------------------------",
+          "\n5. For getting the details of a Kanji:",
           "\nSend 'KanjiDefine <Kanji>' | Short Command: *.kd* <Kanji>",
           "\nFor example:\n*KanjiDefine 空*",
           "\n--------------------------------------------------",
-          "\n5. For getting other Commands:",
+          "\n6. For getting other Commands:",
           "\nSend 'HelpBot' | Short Command: *.help*",
           "\nFor example:\n*HelpBot*",
           "\n```There is no case sensitiviy for full commands```",
@@ -1826,6 +1857,15 @@ function start(client) {
               {
                 title: "wikiPage 14598",
                 description: "For getting the details of wiki page.",
+              },
+              {
+                title: ".calc 5*34",
+                description: "For calculating",
+              },
+              {
+                title:
+                  ".calc [5+2, 4*6, a= 24, a+3,5.08 cm in inch,sin(45 deg) ^ 2]",
+                description: "For using multiple expressions:",
               },
               {
                 title: "KanjiDefine 空",
