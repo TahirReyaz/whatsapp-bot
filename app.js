@@ -474,9 +474,7 @@ function start(client) {
               // If the page is found then query exists
               const wikis = Object.values(response.data.query.pages);
               // Set the fields to be sent in message
-              composeMsg = [
-                "Checkout the bottom menu to read the page details👇",
-              ]; // composeMsg will be used as description of the button options
+              composeMsg = ["Checkout the menu for the page details👇"]; // composeMsg will be used as description of the button options
               list = [
                 {
                   title: "Search Results👌",
@@ -484,12 +482,6 @@ function start(client) {
                 },
               ];
               wikis.forEach((wiki) => {
-                composeMsg.push(
-                  "\n*Title* : ",
-                  wiki.title,
-                  " - *Page ID* : ",
-                  wiki.pageid
-                );
                 list[0].rows.push({
                   title: `WikiPage ${wiki.pageid}`,
                   description: wiki.title,
@@ -500,7 +492,7 @@ function start(client) {
               });
               sendListMenu(
                 message.chatId,
-                "Search Results",
+                `Searched: '${query}'`,
                 "subTitle",
                 msgString,
                 "Results",
@@ -513,7 +505,7 @@ function start(client) {
                 message.id.toString(),
                 "Error when sending Not found: "
               );
-              }
+            }
           })
           .catch((error) => {
             console.log(error);
@@ -896,7 +888,7 @@ function start(client) {
 
             sendListMenu(
               message.chatId,
-              "Checkout the bottom menu for getting character of the Animes",
+              "Checkout the bottom menu To get character of the Animes",
               "Help and all commands",
               msgString,
               "Commands",
@@ -1275,7 +1267,7 @@ function start(client) {
               "\n*Lyrics* :\n",
               song.lyrics,
               "\n--------------------------------------------------",
-              "\nFor getting the details of a song:",
+              "\nTo get the details of a song:",
               "\nSend 'SongDetail <Song name> | Short Command: *.sd*",
               "\nFor example:\n*SongDetail Faded*",
               "\nIf you didn't get the desired result then put the name of the artist too",
@@ -1531,40 +1523,12 @@ function start(client) {
         RecievedMsgPermission = true;
         // Compose the message
         composeMsg = [
-          "1. For just getting a reply:",
-          "\nSend ' *HiBot* ' (without the ')",
-          "\n--------------------------------------------------",
-          "\n2. For creating a Poll:",
-          "\nSend \n```.poll <message>-<option1>-<option2>```",
-          "\nFor example:\n.poll Do you drink tea or coffee?-Tea-Coffee",
-          "\n--------------------------------------------------",
-          "\n3. For talking with an AI:",
-          "\nSend \n```.talk <message>```",
-          "\nFor example:\n.talk Who are you?",
-          "\n--------------------------------------------------",
-          "\n4. For mentioning everyone:",
-          "\nSend '```.everyone```' | Short Command: *.yall*",
-          "\nFor example:\n*.everyone*",
-          "\nWith msg: ```.everyone <msg>```",
-          "\nFor example: *.everyone Hello*",
-          "\n--------------------------------------------------",
-          "\n5. For getting Information related commands like _wiki, dictionary_ etc.:",
-          "\nSend '```InfoHelp```' | Short Command: *.ihelp*",
-          "\nFor example:\n*InfoHelp*",
-          "\n--------------------------------------------------",
-          "\n6. For getting Text based games related commands like _truth or dare, Would you rather_ etc.:",
-          "\nSend '```GameHelp```' | Short Command: *.ghelp*",
-          "\nFor example:\n*GameHelp*",
-          "\n--------------------------------------------------",
-          "\n7. For getting Entertainment related commands like _movie, song, anime detail and lyrics_:",
-          "\nSend '```EntHelp```' | Short Command: *.ehelp*",
-          "\nFor example:\n*EntHelp*",
-          "\n--------------------------------------------------",
-          "\n8. For making stickers: ",
+          "Check out the bottom menu for commands👇",
+          "\nFor making stickers: ",
           "\nSend the image with caption *.sticker*",
           "\n```Gifs and videos are not supported yet```",
           "\n--------------------------------------------------",
-          "\n```There is no case sensitiviy for full commands```",
+          "\n```There is no case sensitivity or need to type . in front of the full commands```",
         ];
         composeMsg.forEach((txt) => {
           msgString += txt;
@@ -1581,11 +1545,12 @@ function start(client) {
               },
               {
                 title: ".poll <message>-<option 1>-<option 2>",
-                description: "\nFor creating polls",
+                description:
+                  "For creating polls. Example .poll Do you drink tea or coffee?-Tea-Coffee",
               },
               {
                 title: ".talk Who are you",
-                description: "\nFor talking with an AI",
+                description: "To talk with an AI",
               },
               {
                 title: "@everyone <message>",
@@ -1593,106 +1558,22 @@ function start(client) {
               },
               {
                 title: "InfoHelp ",
-                description: "For getting help and commands related to Info",
+                description:
+                  "To get Information related commands like wiki, dictionary, maths etc.",
               },
               {
                 title: "GameHelp ",
-                description: "For getting help and commands related to Games",
+                description:
+                  "To get help and commands related to Games like truth or dare, Would you rather etc.",
               },
               {
                 title: "EntHelp ",
                 description:
-                  "For getting help and commands related to Entertainment and Media",
+                  "To get Entertainment related commands like movie, song, anime detail and lyrics",
               },
               {
                 title: "AnimeHelp ",
-                description: "For getting help and commands related to Anime",
-              },
-            ],
-          },
-          {
-            title: "Info Related Commands",
-            rows: [
-              {
-                title: "EnglishDefine Table",
-                description: "For getting the definition of an English word",
-              },
-              {
-                title: ".wiki Indian Population",
-                description: "For searching a term on Wikipedia",
-              },
-              {
-                title: "wikiPage 14598",
-                description: "For getting the details of wiki page.",
-              },
-              {
-                title: "KanjiDefine 空",
-                description: "For readings and meaning of a Kanji.",
-              },
-            ],
-          },
-          {
-            title: "Entertainment and Media Related Commands",
-            rows: [
-              {
-                title: "MovieDetail Inception",
-                description: "For getting the details of a Movie/ Series",
-              },
-              {
-                title: "SongDetail Faded-Alan Walker",
-                description: "Details of a song",
-              },
-              {
-                title: ".lyrics Faded-Alan Walker",
-                description: "Lyrics of a song",
-              },
-              {
-                title: "AnimeHelp ",
-                description:
-                  "For getting help and list of Anime related commands",
-              },
-            ],
-          },
-          {
-            title: "Game Commands",
-            rows: [
-              {
-                title: "BotDare ",
-                description: "For getting a dare",
-              },
-              {
-                title: "BotTruth ",
-                description: "For getting a truth question",
-              },
-              {
-                title: "BotWyr ",
-                description: "For getting a 'Would You Rather' question",
-              },
-            ],
-          },
-          {
-            title: "Anime Commands",
-            rows: [
-              {
-                title: "AnimeDetail Naruto",
-                description: "For getting the details of an Anime",
-              },
-              {
-                title: "CharDetail Kakashi",
-                description:
-                  "For getting details of an Anime Charater by Search",
-              },
-              {
-                title: "CharIdDetail 10820",
-                description: "For getting details of an Anime Charater by ID",
-              },
-              {
-                title: "AnimeIds Naruto",
-                description: "For getting Character IDs of an anime",
-              },
-              {
-                title: "AnimeChars 100053",
-                description: "For getting Character ID and list.",
+                description: "To get help and commands related to Anime",
               },
             ],
           },
@@ -1715,28 +1596,10 @@ function start(client) {
         RecievedMsgPermission = true;
         // Compose the message
         composeMsg = [
-          "1. For getting the details of a Movie or a Series:",
-          "\nSend 'MovieDetail <title>' | Short Command: *.md* <title>",
-          "\nFor example:\n*MovieDetail Daredevil*",
-          "\n--------------------------------------------------",
-          "\n2. For getting the details of a song:",
-          "\nSend 'SongDetail <Song name>' | Short Command: *.sd* <Song name>",
-          "\nFor example:\n*SongDetail Faded*",
-          "\nIf you didn't get the desired result then put the name of the artist too with a hyphen ( - )",
+          "If you didn't get the desired result then put the name of the artist too with a hyphen ( - )",
           "\nFor example:\n*SongDetail Faded-Alan Walker*",
           "\n--------------------------------------------------",
-          "\n3. For getting the lyrics of a song:",
-          "\nSend '.lyrics <Song name>'",
-          "\nFor example:\n*.lyrics Faded*",
-          "\n--------------------------------------------------",
-          "\n4. For getting the Anime commands:",
-          "\nSend 'AnimeHelp' | Short Command: *.ahelp*",
-          "\nFor example:\n*AnimeHelp*",
-          "\n--------------------------------------------------",
-          "\n5. For getting other Commands:",
-          "\nSend 'HelpBot' | Short Command: *.help*",
-          "\nFor example:\n*HelpBot*",
-          "\n```There is no case sensitiviy for full commands```",
+          "\n```There is no case sensitivity or need to type . in front of the full commands```",
         ];
         composeMsg.forEach((txt) => {
           msgString += txt;
@@ -1747,24 +1610,25 @@ function start(client) {
             rows: [
               {
                 title: "MovieDetail Inception",
-                description: "For getting the details of a Movie/ Series",
+                description:
+                  "To get the details of a Movie/ Series | Short Command: .md <title>",
               },
               {
                 title: "SongDetail Faded-Alan Walker",
-                description: "Details of a song",
+                description:
+                  "To get the details of a song | Short Command: .sd <Song name>",
               },
               {
                 title: ".lyrics Faded-Alan Walker",
-                description: "Lyrics of a song",
+                description: "To get the lyrics of a song",
               },
               {
                 title: "AnimeHelp ",
-                description:
-                  "For getting help and list of Anime related commands",
+                description: "To get help and list of Anime related commands",
               },
               {
                 title: "HelpBot ",
-                description: "For getting help and list of all commands.",
+                description: "To get help and list of all commands.",
               },
             ],
           },
@@ -1787,7 +1651,7 @@ function start(client) {
         RecievedMsgPermission = true;
         // Compose the message
         composeMsg = [
-          "\n1. For getting the meaning of an English word:",
+          "\n1. To get the meaning of an English word:",
           "\nSend 'EnglishDefine <Word>' | Short Command: *.ed* <word>",
           "\nFor example:\n*EnglishDefine table*",
           "\n--------------------------------------------------",
@@ -1795,7 +1659,7 @@ function start(client) {
           "\nSend '.wiki <term>'",
           "\nFor example:\n*.wiki Indian Population*",
           "\n--------------------------------------------------",
-          "\n3. For getting the details of wiki page from page ID:",
+          "\n3. To get the details of wiki page from page ID:",
           "\nSend 'wikiPage <page ID>' | Short Command: *.wp* <page ID>",
           "\nFor example:\n*wikiPage 14598*",
           "\n--------------------------------------------------",
@@ -1806,11 +1670,11 @@ function start(client) {
           "\nSend '.calc <expressions as array>",
           "\nFor example:\n*.calc [5+2, 4*6, a= 24, a+3]*",
           "\n--------------------------------------------------",
-          "\n5. For getting the details of a Kanji:",
+          "\n5. To get the details of a Kanji:",
           "\nSend 'KanjiDefine <Kanji>' | Short Command: *.kd* <Kanji>",
           "\nFor example:\n*KanjiDefine 空*",
           "\n--------------------------------------------------",
-          "\n6. For getting other Commands:",
+          "\n6. To get other Commands:",
           "\nSend 'HelpBot' | Short Command: *.help*",
           "\nFor example:\n*HelpBot*",
           "\n```There is no case sensitiviy for full commands```",
@@ -1824,7 +1688,7 @@ function start(client) {
             rows: [
               {
                 title: "EnglishDefine Table",
-                description: "For getting the definition of an English word",
+                description: "To get the definition of an English word",
               },
               {
                 title: ".wiki Indian Population",
@@ -1832,7 +1696,7 @@ function start(client) {
               },
               {
                 title: "wikiPage 14598",
-                description: "For getting the details of wiki page.",
+                description: "To get the details of wiki page.",
               },
               {
                 title: ".calc 5*34",
@@ -1849,7 +1713,7 @@ function start(client) {
               },
               {
                 title: "HelpBot ",
-                description: "For getting help and list of all commands.",
+                description: "To get help and list of all commands.",
               },
             ],
           },
@@ -1875,15 +1739,15 @@ function start(client) {
           "```Text based Games related commands```",
           "\n--------------------------------------------------",
           "\n1. For Truth or Dare Game:",
-          "\nSend 'BotTruth' for getting a truth question | Short Command: *.truth*",
-          "\n\nSend 'BotDare' for getting a dare | Short Command: *.dare*",
+          "\nSend 'BotTruth' To get a truth question | Short Command: *.truth*",
+          "\n\nSend 'BotDare' To get a dare | Short Command: *.dare*",
           "\nFor example:\n*BotTruth* or *BotDare*",
           "\n--------------------------------------------------",
-          "\n2. For getting a 'Would You Rather' question:",
+          "\n2. To get a 'Would You Rather' question:",
           "\nSend 'BotWyr' | Short Command: *.wyr*",
           "\nFor example:\n*BotWyr*",
           "\n--------------------------------------------------",
-          "\n3. For getting other Commands:",
+          "\n3. To get other Commands:",
           "\nSend 'HelpBot' | Short Command: *.help*",
           "\nFor example:\n*HelpBot*",
           "\n```There is no case sensitiviy for full commands```",
@@ -1897,19 +1761,19 @@ function start(client) {
             rows: [
               {
                 title: "BotDare ",
-                description: "For getting a dare",
+                description: "To get a dare",
               },
               {
                 title: "BotTruth ",
-                description: "For getting a truth question",
+                description: "To get a truth question",
               },
               {
                 title: "BotWyr ",
-                description: "For getting a 'Would You Rather' question",
+                description: "To get a 'Would You Rather' question",
               },
               {
                 title: "HelpBot ",
-                description: "For getting help and list of all commands.",
+                description: "To get help and list of all commands.",
               },
             ],
           },
@@ -1932,27 +1796,27 @@ function start(client) {
         RecievedMsgPermission = true;
         // Compose the message
         composeMsg = [
-          "1. For getting the details of an Anime:",
+          "1. To get the details of an Anime:",
           "\nSend 'AnimeDetail <Title>' | Short Command: *.ad* <Title>",
           "\nFor example:\n*AnimeDetail Naruto*",
           "\n--------------------------------------------------",
-          "\n2. For getting details of an Anime character by search:",
+          "\n2. To get details of an Anime character by search:",
           "\nSend 'CharDetail <Name>' | Short Command: *.cd* <Name>",
           "\nFor example:\n*CharDetail Kakashi*",
           "\n--------------------------------------------------",
-          "\n3. For getting details of an Anime character by id:",
+          "\n3. To get details of an Anime character by id:",
           "\nSend 'CharIdDetail <id>' | Short Command: *.cid* <id>",
           "\nFor example:\n*CharIdDetail 10820*",
           "\n--------------------------------------------------",
-          "\n4. For getting IDs of an Anime by search:",
+          "\n4. To get IDs of an Anime by search:",
           "\nSend 'AnimeIds <Anime name or Title>' | Short Command: *.aid* <Name or Title>",
           "\nFor example:\n*AnimeIds Naruto*",
           "\n--------------------------------------------------",
-          "\n5. For getting character list and character Ids of an Anime by anime id:",
+          "\n5. To get character list and character Ids of an Anime by anime id:",
           "\nSend 'AnimeChars <AnimeId>' | Short Command: *.ac* <AnimeId>",
           "\nFor example:\n*AnimeChars 100053*",
           "\n--------------------------------------------------",
-          "\n6. For getting other Commands:",
+          "\n6. To get other Commands:",
           "\nSend 'HelpBot' | Short Command: *.help*",
           "\nFor example:\n*HelpBot*",
           "\n```There is no case sensitiviy for full commands```",
@@ -1966,28 +1830,27 @@ function start(client) {
             rows: [
               {
                 title: "AnimeDetail Naruto",
-                description: "For getting the details of an Anime",
+                description: "To get the details of an Anime",
               },
               {
                 title: "CharDetail Kakashi",
-                description:
-                  "For getting details of an Anime Charater by Search",
+                description: "To get details of an Anime Charater by Search",
               },
               {
                 title: "CharIdDetail 10820",
-                description: "For getting details of an Anime Charater by ID",
+                description: "To get details of an Anime Charater by ID",
               },
               {
                 title: "AnimeIds Naruto",
-                description: "For getting Character IDs of an anime",
+                description: "To get Character IDs of an anime",
               },
               {
                 title: "AnimeChars 100053",
-                description: "For getting Character ID and list.",
+                description: "To get Character ID and list.",
               },
               {
                 title: "HelpBot ",
-                description: "For getting help and list of all commands.",
+                description: "To get help and list of all commands.",
               },
             ],
           },
