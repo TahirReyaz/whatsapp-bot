@@ -10,6 +10,9 @@ const acb = require("acb-api");
 const musicInfo = require("music-info");
 const wyr = require("wyr");
 const openai = require("openai-grammaticalcorrection");
+const fs = require('fs');
+const mime = require('mime-types');
+const { MediaType } = require('venom-bot/dist/api/model/enum');
 require("dotenv").config();
 
 // Create the client
@@ -75,7 +78,7 @@ function start(client) {
     pollerId = "",
     pollerName = "",
     pollerGrp = "";
-  client.onAnyMessage((message) => {
+  client.onAnyMessage(async(message) => {
     // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
@@ -1880,30 +1883,21 @@ function start(client) {
       message.type === "image" &&
       (message.caption === ".sticker" || message.caption === ".sparsh")
     ) {
-      const previewImg = message.mediaData.preview._b64;
+      // const previewImg = message.mediaData.preview._b64;
       // console.log("\nresult:----------------\n" + previewImg.substring(0, 300));
-      client
-        .sendImageAsSticker(message.chatId, previewImg)
-        .then(() => {
-          console.log("Sticker sent\n-------------------------\n");
-        })
-        .catch((erro) => {
-          console.error("Error when sending sticker: \n" + erro);
-        });
-
-      client
-        .reply(
-          message.chatId,
-          "*Somry* for the poor quality of the sticker the sticker command is not working properly. Due to issues in the venom-bot package. I'll fix it as soon as the develepors fix the issue.\nSomeone has commented a workaround, I'll look into it and fixed it when I feel so.\n\nContact the sticker maker of your group if you still want a sticker or\nDO IT YOURSELF",
-          message.id.toString()
-        )
-        .then(() => {
-          console.log("Sticker not sent\n-------------------------\n");
-        })
-        .catch((erro) => {
-          console.error("Error when sending sticker: ", erro);
-        });
-
+          const buffer = await client.decryptFile(message);
+          let fileName = `some-file-name.${mime.extension(message.mimetype)}`;
+            fs.writeFile(fileName, buffer, (err) => {
+             client.sendImageAsSticker(message.chatId, fileName)
+              .then(() => {
+                  console.log("Sticker sent\n-------------------------\n");
+               })
+              .catch((erro) => {
+                 console.error("Error when sending sticker: \n" + erro);
+              });
+              fs.unlink(fileName,(err)=>{});
+            });
+      }
       // console.log(message);
       // .then(res => console.log(Buffer.from(res).toString('base64').substring(0, 100)));
       // client
