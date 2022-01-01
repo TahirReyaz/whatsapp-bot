@@ -1951,9 +1951,7 @@ function start2(client) {
       // const previewImg = message.mediaData.preview._b64;
       // console.log("\nresult:----------------\n" + previewImg.substring(0, 300));
       const buffer = await client.decryptFile(message);
-      const fileName = `files/some-file-name.${mime.extension(
-        message.mimetype
-      )}`;
+      const fileName = `some-file-name.${mime.extension(message.mimetype)}`;
       fs.writeFile(fileName, buffer, (err) => {
         client
           .sendImageAsSticker(message.chatId, fileName)
