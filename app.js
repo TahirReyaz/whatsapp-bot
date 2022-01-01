@@ -21,14 +21,16 @@ venom
     session: "session-name", //name of session
     multidevice: false, // for version not multidevice use false.(default: true)
   })
-  .then((client) => start(client))
+  .then((client) => {
+    start(client);
+    start2(client)
+  })
   .catch((erro) => {
     console.log(erro);
   });
-
+  let RecievedMsgPermission = false;
 // Start the client
 function start(client) {
-  let RecievedMsgPermission = false,
     buttonsArray = [];
   const nsfwGrps = [
     "MEMES",
@@ -78,7 +80,7 @@ function start(client) {
     pollerId = "",
     pollerName = "",
     pollerGrp = "";
-  client.onAnyMessage(async(message) => {
+  client.onAnyMessage(message => {
     // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
@@ -1869,9 +1871,13 @@ function start(client) {
         );
         break;
     }
+  });
+}
+function start2(client){
+     client.onAnyMessage(async(message) => {
     ////////////////////////////////MISCELLANEOUS FEATURES//////////////////////////////
-    if (message.body === "send contact" && message.isGroupMsg === false) {
-      client
+      if (message.body === "send contact" && message.isGroupMsg === false) {
+       client
         .sendContactVcard(message.chatId, message.to, "Tahir")
         .then((result) => {
           console.log("Result: ", result);
@@ -1879,14 +1885,14 @@ function start(client) {
         .catch((erro) => {
           console.error("Error when sending: ", erro);
         });
-    } else if (
+      } else if (
       message.type === "image" &&
       (message.caption === ".sticker" || message.caption === ".sparsh")
     ) {
       // const previewImg = message.mediaData.preview._b64;
       // console.log("\nresult:----------------\n" + previewImg.substring(0, 300));
           const buffer = await client.decryptFile(message);
-          let fileName = `some-file-name.${mime.extension(message.mimetype)}`;
+          const fileName = `some-file-name.${mime.extension(message.mimetype)}`;
             fs.writeFile(fileName, buffer, (err) => {
              client.sendImageAsSticker(message.chatId, fileName)
               .then(() => {
@@ -1895,9 +1901,8 @@ function start(client) {
               .catch((erro) => {
                  console.error("Error when sending sticker: \n" + erro);
               });
-              fs.unlink(fileName,(err)=>{});
+              //fs.unlink(fileName,(err)=>{});
             });
-      }
       // console.log(message);
       // .then(res => console.log(Buffer.from(res).toString('base64').substring(0, 100)));
       // client
@@ -1935,10 +1940,10 @@ function start(client) {
       //     console.log("In catch block of download media");
       //     console.log(error);
       //   });
-    } else if (
+      } else if (
       message.type === "video" &&
-      (message.caption === ".sticker" || message.caption === ".sparsh")
-    ) {
+      (message.caption === ".sticker" || message.caption === ".sparsh"))
+      {
       client
         .reply(
           message.chatId,
@@ -1990,6 +1995,7 @@ function start(client) {
       RecievedMsgPermission = false;
     }
   });
+}
 
   //////////////////////////// FUNCTIONS ///////////////////////////
 
@@ -2049,7 +2055,6 @@ function start(client) {
         console.error(errMsg, erro);
       });
   };
-}
 
 ///////////////////////////////////+1 COUNTER///////////////////////////////
 // case "+1":
