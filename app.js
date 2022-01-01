@@ -10,9 +10,9 @@ const acb = require("acb-api");
 const musicInfo = require("music-info");
 const wyr = require("wyr");
 const openai = require("openai-grammaticalcorrection");
-const fs = require('fs');
-const mime = require('mime-types');
-const { MediaType } = require('venom-bot/dist/api/model/enum');
+const fs = require("fs");
+const mime = require("mime-types");
+const { MediaType } = require("venom-bot/dist/api/model/enum");
 require("dotenv").config();
 
 // Create the client
@@ -23,15 +23,15 @@ venom
   })
   .then((client) => {
     start(client);
-    start2(client)
+    start2(client);
   })
   .catch((erro) => {
     console.log(erro);
   });
-  let RecievedMsgPermission = false;
+let RecievedMsgPermission = false;
 // Start the client
 function start(client) {
-    buttonsArray = [];
+  buttonsArray = [];
   const nsfwGrps = [
     "MEMES",
     "CATS",
@@ -80,7 +80,7 @@ function start(client) {
     pollerId = "",
     pollerName = "",
     pollerGrp = "";
-  client.onAnyMessage(message => {
+  client.onAnyMessage((message) => {
     // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
@@ -1870,14 +1870,73 @@ function start(client) {
           list
         );
         break;
-    }    
+    }
   });
+
+  //////////////////////////// FUNCTIONS ///////////////////////////
+
+  const sendButtons = (sender, msg, buttons, description) => {
+    client
+      .sendButtons(sender, msg, buttons, description)
+      .then(() => {
+        console.log("Sent message: ", msg + "\n-------------------------");
+      })
+      .catch((erro) => {
+        console.error("Error when sending: ", erro);
+      });
+  };
+
+  const sendListMenu = (sender, title, subtitle, desc, menuName, list) => {
+    client
+      .sendListMenu(sender, title, subtitle, desc, menuName, list)
+      .then(() => {
+        console.log("Menu sent");
+      })
+      .catch((erro) => {
+        console.error("Error when sending: ", erro);
+      });
+  };
+
+  const sendText = (sender, text, errMsg) => {
+    client
+      .sendText(sender, text)
+      .then(() => {
+        console.log("Sent message: " + text + "\n------------------\n");
+      })
+      .catch((erro) => {
+        console.error(errMsg, erro);
+      });
+  };
+
+  const sendReply = (sender, text, messageId, errMsg) => {
+    client
+      .reply(sender, text, messageId)
+      .then(() => {
+        console.log(
+          "Reply sent:\n" + text + "\n------------------------------"
+        );
+      })
+      .catch((erro) => {
+        console.error(errMsg, erro);
+      });
+  };
+
+  const sendImage = (sender, img, text, errMsg) => {
+    client
+      .sendImage(sender, img, null, text)
+      .then(() => {
+        console.log("Sent message: \n" + text + "\n--------------------");
+      })
+      .catch((erro) => {
+        console.error(errMsg, erro);
+      });
+  };
 }
-function start2(client){
-     client.onAnyMessage(async(message) => {
+function start2(client) {
+  client.onAnyMessage(async (message) => {
     ////////////////////////////////MISCELLANEOUS FEATURES//////////////////////////////
-      if (message.body === "send contact" && message.isGroupMsg === false) {
-       client
+    if (message.body === "send contact" && message.isGroupMsg === false) {
+      client
         .sendContactVcard(message.chatId, message.to, "Tahir")
         .then((result) => {
           console.log("Result: ", result);
@@ -1885,24 +1944,25 @@ function start2(client){
         .catch((erro) => {
           console.error("Error when sending: ", erro);
         });
-      } else if (
+    } else if (
       message.type === "image" &&
       (message.caption === ".sticker" || message.caption === ".sparsh")
     ) {
       // const previewImg = message.mediaData.preview._b64;
       // console.log("\nresult:----------------\n" + previewImg.substring(0, 300));
-          const buffer = await client.decryptFile(message);
-          const fileName = `some-file-name.${mime.extension(message.mimetype)}`;
-            fs.writeFile(fileName, buffer, (err) => {
-             client.sendImageAsSticker(message.chatId, fileName)
-              .then(() => {
-                  console.log("Sticker sent\n-------------------------\n");
-               })
-              .catch((erro) => {
-                 console.error("Error when sending sticker: \n" + erro);
-              });
-              //fs.unlink(fileName,(err)=>{});
-            });
+      const buffer = await client.decryptFile(message);
+      const fileName = `some-file-name.${mime.extension(message.mimetype)}`;
+      fs.writeFile(fileName, buffer, (err) => {
+        client
+          .sendImageAsSticker(message.chatId, fileName)
+          .then(() => {
+            console.log("Sticker sent\n-------------------------\n");
+          })
+          .catch((erro) => {
+            console.error("Error when sending sticker: \n" + erro);
+          });
+        //fs.unlink(fileName,(err)=>{});
+      });
       // console.log(message);
       // .then(res => console.log(Buffer.from(res).toString('base64').substring(0, 100)));
       // client
@@ -1940,10 +2000,10 @@ function start2(client){
       //     console.log("In catch block of download media");
       //     console.log(error);
       //   });
-      } else if (
+    } else if (
       message.type === "video" &&
-      (message.caption === ".sticker" || message.caption === ".sparsh"))
-      {
+      (message.caption === ".sticker" || message.caption === ".sparsh")
+    ) {
       client
         .reply(
           message.chatId,
@@ -1982,7 +2042,7 @@ function start2(client){
       console.log(
         "------------------------------------------\n",
         "Recieved Message: ",
-        data,
+        message.body,
         "\nType: ",
         message.type,
         "\nName: ",
@@ -1996,65 +2056,6 @@ function start2(client){
     }
   });
 }
-
-  //////////////////////////// FUNCTIONS ///////////////////////////
-
-  const sendButtons = (sender, msg, buttons, description) => {
-    client
-      .sendButtons(sender, msg, buttons, description)
-      .then(() => {
-        console.log("Sent message: ", msg + "\n-------------------------");
-      })
-      .catch((erro) => {
-        console.error("Error when sending: ", erro);
-      });
-  };
-
-  const sendListMenu = (sender, title, subtitle, desc, menuName, list) => {
-    client
-      .sendListMenu(sender, title, subtitle, desc, menuName, list)
-      .then(() => {
-        console.log("Menu sent");
-      })
-      .catch((erro) => {
-        console.error("Error when sending: ", erro);
-      });
-  };
-
-  const sendText = (sender, text, errMsg) => {
-    client
-      .sendText(sender, text)
-      .then(() => {
-        console.log("Sent message: " + text + "\n------------------\n");
-      })
-      .catch((erro) => {
-        console.error(errMsg, erro);
-      });
-  };
-
-   const sendReply = (sender, text, messageId, errMsg) => {
-    client
-      .reply(sender, text, messageId)
-      .then(() => {
-        console.log(
-          "Reply sent:\n" + text + "\n------------------------------"
-        );
-      })
-      .catch((erro) => {
-        console.error(errMsg, erro);
-      });
-  };
-
-   const sendImage = (sender, img, text, errMsg) => {
-    client
-      .sendImage(sender, img, null, text)
-      .then(() => {
-        console.log("Sent message: \n" + text + "\n--------------------");
-      })
-      .catch((erro) => {
-        console.error(errMsg, erro);
-      });
-    };
 
 ///////////////////////////////////+1 COUNTER///////////////////////////////
 // case "+1":
