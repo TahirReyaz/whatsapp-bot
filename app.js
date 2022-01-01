@@ -10,6 +10,9 @@ const acb = require("acb-api");
 const musicInfo = require("music-info");
 const wyr = require("wyr");
 const openai = require("openai-grammaticalcorrection");
+const fs = require('fs');
+const mime = require('mime-types');
+const { MediaType } = require('venom-bot/dist/api/model/enum');
 require("dotenv").config();
 
 // Create the client
@@ -18,14 +21,16 @@ venom
     session: "session-name", //name of session
     multidevice: false, // for version not multidevice use false.(default: true)
   })
-  .then((client) => start(client))
+  .then((client) => {
+    start(client);
+    start2(client)
+  })
   .catch((erro) => {
     console.log(erro);
   });
-
+  let RecievedMsgPermission = false;
 // Start the client
 function start(client) {
-  let RecievedMsgPermission = false,
     buttonsArray = [];
   const nsfwGrps = [
     "MEMES",
@@ -75,7 +80,7 @@ function start(client) {
     pollerId = "",
     pollerName = "",
     pollerGrp = "";
-  client.onAnyMessage((message) => {
+  client.onAnyMessage(message => {
     // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
@@ -1866,9 +1871,13 @@ function start(client) {
         );
         break;
     }
+  });
+}
+function start2(client){
+     client.onAnyMessage(async(message) => {
     ////////////////////////////////MISCELLANEOUS FEATURES//////////////////////////////
-    if (message.body === "send contact" && message.isGroupMsg === false) {
-      client
+      if (message.body === "send contact" && message.isGroupMsg === false) {
+       client
         .sendContactVcard(message.chatId, message.to, "Tahir")
         .then((result) => {
           console.log("Result: ", result);
@@ -1876,34 +1885,24 @@ function start(client) {
         .catch((erro) => {
           console.error("Error when sending: ", erro);
         });
-    } else if (
+      } else if (
       message.type === "image" &&
       (message.caption === ".sticker" || message.caption === ".sparsh")
     ) {
-      const previewImg = message.mediaData.preview._b64;
+      // const previewImg = message.mediaData.preview._b64;
       // console.log("\nresult:----------------\n" + previewImg.substring(0, 300));
-      client
-        .sendImageAsSticker(message.chatId, previewImg)
-        .then(() => {
-          console.log("Sticker sent\n-------------------------\n");
-        })
-        .catch((erro) => {
-          console.error("Error when sending sticker: \n" + erro);
-        });
-
-      client
-        .reply(
-          message.chatId,
-          "*Somry* for the poor quality of the sticker the sticker command is not working properly. Due to issues in the venom-bot package. I'll fix it as soon as the develepors fix the issue.\nSomeone has commented a workaround, I'll look into it and fixed it when I feel so.\n\nContact the sticker maker of your group if you still want a sticker or\nDO IT YOURSELF",
-          message.id.toString()
-        )
-        .then(() => {
-          console.log("Sticker not sent\n-------------------------\n");
-        })
-        .catch((erro) => {
-          console.error("Error when sending sticker: ", erro);
-        });
-
+          const buffer = await client.decryptFile(message);
+          const fileName = `some-file-name.${mime.extension(message.mimetype)}`;
+            fs.writeFile(fileName, buffer, (err) => {
+             client.sendImageAsSticker(message.chatId, fileName)
+              .then(() => {
+                  console.log("Sticker sent\n-------------------------\n");
+               })
+              .catch((erro) => {
+                 console.error("Error when sending sticker: \n" + erro);
+              });
+              //fs.unlink(fileName,(err)=>{});
+            });
       // console.log(message);
       // .then(res => console.log(Buffer.from(res).toString('base64').substring(0, 100)));
       // client
@@ -1941,10 +1940,10 @@ function start(client) {
       //     console.log("In catch block of download media");
       //     console.log(error);
       //   });
-    } else if (
+      } else if (
       message.type === "video" &&
-      (message.caption === ".sticker" || message.caption === ".sparsh")
-    ) {
+      (message.caption === ".sticker" || message.caption === ".sparsh"))
+      {
       client
         .reply(
           message.chatId,
@@ -1996,6 +1995,7 @@ function start(client) {
       RecievedMsgPermission = false;
     }
   });
+}
 
   //////////////////////////// FUNCTIONS ///////////////////////////
 
@@ -2055,7 +2055,6 @@ function start(client) {
         console.error(errMsg, erro);
       });
   };
-}
 
 ///////////////////////////////////+1 COUNTER///////////////////////////////
 // case "+1":
