@@ -1871,6 +1871,83 @@ function start(client) {
         );
         break;
     }
+
+  //////////////////////////// FUNCTIONS ///////////////////////////
+
+  const sendButtons = (sender, msg, buttons, description) => {
+    client
+      .sendButtons(sender, msg, buttons, description)
+      .then(() => {
+        console.log("Sent message: ", msg + "\n-------------------------");
+      })
+      .catch((erro) => {
+        console.error("Error when sending: ", erro);
+      });
+  };
+
+  const sendListMenu = (sender, title, subtitle, desc, menuName, list) => {
+    client
+      .sendListMenu(sender, title, subtitle, desc, menuName, list)
+      .then(() => {
+        console.log("Menu sent");
+      })
+      .catch((erro) => {
+        console.error("Error when sending: ", erro);
+      });
+  };
+
+  const sendText = (sender, text, errMsg) => {
+    client
+      .sendText(sender, text)
+      .then(() => {
+        console.log("Sent message: " + text + "\n------------------\n");
+      })
+      .catch((erro) => {
+        console.error(errMsg, erro);
+      });
+  };
+
+   const sendReply = (sender, text, messageId, errMsg) => {
+    client
+      .reply(sender, text, messageId)
+      .then(() => {
+        console.log(
+          "Reply sent:\n" + text + "\n------------------------------"
+        );
+      })
+      .catch((erro) => {
+        console.error(errMsg, erro);
+      });
+  };
+
+   const sendImage = (sender, img, text, errMsg) => {
+    client
+      .sendImage(sender, img, null, text)
+      .then(() => {
+        console.log("Sent message: \n" + text + "\n--------------------");
+      })
+      .catch((erro) => {
+        console.error(errMsg, erro);
+      });
+    };
+    // Log the recieved msg
+    if (RecievedMsgPermission) {
+      const messageTime = new Date(message.timestamp * 1000);
+      console.log(
+        "------------------------------------------\n",
+        "Recieved Message: ",
+        data,
+        "\nType: ",
+        message.type,
+        "\nName: ",
+        message.sender.displayName,
+        "\nID: ",
+        message.sender.id,
+        "\nTime: ",
+        messageTime.toString()
+      );
+      RecievedMsgPermission = false;
+    }
   });
 }
 function start2(client){
@@ -1976,85 +2053,10 @@ function start2(client){
       //   ...
       // });
     }
-    // Log the recieved msg
-    if (RecievedMsgPermission) {
-      const messageTime = new Date(message.timestamp * 1000);
-      console.log(
-        "------------------------------------------\n",
-        "Recieved Message: ",
-        data,
-        "\nType: ",
-        message.type,
-        "\nName: ",
-        message.sender.displayName,
-        "\nID: ",
-        message.sender.id,
-        "\nTime: ",
-        messageTime.toString()
-      );
-      RecievedMsgPermission = false;
-    }
+    
   });
 }
 
-  //////////////////////////// FUNCTIONS ///////////////////////////
-
-  const sendButtons = (sender, msg, buttons, description) => {
-    client
-      .sendButtons(sender, msg, buttons, description)
-      .then(() => {
-        console.log("Sent message: ", msg + "\n-------------------------");
-      })
-      .catch((erro) => {
-        console.error("Error when sending: ", erro);
-      });
-  };
-
-  const sendListMenu = (sender, title, subtitle, desc, menuName, list) => {
-    client
-      .sendListMenu(sender, title, subtitle, desc, menuName, list)
-      .then(() => {
-        console.log("Menu sent");
-      })
-      .catch((erro) => {
-        console.error("Error when sending: ", erro);
-      });
-  };
-
-  const sendText = (sender, text, errMsg) => {
-    client
-      .sendText(sender, text)
-      .then(() => {
-        console.log("Sent message: " + text + "\n------------------\n");
-      })
-      .catch((erro) => {
-        console.error(errMsg, erro);
-      });
-  };
-
-  const sendReply = (sender, text, messageId, errMsg) => {
-    client
-      .reply(sender, text, messageId)
-      .then(() => {
-        console.log(
-          "Reply sent:\n" + text + "\n------------------------------"
-        );
-      })
-      .catch((erro) => {
-        console.error(errMsg, erro);
-      });
-  };
-
-  const sendImage = (sender, img, text, errMsg) => {
-    client
-      .sendImage(sender, img, null, text)
-      .then(() => {
-        console.log("Sent message: \n" + text + "\n--------------------");
-      })
-      .catch((erro) => {
-        console.error(errMsg, erro);
-      });
-  };
 
 ///////////////////////////////////+1 COUNTER///////////////////////////////
 // case "+1":
