@@ -1936,16 +1936,7 @@ function start(client) {
 function start2(client) {
   client.onAnyMessage(async (message) => {
     ////////////////////////////////MISCELLANEOUS FEATURES//////////////////////////////
-    if (message.body === "send contact" && message.isGroupMsg === false) {
-      client
-        .sendContactVcard(message.chatId, message.to, "Tahir")
-        .then((result) => {
-          console.log("Result: ", result);
-        })
-        .catch((erro) => {
-          console.error("Error when sending: ", erro);
-        });
-    } else if (
+    if (
       message.type === "image" &&
       (message.caption === ".sticker" || message.caption === ".sparsh")
     ) {
@@ -2003,63 +1994,47 @@ function start2(client) {
       //   });
     } else if (
       message.type === "video" &&
-      (message.caption === ".sticker" || message.caption === ".sparsh")){
-        const buffer = await client.decryptFile(message);
-        fileName = `some-file-name.${mime.extension(message.mimetype)}`;
-        fs.writeFile(fileName, buffer, (err) =>{});
-          fileName = fileName.slice(0, 14) + ".gif";
-          var opts = {
-            width: 500,
-          };
-          gify(
-            "some-file-name.mp4",
-            "some-file-name.gif",
-            opts,
-            function (err) {
-              if (err) throw err;
-              //console.log(fileName);
-              client
-                .sendImageAsStickerGif(message.chatId, fileName)
-                .then(() => {
-                  console.log("Sticker sent\n-------------------------\n");
-                })
-                .catch((erro) => {
-                  console.error("Error when sending sticker: \n" + erro);
-                });
-            }
-          );
-        }
-      /*client
-        .reply(
-          message.chatId,
-          "gifs and videos are not supported yet",
-          message.id.toString()
-        )
-        .then(() => {
-          console.log("gif not sent\n-------------------------\n");
-        })
-        .catch((erro) => {
-          console.error("Error when sending sticker: ", erro);
-        });*/
-      // client
-      // .downloadMedia(message.id)
-      // .then(result => {
-      // console.log(result.substring(22, 50));
-      // const gif = result.substring(22, result.length);
-      // })
-      // .catch(erro => (console.log(erro)));
-      // } else if (message.isMedia === true || message.isMMS === true) {
-      //   client
-      //     .decryptFile(message)
-      //     .then(res => console.log(Buffer.from(res).toString('base64').substring(0, 100)));
-      // const buffer = client.decryptFile(message);
-      // console.log(buffer);
-      // At this point you can do whatever you want with the buffer
-      // Most likely you want to write it into a file
-      // const fileName = `some-file-name.${mime.extension(message.mimetype)}`;
-      // await fs.writeFile(fileName, buffer, (err) => {
-      //   ...
-      // });
+      (message.caption === ".sticker" || message.caption === ".sparsh")
+    ) {
+      const buffer = await client.decryptFile(message);
+      fileName = `some-file-name.${mime.extension(message.mimetype)}`;
+      fs.writeFile(fileName, buffer, (err) => {});
+      fileName = fileName.slice(0, 14) + ".gif";
+      var opts = {
+        width: 500,
+      };
+      gify("some-file-name.mp4", "some-file-name.gif", opts, function (err) {
+        if (err) throw err;
+        //console.log(fileName);
+        client
+          .sendImageAsStickerGif(message.chatId, fileName)
+          .then(() => {
+            console.log("Sticker sent\n-------------------------\n");
+          })
+          .catch((erro) => {
+            console.error("Error when sending sticker: \n" + erro);
+          });
+      });
+    }
+    // client
+    // .downloadMedia(message.id)
+    // .then(result => {
+    // console.log(result.substring(22, 50));
+    // const gif = result.substring(22, result.length);
+    // })
+    // .catch(erro => (console.log(erro)));
+    // } else if (message.isMedia === true || message.isMMS === true) {
+    //   client
+    //     .decryptFile(message)
+    //     .then(res => console.log(Buffer.from(res).toString('base64').substring(0, 100)));
+    // const buffer = client.decryptFile(message);
+    // console.log(buffer);
+    // At this point you can do whatever you want with the buffer
+    // Most likely you want to write it into a file
+    // const fileName = `some-file-name.${mime.extension(message.mimetype)}`;
+    // await fs.writeFile(fileName, buffer, (err) => {
+    //   ...
+    // });
     // Log the recieved msg
     if (RecievedMsgPermission) {
       const messageTime = new Date(message.timestamp * 1000);
