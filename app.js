@@ -2016,25 +2016,6 @@ function start2(client) {
           });
       });
     }
-    // client
-    // .downloadMedia(message.id)
-    // .then(result => {
-    // console.log(result.substring(22, 50));
-    // const gif = result.substring(22, result.length);
-    // })
-    // .catch(erro => (console.log(erro)));
-    // } else if (message.isMedia === true || message.isMMS === true) {
-    //   client
-    //     .decryptFile(message)
-    //     .then(res => console.log(Buffer.from(res).toString('base64').substring(0, 100)));
-    // const buffer = client.decryptFile(message);
-    // console.log(buffer);
-    // At this point you can do whatever you want with the buffer
-    // Most likely you want to write it into a file
-    // const fileName = `some-file-name.${mime.extension(message.mimetype)}`;
-    // await fs.writeFile(fileName, buffer, (err) => {
-    //   ...
-    // });
     // Log the recieved msg
     if (RecievedMsgPermission) {
       const messageTime = new Date(message.timestamp * 1000);
