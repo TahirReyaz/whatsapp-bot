@@ -2,4 +2,6 @@ node_modules/
 tokens/
 files/
 some-file-name.jpeg
+some-file-name.mp4
+some-file-name.gif
 .env

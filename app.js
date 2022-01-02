@@ -13,6 +13,7 @@ const openai = require("openai-grammaticalcorrection");
 const fs = require("fs");
 const mime = require("mime-types");
 const { MediaType } = require("venom-bot/dist/api/model/enum");
+const gify = require("gify");
 require("dotenv").config();
 
 // Create the client
@@ -1951,7 +1952,7 @@ function start2(client) {
       // const previewImg = message.mediaData.preview._b64;
       // console.log("\nresult:----------------\n" + previewImg.substring(0, 300));
       const buffer = await client.decryptFile(message);
-      const fileName = `some-file-name.${mime.extension(message.mimetype)}`;
+      let fileName = `some-file-name.${mime.extension(message.mimetype)}`;
       fs.writeFile(fileName, buffer, (err) => {
         client
           .sendImageAsSticker(message.chatId, fileName)
@@ -2002,9 +2003,33 @@ function start2(client) {
       //   });
     } else if (
       message.type === "video" &&
-      (message.caption === ".sticker" || message.caption === ".sparsh")
-    ) {
-      client
+      (message.caption === ".sticker" || message.caption === ".sparsh")){
+        const buffer = await client.decryptFile(message);
+        fileName = `some-file-name.${mime.extension(message.mimetype)}`;
+        fs.writeFile(fileName, buffer, (err) =>{});
+          fileName = fileName.slice(0, 14) + ".gif";
+          var opts = {
+            width: 500,
+          };
+          gify(
+            "some-file-name.mp4",
+            "some-file-name.gif",
+            opts,
+            function (err) {
+              if (err) throw err;
+              //console.log(fileName);
+              client
+                .sendImageAsStickerGif(message.chatId, fileName)
+                .then(() => {
+                  console.log("Sticker sent\n-------------------------\n");
+                })
+                .catch((erro) => {
+                  console.error("Error when sending sticker: \n" + erro);
+                });
+            }
+          );
+        }
+      /*client
         .reply(
           message.chatId,
           "gifs and videos are not supported yet",
@@ -2015,7 +2040,7 @@ function start2(client) {
         })
         .catch((erro) => {
           console.error("Error when sending sticker: ", erro);
-        });
+        });*/
       // client
       // .downloadMedia(message.id)
       // .then(result => {
@@ -2035,7 +2060,6 @@ function start2(client) {
       // await fs.writeFile(fileName, buffer, (err) => {
       //   ...
       // });
-    }
     // Log the recieved msg
     if (RecievedMsgPermission) {
       const messageTime = new Date(message.timestamp * 1000);
