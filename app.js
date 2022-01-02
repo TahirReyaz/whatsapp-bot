@@ -1,8 +1,6 @@
 // Supports ES6
 // import { create, Whatsapp } from 'venom-bot';
 const venom = require("venom-bot");
-// const { useragentOverride } = require('venom-bot/dist/config/WAuserAgente');
-// const { makeOptions, magix, timeout } = require('venom-bot/dist/api/helpers/decrypt');
 const truthOrDareFile = require("./data/truth-or-dare.json");
 const axios = require("axios");
 const malScraper = require("mal-scraper");
@@ -1877,11 +1875,15 @@ function start(client) {
       message.type === "image" &&
       (message.caption === ".sticker" || message.caption === ".sparsh")
     ) {
+      RecievedMsgPermission = true;
       sendImgSticker(message);
-    } else if (
+    }
+    /////////////////////// Gif Sticker ////////////////////////
+    else if (
       message.type === "video" &&
       (message.caption === ".sticker" || message.caption === ".sparsh")
     ) {
+      RecievedMsgPermission = true;
       sendGifSticker(message);
     }
 
@@ -2008,34 +2010,3 @@ function start(client) {
     });
   };
 }
-// function start2(client) {
-//   client.onAnyMessage(async (message) => {
-//     ////////////////////////////////MISCELLANEOUS FEATURES//////////////////////////////
-//     if (
-//       message.type === "video" &&
-//       (message.caption === ".sticker" || message.caption === ".sparsh")
-//     ) {
-//       const buffer = await client.decryptFile(message);
-//       fileName = `some-file-name.${mime.extension(message.mimetype)}`;
-//       fs.writeFile(fileName, buffer, (err) => {
-//         console.log("Error while writing file", err);
-//       });
-//       fileName = fileName.slice(0, 14) + ".gif";
-//       var opts = {
-//         width: 500,
-//       };
-//       gify("some-file-name.mp4", "some-file-name.gif", opts, function (err) {
-//         if (err) throw err;
-//         //console.log(fileName);
-//         client
-//           .sendImageAsStickerGif(message.chatId, fileName)
-//           .then(() => {
-//             console.log("Sticker sent\n-------------------------\n");
-//           })
-//           .catch((erro) => {
-//             console.error("Error when sending sticker: \n" + erro);
-//           });
-//       });
-//     }
-//   });
-// }
