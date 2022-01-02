@@ -24,7 +24,6 @@ venom
   })
   .then((client) => {
     start(client);
-    start2(client);
   })
   .catch((erro) => {
     console.log(erro);
@@ -67,7 +66,6 @@ function start(client) {
   const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
   const mathsEndpoint = "http://api.mathjs.org/v4/?expr=";
   let params = {},
-    // counter = 0,
     op1count = 0,
     op2count = 0,
     totalVotes = 0,
@@ -1872,6 +1870,39 @@ function start(client) {
         );
         break;
     }
+
+    ////////////////////////////////MISCELLANEOUS FEATURES//////////////////////////////
+    /////////////////////// Image Sticker ////////////////////////
+    if (
+      message.type === "image" &&
+      (message.caption === ".sticker" || message.caption === ".sparsh")
+    ) {
+      sendImgSticker(message);
+    } else if (
+      message.type === "video" &&
+      (message.caption === ".sticker" || message.caption === ".sparsh")
+    ) {
+      sendGifSticker(message);
+    }
+
+    // Log the recieved msg
+    if (RecievedMsgPermission) {
+      const messageTime = new Date(message.timestamp * 1000);
+      console.log(
+        "------------------------------------------\n",
+        "Recieved Message: ",
+        data,
+        "\nType: ",
+        message.type,
+        "\nName: ",
+        message.sender.displayName,
+        "\nID: ",
+        message.sender.id,
+        "\nTime: ",
+        messageTime.toString()
+      );
+      RecievedMsgPermission = false;
+    }
   });
 
   //////////////////////////// FUNCTIONS ///////////////////////////
@@ -1932,144 +1963,79 @@ function start(client) {
         console.error(errMsg, erro);
       });
   };
-}
-function start2(client) {
-  client.onAnyMessage(async (message) => {
-    ////////////////////////////////MISCELLANEOUS FEATURES//////////////////////////////
-    if (
-      message.type === "image" &&
-      (message.caption === ".sticker" || message.caption === ".sparsh")
-    ) {
-      // const previewImg = message.mediaData.preview._b64;
-      // console.log("\nresult:----------------\n" + previewImg.substring(0, 300));
-      const buffer = await client.decryptFile(message);
-      let fileName = `some-file-name.${mime.extension(message.mimetype)}`;
-      fs.writeFile(fileName, buffer, (err) => {
-        client
-          .sendImageAsSticker(message.chatId, fileName)
-          .then(() => {
-            console.log("Sticker sent\n-------------------------\n");
-          })
-          .catch((erro) => {
-            console.error("Error when sending sticker: \n" + erro);
-          });
-        //fs.unlink(fileName,(err)=>{});
-      });
-      // console.log(message);
-      // .then(res => console.log(Buffer.from(res).toString('base64').substring(0, 100)));
-      // client
-      // .decryptFile(message)
-      // .then(result => {
-      //   // const img = result.substring(23, result.length);
-      //   const img = Buffer.from(result).toString('base64');
-      //   const imgTrimmed = img.substring(23, img.length);
-      //   console.log('\ndownloaded it');
-      //   console.log(img.substring(0, 100));
-      //   // console.log('\nresult: ' + result);
-      //   client
-      //     .sendImageAsSticker(message.chatId, imgTrimmed)
-      //     .then(() => { console.log("Sticker sent\n-------------------------\n") })
-      //     .catch((erro) => { console.error("Error when sending sticker: \n" + erro); });
-      // })
-      // .catch(erro => console.log(erro));
 
-      // client
-      //   .downloadMedia(message)
-      //   .then((result) => {
-      //     const img = result.substring(23, result.length);
-      //     console.log("\ndownloaded it");
-      //     console.log("\nresult:----------------\n" + result.substring(0, 300));
-      //     client
-      //       .sendImageAsSticker(message.chatId, img)
-      //       .then(() => {
-      //         console.log("Sticker sent\n-------------------------\n");
-      //       })
-      //       .catch((erro) => {
-      //         console.error("Error when sending sticker: \n" + erro);
-      //       });
-      //   })
-      //   .catch((error) => {
-      //     console.log("In catch block of download media");
-      //     console.log(error);
-      //   });
-    } else if (
-      message.type === "video" &&
-      (message.caption === ".sticker" || message.caption === ".sparsh")
-    ) {
-      const buffer = await client.decryptFile(message);
-      fileName = `some-file-name.${mime.extension(message.mimetype)}`;
-      fs.writeFile(fileName, buffer, (err) => {});
-      fileName = fileName.slice(0, 14) + ".gif";
-      var opts = {
-        width: 500,
-      };
-      gify("some-file-name.mp4", "some-file-name.gif", opts, function (err) {
-        if (err) throw err;
-        //console.log(fileName);
-        client
-          .sendImageAsStickerGif(message.chatId, fileName)
-          .then(() => {
-            console.log("Sticker sent\n-------------------------\n");
-          })
-          .catch((erro) => {
-            console.error("Error when sending sticker: \n" + erro);
-          });
-      });
-    }
-    // Log the recieved msg
-    if (RecievedMsgPermission) {
-      const messageTime = new Date(message.timestamp * 1000);
-      console.log(
-        "------------------------------------------\n",
-        "Recieved Message: ",
-        message.body,
-        "\nType: ",
-        message.type,
-        "\nName: ",
-        message.sender.displayName,
-        "\nID: ",
-        message.sender.id,
-        "\nTime: ",
-        messageTime.toString()
-      );
-      RecievedMsgPermission = false;
-    }
-  });
-}
+  const sendImgSticker = async (message) => {
+    const buffer = await client.decryptFile(message);
+    console.log("Buffer generated");
+    let fileName = `some-file-name.${mime.extension(message.mimetype)}`;
+    fs.writeFile(fileName, buffer, (err) => {
+      console.log("File write successfull");
+      client
+        .sendImageAsSticker(message.chatId, fileName)
+        .then(() => {
+          console.log("Sticker sent\n-------------------------\n");
+        })
+        .catch((erro) => {
+          console.error("Error when sending sticker: \n" + erro);
+        });
+      //fs.unlink(fileName,(err)=>{});
+    });
+  };
 
-///////////////////////////////////+1 COUNTER///////////////////////////////
-// case "+1":
-//   RecievedMsgPermission = true;
-//   let countPerm = false;
-//   pollGrps.forEach(grp => {
-//     if(message.isGroupMsg && message.chat.name.search(grp) !== -1) {
-//       countPerm = true;
+  const sendGifSticker = async (message) => {
+    const buffer = await client.decryptFile(message);
+    console.log("Buffer generated");
+    fileName = `some-file-name.${mime.extension(message.mimetype)}`;
+    fs.writeFile(fileName, buffer, (err) => {
+      console.log("Error while writing file", err);
+    });
+    console.log("File write successful");
+    fileName = fileName.slice(0, 14) + ".gif";
+    var opts = {
+      width: 500,
+    };
+    gify("some-file-name.mp4", "some-file-name.gif", opts, function (err) {
+      if (err) throw err;
+      console.log("Gify converted the mp4 to gif");
+      client
+        .sendImageAsStickerGif(message.chatId, fileName)
+        .then(() => {
+          console.log("Sticker sent\n-------------------------\n");
+        })
+        .catch((erro) => {
+          console.error("Error when sending sticker: \n" + erro);
+        });
+    });
+  };
+}
+// function start2(client) {
+//   client.onAnyMessage(async (message) => {
+//     ////////////////////////////////MISCELLANEOUS FEATURES//////////////////////////////
+//     if (
+//       message.type === "video" &&
+//       (message.caption === ".sticker" || message.caption === ".sparsh")
+//     ) {
+//       const buffer = await client.decryptFile(message);
+//       fileName = `some-file-name.${mime.extension(message.mimetype)}`;
+//       fs.writeFile(fileName, buffer, (err) => {
+//         console.log("Error while writing file", err);
+//       });
+//       fileName = fileName.slice(0, 14) + ".gif";
+//       var opts = {
+//         width: 500,
+//       };
+//       gify("some-file-name.mp4", "some-file-name.gif", opts, function (err) {
+//         if (err) throw err;
+//         //console.log(fileName);
+//         client
+//           .sendImageAsStickerGif(message.chatId, fileName)
+//           .then(() => {
+//             console.log("Sticker sent\n-------------------------\n");
+//           })
+//           .catch((erro) => {
+//             console.error("Error when sending sticker: \n" + erro);
+//           });
+//       });
 //     }
 //   });
-//   if(!countPerm) {
-//     break;
-//   }
-
-//   if(query === "reset") {
-//     counter = 0;
-//     composeMsg = ["Counter reset👌"];
-//   } else {
-//     counter++;
-//     composeMsg = [
-//       "Counting +1s💪\n",
-//       "-------------------\n",
-//       "Current count: +", counter];
-//   }
-//   composeMsg.forEach( txt => { msgString += txt; });
-//   buttonsArray = [
-//     {buttonId: '+1', buttonText: {displayText: "+1"}, type: 1},
-//     {buttonId: 'reset', buttonText: {displayText: "+1 reset"}, type: 1}
-//   ]
-//   // Send the response to the sender if count is more than 1
-//   if(counter !== 1) {
-//     client
-//       .sendButtons(message.chatId, msgString, buttonsArray, "You can click on the button for further counting.\nOr just count as usual")
-//       .then(() => { console.log("Sent message: " + msgString + "\n-------------------"); })
-//       .catch(error => { console.error("Error when sending truth: ", error); });
-//     }
-// break;
+// }
