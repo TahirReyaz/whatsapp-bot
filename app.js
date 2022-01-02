@@ -1890,10 +1890,14 @@ function start(client) {
     // Log the recieved msg
     if (RecievedMsgPermission) {
       const messageTime = new Date(message.timestamp * 1000);
+      const messageTxt = "Recieved Message:\n" + data;
+      if (message.type === "image" || message.type === "video") {
+        messageTxt = "";
+      }
+
       console.log(
         "------------------------------------------\n",
-        "Recieved Message: ",
-        data,
+        messageTxt,
         "\nType: ",
         message.type,
         "\nName: ",
