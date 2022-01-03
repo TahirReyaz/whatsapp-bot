@@ -1978,17 +1978,22 @@ function start(client) {
     fs.writeFile(fileName, buffer, (err) => {
       console.log("File write successfull");
       gm(fileName)
-        .resizeExact("500", "500")
+        .resizeExact(500, 500)
         .gravity("Center")
         .write(fileName, function (err) {
-          if (!err) console.log(" hooray! ");
+          if (!err) {
+            console.log("Squeeze square fit successfull");
+          } else {
+            console.log("Error while making square fit", err);
+            return;
+          }
           client
             .sendImageAsSticker(message.chatId, fileName)
             .then(() => {
               console.log("Sticker sent\n-------------------------\n");
             })
             .catch((erro) => {
-              console.error("Error when sending sticker: \n" + erro);
+              console.error("Error when sending sticker: \n", erro);
             });
         });
       //fs.unlink(fileName,(err)=>{});
@@ -2008,7 +2013,7 @@ function start(client) {
       if (err) throw err;
       console.log("Gify converted the mp4 to gif");
       gm(fileName)
-        .resizeExact("500", "500")
+        .resizeExact(500, 500)
         .gravity("Center")
         .write(fileName, async function (err) {
           if (!err) console.log(" hooray! ");
