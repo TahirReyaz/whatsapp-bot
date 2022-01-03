@@ -12,6 +12,7 @@ const fs = require("fs");
 const mime = require("mime-types");
 const { MediaType } = require("venom-bot/dist/api/model/enum");
 const gify = require("gify");
+const gm = require("gm").subClass({ imageMagick: true });
 require("dotenv").config();
 
 // Create the client
@@ -1976,13 +1977,19 @@ function start(client) {
     let fileName = `some-file-name.${mime.extension(message.mimetype)}`;
     fs.writeFile(fileName, buffer, (err) => {
       console.log("File write successfull");
-      client
-        .sendImageAsSticker(message.chatId, fileName)
-        .then(() => {
-          console.log("Sticker sent\n-------------------------\n");
-        })
-        .catch((erro) => {
-          console.error("Error when sending sticker: \n" + erro);
+      gm(fileName)
+        .resizeExact("500", "500")
+        .gravity("Center")
+        .write(fileName, function (err) {
+          if (!err) console.log(" hooray! ");
+          client
+            .sendImageAsSticker(message.chatId, fileName)
+            .then(() => {
+              console.log("Sticker sent\n-------------------------\n");
+            })
+            .catch((erro) => {
+              console.error("Error when sending sticker: \n" + erro);
+            });
         });
       //fs.unlink(fileName,(err)=>{});
     });
@@ -1993,23 +2000,26 @@ function start(client) {
     console.log("Buffer generated");
     fileName = `some-file-name.${mime.extension(message.mimetype)}`;
     fs.writeFile(fileName, buffer, (err) => {
-      console.log("Error while writing file", err);
+      //console.log("Error while writing file", err);
     });
     console.log("File write successful");
     fileName = fileName.slice(0, 14) + ".gif";
-    var opts = {
-      width: 500,
-    };
-    gify("some-file-name.mp4", "some-file-name.gif", opts, function (err) {
+    gify("some-file-name.mp4", "some-file-name.gif", function (err) {
       if (err) throw err;
       console.log("Gify converted the mp4 to gif");
-      client
-        .sendImageAsStickerGif(message.chatId, fileName)
-        .then(() => {
-          console.log("Sticker sent\n-------------------------\n");
-        })
-        .catch((erro) => {
-          console.error("Error when sending sticker: \n" + erro);
+      gm(fileName)
+        .resizeExact("500", "500")
+        .gravity("Center")
+        .write(fileName, async function (err) {
+          if (!err) console.log(" hooray! ");
+          client
+            .sendImageAsStickerGif(message.chatId, fileName)
+            .then(() => {
+              console.log("Sticker sent\n-------------------------\n");
+            })
+            .catch((erro) => {
+              console.error("Error when sending sticker: \n" + erro);
+            });
         });
     });
   };
