@@ -48,6 +48,8 @@ function start(client) {
     "BDAY",
     "pendicul",
     "testing",
+    "leave",
+    "yall"
   ];
   const pollGrps = [
     "Unofficial",
