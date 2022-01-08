@@ -4,4 +4,6 @@ files/
 some-file-name.jpeg
 some-file-name.mp4
 some-file-name.gif
+eng.traineddata
+osd.traineddata
 .env
