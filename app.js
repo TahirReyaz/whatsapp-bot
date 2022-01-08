@@ -1880,7 +1880,6 @@ function start(client) {
         break;
     }
 
-    ////////////////////////////////MISCELLANEOUS FEATURES//////////////////////////////
     /////////////////////// Image Sticker ////////////////////////
     if (
       message.type === "image" &&
@@ -1899,15 +1898,10 @@ function start(client) {
     }
 
     /////////////////////// OCR ////////////////////////
-    else if (
-      message.type === "image" &&
-      (message.caption === ".ocr" || message.caption === ".ocr")
-    ) {
+    else if (message.type === "image" && message.caption === ".ocr") {
       RecievedMsgPermission = true;
       sendOCR(message);
     }
-
-    
 
     // Log the recieved msg
     if (RecievedMsgPermission) {
@@ -2063,11 +2057,22 @@ function start(client) {
         .recognize(`${__dirname}/${filename}`, config)
         .then((text) => {
           console.log("Result:", text);
-          sendText(message.chatId, text);
+          sendReply(
+            message.chatId,
+            text,
+            message.id.toString(),
+            "Error when sending ocr: "
+          );
         })
         .catch((error) => {
-          console.log("ERROR")
+          console.log("ERROR");
           console.log(error.message);
+          sendReply(
+            message.chatId,
+            "Text not found",
+            message.id.toString(),
+            "Error when sending ocr failure: "
+          );
         });
     });
   };
