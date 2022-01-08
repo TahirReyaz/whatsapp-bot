@@ -2059,6 +2059,12 @@ function start(client) {
           console.log("Result:", text);
           sendReply(
             message.chatId,
+            "Text recognised through OCR:",
+            message.id.toString(),
+            "Error when sending ocr: "
+          );
+          sendReply(
+            message.chatId,
             text,
             message.id.toString(),
             "Error when sending ocr: "
