@@ -10,10 +10,18 @@ const wyr = require("wyr");
 const openai = require("openai-grammaticalcorrection");
 const fs = require("fs");
 const mime = require("mime-types");
+const ReadText = require("text-from-image");
 const { MediaType } = require("venom-bot/dist/api/model/enum");
 const gify = require("gify");
 const gm = require("gm").subClass({ imageMagick: true });
 require("dotenv").config();
+const tesseract = require("node-tesseract-ocr");
+
+const config = {
+  lang: "eng",
+  oem: 1,
+  psm: 3,
+};
 
 // Create the client
 venom
@@ -49,7 +57,7 @@ function start(client) {
     "pendicul",
     "testing",
     "leave",
-    "yall"
+    "yall",
   ];
   const pollGrps = [
     "Unofficial",
@@ -1890,6 +1898,17 @@ function start(client) {
       sendGifSticker(message);
     }
 
+    /////////////////////// OCR ////////////////////////
+    else if (
+      message.type === "image" &&
+      (message.caption === ".ocr" || message.caption === ".ocr")
+    ) {
+      RecievedMsgPermission = true;
+      sendOCR(message);
+    }
+
+    
+
     // Log the recieved msg
     if (RecievedMsgPermission) {
       const messageTime = new Date(message.timestamp * 1000);
@@ -2027,6 +2046,28 @@ function start(client) {
             .catch((erro) => {
               console.error("Error when sending sticker: \n" + erro);
             });
+        });
+    });
+  };
+
+  const sendOCR = async (message) => {
+    const buffer = await client.decryptFile(message);
+    console.log("Buffer generated");
+    let filename = `some-file-name.jpg`;
+    fs.writeFile(filename, buffer, async (err) => {
+      if (err) throw err;
+      console.log("File write successful");
+      console.log(`${__dirname}/${filename}`);
+
+      tesseract
+        .recognize(`${__dirname}/${filename}`, config)
+        .then((text) => {
+          console.log("Result:", text);
+          sendText(message.chatId, text);
+        })
+        .catch((error) => {
+          console.log("ERROR")
+          console.log(error.message);
         });
     });
   };

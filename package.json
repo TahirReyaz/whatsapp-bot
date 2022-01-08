@@ -14,9 +14,13 @@
     "dotenv": "^10.0.0",
     "gify": "^0.2.0",
     "gm": "^1.23.1",
+    "image-to-text": "^1.0.8",
     "mal-scraper": "^2.11.3",
     "music-info": "^1.2.1",
+    "node-tesseract-ocr": "^2.2.1",
     "openai-grammaticalcorrection": "^1.1.0",
+    "tesseract.js": "^2.0.0-beta.2",
+    "text-from-image": "^1.1.1",
     "venom-bot": "^4.0.4",
     "wyr": "^1.0.2"
   }
