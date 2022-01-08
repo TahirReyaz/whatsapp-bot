@@ -2081,6 +2081,7 @@ function start(client) {
             message.id.toString(),
             "Error when sending ocr: "
           );
+          ocrConfig.lang = "eng";
         })
         .catch((error) => {
           console.log("ERROR");
@@ -2091,6 +2092,7 @@ function start(client) {
             message.id.toString(),
             "Error when sending ocr failure: "
           );
+          ocrConfig.lang = "eng";
         });
     });
   };
