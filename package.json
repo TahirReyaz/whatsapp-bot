@@ -18,7 +18,6 @@
     "music-info": "^1.2.1",
     "node-tesseract-ocr": "^2.2.1",
     "openai-grammaticalcorrection": "^1.1.0",
-    "text-from-image": "^1.1.1",
     "venom-bot": "^4.0.4",
     "wyr": "^1.0.2"
   }

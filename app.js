@@ -10,14 +10,13 @@ const wyr = require("wyr");
 const openai = require("openai-grammaticalcorrection");
 const fs = require("fs");
 const mime = require("mime-types");
-const ReadText = require("text-from-image");
 const { MediaType } = require("venom-bot/dist/api/model/enum");
 const gify = require("gify");
 const gm = require("gm").subClass({ imageMagick: true });
 require("dotenv").config();
 const tesseract = require("node-tesseract-ocr");
 
-const config = {
+const ocrConfig = {
   lang: "eng",
   oem: 1,
   psm: 3,
@@ -1880,27 +1879,40 @@ function start(client) {
         break;
     }
 
-    /////////////////////// Image Sticker ////////////////////////
-    if (
-      message.type === "image" &&
-      (message.caption === ".sticker" || message.caption === ".sparsh")
-    ) {
-      RecievedMsgPermission = true;
-      sendImgSticker(message);
+    /////////////////////// Image Functions ////////////////////////
+    if (message.type === "image") {
+      const imgData = message.caption;
+      const imgBotQuery = imgData.split(" ");
+      const imgQueryCutter = imgBotQuery[0] + " ";
+      query = imgData.substring(imgQueryCutter.length);
+      const imgQueryPart = query.split("-");
+      switch (imgBotQuery[0]) {
+        /////////////////////// Image Sticker ////////////////////////
+        case ".sticker":
+        case ".sparsh":
+          RecievedMsgPermission = true;
+          sendImgSticker(message);
+          break;
+        /////////////////////// OCR ////////////////////////
+        case ".ocr":
+        case ".imgToText":
+        case "imageToText":
+          RecievedMsgPermission = true;
+          if (query) {
+            ocrConfig.lang = query;
+          }
+          sendOCR(message);
+          break;
+      }
     }
+    /////////////////////// Video and gif functions ////////////////////////
     /////////////////////// Gif Sticker ////////////////////////
-    else if (
+    if (
       message.type === "video" &&
       (message.caption === ".sticker" || message.caption === ".sparsh")
     ) {
       RecievedMsgPermission = true;
       sendGifSticker(message);
-    }
-
-    /////////////////////// OCR ////////////////////////
-    else if (message.type === "image" && message.caption === ".ocr") {
-      RecievedMsgPermission = true;
-      sendOCR(message);
     }
 
     // Log the recieved msg
@@ -2054,7 +2066,7 @@ function start(client) {
       console.log(`${__dirname}/${filename}`);
 
       tesseract
-        .recognize(`${__dirname}/${filename}`, config)
+        .recognize(`${__dirname}/${filename}`, ocrConfig)
         .then((text) => {
           console.log("Result:", text);
           sendReply(
