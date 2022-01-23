@@ -595,6 +595,8 @@ function start(client) {
       ///////////////////////////////////// POLL //////////////////////////////
       case ".poll":
         RecievedMsgPermission = true;
+
+        // Check permission
         let pollPerm = false;
         pollGrps.forEach((grp) => {
           if (message.isGroupMsg && message.chat.name.search(grp) !== -1) {
@@ -611,12 +613,15 @@ function start(client) {
           break;
         }
 
+        // If there is an active poll going on
         if (message.chatId !== pollerGrp && pollActive && !message.fromMe) {
           msgString =
             "There is already a poll going on in another group.\nWait for it to end😅";
           sendText(message.chatId, msgString, "Error when sending warning: ");
           break;
         }
+
+        // Someone entered wrong syntax
         if (!queryPart[2] && !pollActive) {
           msgString =
             "Enter the command properly🤦‍♂️\n\nOr maybe the poll has ended😅";
@@ -632,6 +637,8 @@ function start(client) {
             });
           break;
         }
+
+        // If someone requested to end the poll
         if (
           query === "end" &&
           (pollerId === message.sender.id || message.fromMe)
@@ -679,6 +686,8 @@ function start(client) {
           sendText(message.chatId, msgString, "Error while ending the poll: ");
           break;
         }
+
+        // Voting logic
         if (queryPart[0] === "op1") {
           if (!pollVoters.includes(message.sender.id)) {
             op1count++;
@@ -726,6 +735,8 @@ function start(client) {
           op1percent = op1percent.toFixed(2);
           op2percent = op2percent.toFixed(2);
         }
+
+        // Sending response
         composeMsg = [
           "```Started a poll on the request of``` *",
           pollerName,
@@ -815,8 +826,6 @@ function start(client) {
               "\n*Status* : ",
               data.status,
               "\n*Duration*🕑 : ",
-              data.duration,
-              "\n*Duration* : ",
               data.duration,
               "\n*Rating* : ",
               data.rating,
