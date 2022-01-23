@@ -2,7 +2,6 @@
 
 - Use sendText(), sendReply() etc. functions everywhere instead of client.sendText(), client.sendReply() etc. to increase modularity.
 - Download Hindi and Japanese data for the OCR.
-- Send progress as reply to user while generating stickers.
 - Array of poll objects which store distinct polls using the groupId and with the help of that, start different polls in different groups.
 
 # List of features to be added

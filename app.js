@@ -2003,15 +2003,30 @@ function start(client) {
     console.log("Buffer generated");
     let fileName = `some-file-name.${mime.extension(message.mimetype)}`;
     fs.writeFile(fileName, buffer, (err) => {
-      console.log("File write successfull");
+      sendReply(
+        message.chatId,
+        "Image Downloaded successfully🦾",
+        message.id.toString(),
+        "Error when sending sticker progress: "
+      );
       gm(fileName)
         .resizeExact(500, 500)
         .gravity("Center")
         .write(fileName, function (err) {
           if (!err) {
-            console.log("Squeeze square fit successfull");
+            sendReply(
+              message.chatId,
+              "Image editing completed🦾\n\nSending Sticker",
+              message.id.toString(),
+              "Error when sending sticker progress: "
+            );
           } else {
-            console.log("Error while making square fit", err);
+            sendReply(
+              message.chatId,
+              "Image editing failed😞\n\nTry again",
+              message.id.toString(),
+              "Error when sending sticker progress: "
+            );
             return;
           }
           client
@@ -2021,6 +2036,12 @@ function start(client) {
             })
             .catch((erro) => {
               console.error("Error when sending sticker: \n", erro);
+              sendReply(
+                message.chatId,
+                "Sending sticker failed😞\n\nTry again",
+                message.id.toString(),
+                "Error when sending sticker error: "
+              );
             });
         });
       //fs.unlink(fileName,(err)=>{});
@@ -2035,15 +2056,37 @@ function start(client) {
       //console.log("Error while writing file", err);
     });
     console.log("File write successful");
+    sendReply(
+      message.chatId,
+      "Image Downloaded successfully🦾",
+      message.id.toString(),
+      "Error when sending sticker progress: "
+    );
     fileName = fileName.slice(0, 14) + ".gif";
     gify("some-file-name.mp4", "some-file-name.gif", function (err) {
-      if (err) throw err;
+      if (err) {
+        sendReply(
+          message.chatId,
+          "Image conversion failed😞",
+          message.id.toString(),
+          "Error when sending sticker error: "
+        );
+        throw err;
+      }
       console.log("Gify converted the mp4 to gif");
       gm(fileName)
         .resizeExact(500, 500)
         .gravity("Center")
         .write(fileName, async function (err) {
-          if (!err) console.log(" hooray! ");
+          if (!err) {
+            sendReply(
+              message.chatId,
+              "Gif resizing completed🦾\n\nSending Sticker",
+              message.id.toString(),
+              "Error when sending sticker progress: "
+            );
+            console.log(" hooray! ");
+          }
           client
             .sendImageAsStickerGif(message.chatId, fileName)
             .then(() => {
@@ -2051,6 +2094,12 @@ function start(client) {
             })
             .catch((erro) => {
               console.error("Error when sending sticker: \n" + erro);
+              sendReply(
+                message.chatId,
+                "Sending sticker failed😞\n\nTry again",
+                message.id.toString(),
+                "Error when sending sticker error: "
+              );
             });
         });
     });
