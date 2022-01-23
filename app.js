@@ -16,6 +16,8 @@ const gm = require("gm").subClass({ imageMagick: true });
 require("dotenv").config();
 const tesseract = require("node-tesseract-ocr");
 
+var Poll = require("./models/poll");
+
 const ocrConfig = {
   lang: "eng",
   oem: 1,
@@ -87,6 +89,7 @@ function start(client) {
     pollerId = "",
     pollerName = "",
     pollerGrp = "";
+  let poll = [{}];
   client.onAnyMessage((message) => {
     // variables and constants required to make the data readable
     const data = message.body;
