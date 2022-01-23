@@ -182,7 +182,13 @@ function start(client) {
               ];
               console.log(response.data.insult);
             } else {
-              composeMsg = ["Dear ", query, ", ", response.data.insult];
+              composeMsg = [
+                "Roast from Bot\n-------------------------\n",
+                "Dear ",
+                query,
+                ", ",
+                response.data.insult,
+              ];
             }
             composeMsg.forEach((txt) => {
               msgString += txt;
@@ -1538,7 +1544,8 @@ function start(client) {
           "Check out the bottom menu for commands👇",
           "\nFor making stickers: ",
           "\nSend the image with caption *.sticker*",
-          "\n```Gifs and videos are not supported yet```",
+          "\nFor extracting text from image (ocr):",
+          "\nSend the image with caption *.ocr*",
           "\n--------------------------------------------------",
           "\n```There is no case sensitivity or need to type . in front of the full commands```",
         ];
@@ -2058,7 +2065,7 @@ function start(client) {
     console.log("File write successful");
     sendReply(
       message.chatId,
-      "Image Downloaded successfully🦾",
+      "Gif Downloaded successfully🦾",
       message.id.toString(),
       "Error when sending sticker progress: "
     );
@@ -2067,7 +2074,7 @@ function start(client) {
       if (err) {
         sendReply(
           message.chatId,
-          "Image conversion failed😞",
+          "Gif conversion failed😞",
           message.id.toString(),
           "Error when sending sticker error: "
         );
