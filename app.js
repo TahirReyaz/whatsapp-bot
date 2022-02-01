@@ -47,6 +47,7 @@ function start(client) {
       for (const key in res.data) {
         mentionAllGrps.push({ id: key, grpId: res.data[key].grpId });
       }
+      console.log(mentionAllGrps);
     });
   let mentionAllAdminOnlyGrps = [];
   axios
@@ -55,6 +56,7 @@ function start(client) {
       for (const key in res.data) {
         mentionAllAdminOnlyGrps.push({ id: key, grpId: res.data[key].grpId });
       }
+      console.log(mentionAllAdminOnlyGrps);
     });
   let nsfwRoastGrps = [];
   axios
@@ -1761,6 +1763,7 @@ function start(client) {
           let selectedGrp = grpArray.find(
             (grp) => grp.grpId === message.chatId
           );
+          console.log(grpArray);
           console.log("selectedgrp:", selectedGrp.id);
 
           axios
