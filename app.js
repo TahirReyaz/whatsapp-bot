@@ -66,10 +66,12 @@ function start(client) {
     .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/mention-all.json`)
     .then((res) => {
       for (const key in res.data) {
-        mentionAllGrps.push(res.data[key].grpId);
+        mentionAllGrps.push({ id: key, grpId: res.data[key].grpId });
       }
       console.log(mentionAllGrps);
     });
+  let mentionAllAdminOnlyGrps = [];
+  let nsfwRoastGrps = [];
 
   const grpRoles = [
     {
@@ -119,6 +121,8 @@ function start(client) {
     pollerGrp = "";
   let poll = [{}],
     perm = false;
+  let grpArray = [];
+
   client.onAnyMessage((message) => {
     // variables and constants required to make the data readable
     const data = message.body;
@@ -254,8 +258,8 @@ function start(client) {
         // message.chat.groupMetaData.participants.forEach(participant => participant.isAdmin ? perm = true)
         query = data.substring(queryCutter.length);
         // Check if the group allows annoying mentions or not
-        annoyGrps.forEach((grp) => {
-          if (message.isGroupMsg && message.chat.name.search(grp) !== -1) {
+        mentionAllGrps.forEach((grp) => {
+          if (message.isGroupMsg && message.chatId === grp.grpId) {
             annoyPerm = true;
           }
         });
@@ -1613,7 +1617,7 @@ function start(client) {
           list
         );
         break;
-      ////////////////////////////////////ADD GRP ROLES/////////////////////////////////
+      ////////////////////////////////////ADD GRP ROLE/////////////////////////////////
       case ".agr":
         RecievedMsgPermission = true;
         console.log("in add groles");
@@ -1625,8 +1629,8 @@ function start(client) {
             perm = true;
           }
         });
-        // If sender is not a an admin then send warning
-        if (!perm) {
+        // If sender is not an admin then send warning
+        if (!perm && !message.fromMe) {
           sendReply(
             message.chatId,
             "This command is used for choosing a group roles.\n\nThis commands is only for admins",
@@ -1636,8 +1640,20 @@ function start(client) {
           break;
         }
 
+        switch (query) {
+          case "mention-all":
+            grpArray = mentionAllGrps;
+            break;
+          case "mention-all-admin-only":
+            grpArray = mentionAllAdminOnlyGrps;
+            break;
+          case "nsfw-roast":
+            grpArray = nsfwGrps;
+            break;
+        }
+
         let grpPresentAlready = false;
-        mentionAllGrps.forEach((grp) => {
+        grpArray.forEach((grp) => {
           if (grp === message.chatId) {
             grpPresentAlready = true;
           }
@@ -1657,6 +1673,7 @@ function start(client) {
               grpId: message.chatId,
             })
             .then((res) => {
+              grpArray.push({ id: res.data, grpId: message.chatId });
               sendReply(
                 message.chatId,
                 `Added this group to ${query}`,
@@ -1665,6 +1682,81 @@ function start(client) {
               );
               console.log(res.data);
             });
+        }
+
+        break;
+      //////////////////////////////////DELETE GRP ROLE/////////////////////////////////
+      case ".dgr":
+        RecievedMsgPermission = true;
+        console.log("in del groles");
+
+        // Check whether the sender is an admin
+        perm = false;
+        message.chat.groupMetadata.participants.forEach((participant) => {
+          if (participant.isAdmin && participant.id === message.sender.id) {
+            perm = true;
+          }
+        });
+        // If sender is not an admin then send warning
+        if (!perm && !message.fromMe) {
+          sendReply(
+            message.chatId,
+            "This command is used for deleting a group role.\n\nThis commands is only for admins",
+            message.id.toString(),
+            "Error when sending warning: "
+          );
+          break;
+        }
+
+        // Select the group to work on
+        switch (query) {
+          case "mention-all":
+            grpArray = mentionAllGrps;
+            break;
+          case "mention-all-admin-only":
+            grpArray = mentionAllAdminOnlyGrps;
+            break;
+          case "nsfw-roast":
+            grpArray = nsfwGrps;
+            break;
+        }
+
+        let grpAbsent = true;
+        grpArray.forEach((grp) => {
+          if (grp === message.chatId) {
+            grpAbsent = false;
+          }
+        });
+
+        // If group doesnt have the selected role
+        if (grpAbsent) {
+          sendReply(
+            message.chatId,
+            `This group is not a ${query} group`,
+            message.id.toString(),
+            "Error when sending warning: "
+          );
+        } else {
+          let selectedGrp = grpArray.find(
+            (grp) => grp.grpId === message.chatId
+          ).id;
+          console.log(selectedGrp);
+
+          axios
+            .delete(
+              `${process.env.FIREBASE_DOMAIN}/grpFlags/${query}/${selectedGrp}.json`
+            )
+            .then((res) => {
+              grpArray.filter((grp) => message.chatId !== grp.grpId);
+              sendReply(
+                message.chatId,
+                `Removed ${query} role from this group`,
+                message.id.toString(),
+                "Error when sending warning: "
+              );
+              console.log(res.data);
+            })
+            .catch((err) => console.log(err));
         }
 
         break;
