@@ -91,7 +91,8 @@ function start(client) {
     pollerId = "",
     pollerName = "",
     pollerGrp = "";
-  let poll = [{}];
+  let poll = [{}],
+    perm = false;
   client.onAnyMessage((message) => {
     // variables and constants required to make the data readable
     const data = message.body;
@@ -1549,7 +1550,13 @@ function start(client) {
       case ".grpRoles":
       case ".groles":
         RecievedMsgPermission = true;
-        console.log("in g roles");
+
+        message.chat.groupMetaData.participants.forEach((participant) => {
+          // if(participant.isAdmin && ) {
+          console.log(participant);
+          // }
+        });
+
         list = [
           {
             title: "Group Roles",
@@ -1559,13 +1566,12 @@ function start(client) {
         grpRoles.forEach((grpRole) => {
           list[0].rows.push({ title: grpRole, description: grpRole });
         });
-        console.log(list);
 
         sendListMenu(
           message.chatId,
           "Welcome to THE BOT",
           "Select the type of role",
-          "This command is only for admins",
+          "Select the Group Role for this group\n\nThis command is only for admins",
           "Group Roles",
           list
         );
