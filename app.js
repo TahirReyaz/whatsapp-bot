@@ -1636,19 +1636,37 @@ function start(client) {
           break;
         }
 
-        axios
-          .post(`${process.env.FIREBASE_DOMAIN}/grpFlags/${query}.json`, {
-            grpId: message.chatId,
-          })
-          .then((res) => {
-            sendReply(
-              message.chatId,
-              `Added this group to ${query}`,
-              message.id.toString(),
-              "Error when sending warning: "
-            );
-            console.log(res.data);
-          });
+        let grpPresentAlready = false;
+        mentionAllGrps.forEach((grp) => {
+          if (grp === message.chatId) {
+            grpPresentAlready = true;
+          }
+        });
+
+        // If group already has the selected role
+        if (grpPresentAlready) {
+          sendReply(
+            message.chatId,
+            `This group is already a ${query} group`,
+            message.id.toString(),
+            "Error when sending warning: "
+          );
+        } else {
+          axios
+            .post(`${process.env.FIREBASE_DOMAIN}/grpFlags/${query}.json`, {
+              grpId: message.chatId,
+            })
+            .then((res) => {
+              sendReply(
+                message.chatId,
+                `Added this group to ${query}`,
+                message.id.toString(),
+                "Error when sending warning: "
+              );
+              console.log(res.data);
+            });
+        }
+
         break;
       /////////////////////////////////////BOT MENU/////////////////////////////////////
       case ".help":
