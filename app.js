@@ -266,7 +266,7 @@ function start(client) {
         if (!annoyPerm) {
           message.isGroupMsg
             ? (msgString =
-                "People get annoyed by useless mentioning😔\n\nAsk admins for activating this command in this group")
+                "People get annoyed by useless mentioning😔\n\nAsk admins for activating this command in this group\n\nIf you are an admin yourself, then use GroupRoles command for activating this command in this group.")
             : (msgString = "This command is not supported in dms😁");
 
           // Send the response to the sender
@@ -1753,7 +1753,7 @@ function start(client) {
           let selectedGrp = grpArray.find(
             (grp) => grp.grpId === message.chatId
           ).id;
-          console.log(selectedGrp);
+          console.log("selectedgrp:", selectedGrp);
 
           axios
             .delete(
@@ -1779,7 +1779,6 @@ function start(client) {
                 message.id.toString(),
                 "Error when sending warning: "
               );
-              console.log(res.data);
             })
             .catch((err) => console.log(err.data));
         }
@@ -1828,6 +1827,11 @@ function start(client) {
               {
                 title: "@everyone <message>",
                 description: "For tagging everyone like discord",
+              },
+              {
+                title: "GroupRoles",
+                description:
+                  "For activating certain commands in a group (Admin only)",
               },
               {
                 title: "InfoHelp ",
