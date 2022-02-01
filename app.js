@@ -1723,7 +1723,7 @@ function start(client) {
 
         let grpAbsent = true;
         grpArray.forEach((grp) => {
-          if (grp === message.chatId) {
+          if (grp.grpId === message.chatId) {
             grpAbsent = false;
           }
         });
