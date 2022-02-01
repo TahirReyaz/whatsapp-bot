@@ -1571,7 +1571,10 @@ function start(client) {
         break;
       ////////////////////////////////////GRP ROLES/////////////////////////////////
       case ".grpRoles":
+      case ".groupRoles":
+      case ".grouproles":
       case "GroupRoles":
+      case "Grouproles":
       case ".groles":
         RecievedMsgPermission = true;
         console.log("in groles");
