@@ -1682,7 +1682,7 @@ function start(client) {
               grpId: message.chatId,
             })
             .then((res) => {
-              grpArray.push({ id: res.data, grpId: message.chatId });
+              grpArray.push({ id: res.data.name, grpId: message.chatId });
               switch (query) {
                 case "mention-all":
                   mentionAllGrps = grpArray;
