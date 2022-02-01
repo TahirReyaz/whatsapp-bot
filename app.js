@@ -1552,8 +1552,8 @@ function start(client) {
         RecievedMsgPermission = true;
         console.log("in groles");
         // console.log(message.chat);
-        console.log(message.chat.groupMetaData.participants);
-        message.chat.groupMetaData.participants.forEach((participant) => {
+        console.log(message.chat.groupMetadata.participants);
+        message.chat.groupMetadata.participants.forEach((participant) => {
           // if(participant.isAdmin && ) {
           console.log(participant);
           // }
