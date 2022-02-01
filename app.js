@@ -1654,7 +1654,7 @@ function start(client) {
 
         let grpPresentAlready = false;
         grpArray.forEach((grp) => {
-          if (grp === message.chatId) {
+          if (grp.grpId === message.chatId) {
             grpPresentAlready = true;
           }
         });
