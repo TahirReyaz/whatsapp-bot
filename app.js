@@ -1550,12 +1550,13 @@ function start(client) {
       case ".grpRoles":
       case ".groles":
         RecievedMsgPermission = true;
-
-        message.chat.groupMetaData.participants.forEach((participant) => {
-          // if(participant.isAdmin && ) {
-          console.log(participant);
-          // }
-        });
+        console.log("in groles");
+        console.log(message.chat.groupMetaData.participants);
+        // message.chat.groupMetaData.participants.forEach((participant) => {
+        //   // if(participant.isAdmin && ) {
+        //   console.log(participant);
+        //   // }
+        // });
 
         list = [
           {
