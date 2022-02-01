@@ -61,6 +61,16 @@ function start(client) {
   //   "yall",
   // ];
   let annoyGrps = [];
+  let mentionAllGrps = [];
+  axios
+    .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/mention-all.json`)
+    .then((res) => {
+      for (const key in res.data) {
+        mentionAllGrps.push(res.data[key].grpId);
+      }
+      console.log(mentionAllGrps);
+    });
+
   const grpRoles = [
     {
       title: ".agr mention-all",
@@ -124,6 +134,7 @@ function start(client) {
       title: queryPart[0],
       artist: queryPart[1],
     };
+
     switch (botQuery[0]) {
       //////////////////////////////////////HI BOT//////////////////////////////////////
       case "HiBot":
@@ -1638,25 +1649,6 @@ function start(client) {
             );
             console.log(res.data);
           });
-
-        list = [
-          {
-            title: "Group Roles",
-            rows: [],
-          },
-        ];
-        grpRoles.forEach((grpRole) => {
-          list[0].rows.push({ title: grpRole, description: grpRole });
-        });
-
-        sendListMenu(
-          message.chatId,
-          "Welcome to THE BOT",
-          "Select the type of role",
-          "Select the Group Role for this group\n\nThis command is only for admins",
-          "Group Roles",
-          list
-        );
         break;
       /////////////////////////////////////BOT MENU/////////////////////////////////////
       case ".help":
