@@ -61,7 +61,23 @@ function start(client) {
   //   "yall",
   // ];
   let annoyGrps = [];
-  const grpRoles = ["MentionAll", "MentionAllAdminOnly", "nsfwRoast"];
+  const grpRoles = [
+    {
+      title: ".agr mention-all",
+      description:
+        "To enable this group for letting all members mention everyone like discord",
+    },
+    {
+      title: ".agr mention-all-admin-only",
+      description:
+        "To enable this group for letting only admins mention everyone",
+    },
+    {
+      title: ".agr nsfw-roast",
+      description:
+        "To enable this group for letting all members use roast command which may be nsfw",
+    },
+  ];
   const pollGrps = [
     "Unofficial",
     "#3: HASH",
@@ -1548,6 +1564,7 @@ function start(client) {
         break;
       ////////////////////////////////////GRP ROLES/////////////////////////////////
       case ".grpRoles":
+      case "GroupRoles":
       case ".groles":
         RecievedMsgPermission = true;
         console.log("in groles");
@@ -1568,6 +1585,59 @@ function start(client) {
           );
           break;
         }
+
+        list = [
+          {
+            title: "Group Roles",
+            rows: grpRoles,
+          },
+        ];
+
+        sendListMenu(
+          message.chatId,
+          "Welcome to THE BOT",
+          "Select the type of role",
+          "Select the Group Role for this group\n\nThis command is only for admins",
+          "Group Roles",
+          list
+        );
+        break;
+      ////////////////////////////////////ADD GRP ROLES/////////////////////////////////
+      case ".agr":
+        RecievedMsgPermission = true;
+        console.log("in add groles");
+
+        // Check whether the sender is an admin
+        perm = false;
+        message.chat.groupMetadata.participants.forEach((participant) => {
+          if (participant.isAdmin && participant.id === message.sender.id) {
+            perm = true;
+          }
+        });
+        // If sender is not a an admin then send warning
+        if (!perm) {
+          sendReply(
+            message.chatId,
+            "This command is used for choosing a group roles.\n\nThis commands is only for admins",
+            message.id.toString(),
+            "Error when sending warning: "
+          );
+          break;
+        }
+
+        axios
+          .post(`${process.env.FIREBASE_DOMAIN}/grpFlags/${query}.json`, {
+            grpId: message.chatId,
+          })
+          .then((res) => {
+            sendReply(
+              message.chatId,
+              `Added this group to ${query}`,
+              message.id.toString(),
+              "Error when sending warning: "
+            );
+            console.log(res.data);
+          });
 
         list = [
           {
