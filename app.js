@@ -1760,12 +1760,12 @@ function start(client) {
         } else {
           let selectedGrp = grpArray.find(
             (grp) => grp.grpId === message.chatId
-          ).id;
-          console.log("selectedgrp:", selectedGrp);
+          );
+          console.log("selectedgrp:", selectedGrp.id);
 
           axios
             .delete(
-              `${process.env.FIREBASE_DOMAIN}/grpFlags/${query}/${selectedGrp}.json`
+              `${process.env.FIREBASE_DOMAIN}/grpFlags/${query}/${selectedGrp.id}.json`
             )
             .then((res) => {
               grpArray.filter((grp) => message.chatId !== grp.grpId);
