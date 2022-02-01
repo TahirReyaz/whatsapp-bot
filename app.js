@@ -1551,13 +1551,23 @@ function start(client) {
       case ".groles":
         RecievedMsgPermission = true;
         console.log("in groles");
-        // console.log(message.chat);
-        console.log(message.chat.groupMetadata.participants);
+        perm = false;
         message.chat.groupMetadata.participants.forEach((participant) => {
-          // if(participant.isAdmin && ) {
-          console.log(participant);
-          // }
+          if (participant.isAdmin && participant.id === message.sender.id) {
+            perm = true;
+          }
         });
+
+        // If sender is not a an admin then send warning
+        if (!perm) {
+          sendReply(
+            message.chatId,
+            "This command is used for choosing a group roles.\n\nThis commands is only for admins",
+            message.id.toString(),
+            "Error when sending warning: "
+          );
+          break;
+        }
 
         list = [
           {
