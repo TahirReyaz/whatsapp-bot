@@ -1682,16 +1682,19 @@ function start(client) {
               grpId: message.chatId,
             })
             .then((res) => {
-              grpArray.push({ id: res.data.name, grpId: message.chatId });
+              let updatedGrpArr = grpArray.push({
+                id: res.data.name,
+                grpId: message.chatId,
+              });
               switch (query) {
                 case "mention-all":
-                  mentionAllGrps = grpArray;
+                  mentionAllGrps = updatedGrpArr;
                   break;
                 case "mention-all-admin-only":
-                  mentionAllAdminOnlyGrps = grpArray;
+                  mentionAllAdminOnlyGrps = updatedGrpArr;
                   break;
                 case "nsfw-roast":
-                  nsfwRoastGrps = grpArray;
+                  nsfwRoastGrps = updatedGrpArr;
                   break;
               }
 
@@ -1772,24 +1775,24 @@ function start(client) {
               `${process.env.FIREBASE_DOMAIN}/grpFlags/${query}/${selectedGrp.id}.json`
             )
             .then((res) => {
-              grpArray.filter((grp) => {
+              let updatedGrpArr = grpArray.filter((grp) => {
                 console.log(
                   message.chatId !== grp.grpId,
                   message.chatId != grp.grpId
                 );
                 return message.chatId !== grp.grpId;
               });
-              console.log("grp array", grpArray);
+              console.log("grp array", updatedGrpArr);
               switch (query) {
                 case "mention-all":
-                  mentionAllGrps = grpArray;
+                  mentionAllGrps = updatedGrpArr;
                   console.log("all grps", mentionAllGrps);
                   break;
                 case "mention-all-admin-only":
-                  mentionAllAdminOnlyGrps = grpArray;
+                  mentionAllAdminOnlyGrps = updatedGrpArr;
                   break;
                 case "nsfw-roast":
-                  nsfwRoastGrps = grpArray;
+                  nsfwRoastGrps = updatedGrpArr;
                   break;
               }
 
