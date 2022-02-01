@@ -18,7 +18,7 @@
     "music-info": "^1.2.1",
     "node-tesseract-ocr": "^2.2.1",
     "openai-grammaticalcorrection": "^1.1.0",
-    "venom-bot": "^4.0.4",
+    "venom-bot": "^4.0.5",
     "wyr": "^1.0.2"
   }
 }

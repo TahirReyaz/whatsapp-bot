@@ -49,17 +49,19 @@ function start(client) {
     "pendicul",
     "testing",
   ];
-  const annoyGrps = [
-    "CATS",
-    "WE",
-    "Chaman",
-    "CS Team",
-    "BDAY",
-    "pendicul",
-    "testing",
-    "leave",
-    "yall",
-  ];
+  // const annoyGrps = [
+  //   "CATS",
+  //   "WE",
+  //   "Chaman",
+  //   "CS Team",
+  //   "BDAY",
+  //   "pendicul",
+  //   "testing",
+  //   "leave",
+  //   "yall",
+  // ];
+  let annoyGrps = [];
+  const grpRoles = ["MentionAll", "MentionAllAdminOnly", "nsfwRoast"];
   const pollGrps = [
     "Unofficial",
     "#3: HASH",
@@ -1542,6 +1544,30 @@ function start(client) {
                 console.error("Error when sending error: ", erro);
               });
           });
+        break;
+      ////////////////////////////////////GRP ROLES/////////////////////////////////
+      case ".grpRoles":
+      case ".groles":
+        RecievedMsgPermission = true;
+        console.log("in g roles");
+        list = [
+          {
+            title: "Group Roles",
+          },
+        ];
+        grpRoles.forEach((grpRole) =>
+          list[0].rows.push({ title: grpRole, description: grpRole })
+        );
+        console.log(list);
+
+        sendListMenu(
+          message.chatId,
+          "Welcome to THE BOT",
+          "Select the type of role",
+          "This command is only for admins",
+          "Group Roles",
+          list
+        );
         break;
       /////////////////////////////////////BOT MENU/////////////////////////////////////
       case ".help":
