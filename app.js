@@ -40,27 +40,6 @@ let RecievedMsgPermission = false;
 // Start the client
 function start(client) {
   buttonsArray = [];
-  const nsfwGrps = [
-    "MEMES",
-    "CATS",
-    "WE",
-    "OT4KU",
-    "Chaman",
-    "pendicul",
-    "testing",
-  ];
-  // const annoyGrps = [
-  //   "CATS",
-  //   "WE",
-  //   "Chaman",
-  //   "CS Team",
-  //   "BDAY",
-  //   "pendicul",
-  //   "testing",
-  //   "leave",
-  //   "yall",
-  // ];
-  let annoyGrps = [];
   let mentionAllGrps = [];
   axios
     .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/mention-all.json`)
@@ -68,10 +47,23 @@ function start(client) {
       for (const key in res.data) {
         mentionAllGrps.push({ id: key, grpId: res.data[key].grpId });
       }
-      console.log(mentionAllGrps);
     });
   let mentionAllAdminOnlyGrps = [];
+  axios
+    .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/mention-all-admin-only.json`)
+    .then((res) => {
+      for (const key in res.data) {
+        mentionAllAdminOnlyGrps.push({ id: key, grpId: res.data[key].grpId });
+      }
+    });
   let nsfwRoastGrps = [];
+  axios
+    .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/nsfw-roast.json`)
+    .then((res) => {
+      for (const key in res.data) {
+        nsfwRoastGrps.push({ id: key, grpId: res.data[key].grpId });
+      }
+    });
 
   const grpRoles = [
     {
@@ -183,14 +175,14 @@ function start(client) {
         RecievedMsgPermission = true;
         let roastPerm = false;
         // Check if the group allows nsfw roats or not
-        nsfwGrps.forEach((grp) => {
+        nsfwRoastGrps.forEach((grp) => {
           if (message.chat.name.search(grp) !== -1 || !message.isGroupMsg) {
             roastPerm = true;
           }
         });
         if (!roastPerm) {
           composeMsg = [
-            "This command is not supported here. There are people here who don't like it.\n```THEY AREN'T COOL ENOUGH.```",
+            "This command is not supported here. There are people here who don't like it.\n```THEY AREN'T COOL ENOUGH.```\n\nAsk admins for activating this command in this group\n\nIf you are an admin yourself, then use GroupRoles command for activating this command in this group.",
           ];
           composeMsg.forEach((txt) => {
             msgString += txt;
@@ -1648,7 +1640,7 @@ function start(client) {
             grpArray = mentionAllAdminOnlyGrps;
             break;
           case "nsfw-roast":
-            grpArray = nsfwGrps;
+            grpArray = nsfwRoastGrps;
             break;
         }
 
