@@ -1748,6 +1748,7 @@ function start(client) {
             message.id.toString(),
             "Error when sending warning: "
           );
+          break;
         } else {
           let selectedGrp = grpArray.find(
             (grp) => grp.grpId === message.chatId
@@ -1780,7 +1781,7 @@ function start(client) {
               );
               console.log(res.data);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => console.log(err.data));
         }
 
         break;
