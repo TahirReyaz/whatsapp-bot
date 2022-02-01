@@ -1674,6 +1674,18 @@ function start(client) {
             })
             .then((res) => {
               grpArray.push({ id: res.data, grpId: message.chatId });
+              switch (query) {
+                case "mention-all":
+                  mentionAllGrps = grpArray;
+                  break;
+                case "mention-all-admin-only":
+                  mentionAllAdminOnlyGrps = grpArray;
+                  break;
+                case "nsfw-roast":
+                  nsfwRoastGrps = grpArray;
+                  break;
+              }
+
               sendReply(
                 message.chatId,
                 `Added this group to ${query}`,
@@ -1717,7 +1729,7 @@ function start(client) {
             grpArray = mentionAllAdminOnlyGrps;
             break;
           case "nsfw-roast":
-            grpArray = nsfwGrps;
+            grpArray = nsfwRoastGrps;
             break;
         }
 
@@ -1748,6 +1760,18 @@ function start(client) {
             )
             .then((res) => {
               grpArray.filter((grp) => message.chatId !== grp.grpId);
+              switch (query) {
+                case "mention-all":
+                  mentionAllGrps = grpArray;
+                  break;
+                case "mention-all-admin-only":
+                  mentionAllAdminOnlyGrps = grpArray;
+                  break;
+                case "nsfw-roast":
+                  nsfwRoastGrps = grpArray;
+                  break;
+              }
+
               sendReply(
                 message.chatId,
                 `Removed ${query} role from this group`,
