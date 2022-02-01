@@ -246,15 +246,27 @@ function start(client) {
       case "@everyone":
       case ".everyone":
         RecievedMsgPermission = true;
-        let annoyPerm = false;
-        // message.chat.groupMetaData.participants.forEach(participant => participant.isAdmin ? perm = true)
+        let annoyPerm = false,
+          isAdmin = false;
         query = data.substring(queryCutter.length);
         // Check if the group allows annoying mentions or not
+        message.chat.groupMetadata.participants.forEach((participant) => {
+          if (participant.isAdmin && participant.id === message.sender.id) {
+            isAdmin = true;
+          }
+        });
+
+        mentionAllAdminOnlyGrps.forEach((grp) => {
+          if (message.isGroupMsg && message.chatId === grp.grpId && isAdmin) {
+            annoyPerm = true;
+          }
+        });
         mentionAllGrps.forEach((grp) => {
           if (message.isGroupMsg && message.chatId === grp.grpId) {
             annoyPerm = true;
           }
         });
+
         if (!annoyPerm) {
           message.isGroupMsg
             ? (msgString =
@@ -1688,7 +1700,8 @@ function start(client) {
                 "Error when sending warning: "
               );
               console.log(res.data);
-            });
+            })
+            .catch((err) => console.log(err));
         }
 
         break;
@@ -1775,7 +1788,15 @@ function start(client) {
                 "Error when sending warning: "
               );
             })
-            .catch((err) => console.log(err.data));
+            .catch((err) => {
+              sendReply(
+                message.chatId,
+                "An error occurred\nCheck spellings and syntax",
+                message.id.toString(),
+                "Error when sending error: "
+              );
+              console.log(err.data);
+            });
         }
 
         break;
