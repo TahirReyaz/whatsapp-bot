@@ -1731,6 +1731,7 @@ function start(client) {
         }
 
         // Select the group to work on
+        console.log(query);
         switch (query) {
           case "mention-all":
             grpArray = mentionAllGrps;
@@ -1772,7 +1773,10 @@ function start(client) {
             )
             .then((res) => {
               grpArray.filter((grp) => {
-                console.log(message.chatId, grp.grpId);
+                console.log(
+                  message.chatId !== grp.grpId,
+                  message.chatId != grp.grpId
+                );
                 return message.chatId !== grp.grpId;
               });
               console.log("grp array", grpArray);
