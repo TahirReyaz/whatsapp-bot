@@ -1771,7 +1771,10 @@ function start(client) {
               `${process.env.FIREBASE_DOMAIN}/grpFlags/${query}/${selectedGrp.id}.json`
             )
             .then((res) => {
-              grpArray.filter((grp) => message.chatId !== grp.grpId);
+              grpArray.filter((grp) => {
+                console.log(message.chatId, grp.grpId);
+                return message.chatId !== grp.grpId;
+              });
               console.log("grp array", grpArray);
               switch (query) {
                 case "mention-all":
