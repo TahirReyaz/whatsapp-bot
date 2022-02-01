@@ -1769,9 +1769,11 @@ function start(client) {
             )
             .then((res) => {
               grpArray.filter((grp) => message.chatId !== grp.grpId);
+              console.log("grp array", grpArray);
               switch (query) {
                 case "mention-all":
                   mentionAllGrps = grpArray;
+                  console.log("all grps", mentionAllGrps);
                   break;
                 case "mention-all-admin-only":
                   mentionAllAdminOnlyGrps = grpArray;
