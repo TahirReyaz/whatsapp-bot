@@ -1553,11 +1553,12 @@ function start(client) {
         list = [
           {
             title: "Group Roles",
+            rows: [],
           },
         ];
-        grpRoles.forEach((grpRole) =>
-          list[0].rows.push({ title: grpRole, description: grpRole })
-        );
+        grpRoles.forEach((grpRole) => {
+          list[0].rows.push({ title: grpRole, description: grpRole });
+        });
         console.log(list);
 
         sendListMenu(
