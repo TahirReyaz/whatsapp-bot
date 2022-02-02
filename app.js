@@ -1894,7 +1894,7 @@ function start(client) {
                   grp.grpId ===
                   message.chatId.substring(0, message.chatId.length - 3)
               );
-
+              console.log(grpData[selectedGrpIndex].roles);
               let updatedRoles = grpData[selectedGrpIndex].roles.push({
                 roleId: res.data.name,
                 roleName: query,
@@ -1902,6 +1902,7 @@ function start(client) {
               });
 
               grpData[selectedGrpIndex].roles = updatedRoles;
+              console.log(grpData[selectedGrpIndex].roles);
 
               sendReply(
                 message.chatId,
