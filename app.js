@@ -138,7 +138,8 @@ function start(client) {
     pollerGrp = "";
   let poll = [{}],
     perm = false;
-  let grpArray = [];
+  let grpArray = [],
+    selectedGrp = [];
 
   client.onAnyMessage((message) => {
     // variables and constants required to make the data readable
@@ -1787,9 +1788,7 @@ function start(client) {
           );
           break;
         } else {
-          let selectedGrp = grpArray.find(
-            (grp) => grp.grpId === message.chatId
-          );
+          selectedGrp = grpArray.find((grp) => grp.grpId === message.chatId);
           console.log(grpArray);
           console.log("selectedgrp:", selectedGrp.id);
 
@@ -1879,7 +1878,7 @@ function start(client) {
           );
           break;
         } else {
-          // let selectedGrp = grpArray.find(
+          // selectedGrp = grpArray.find(
           //   (grp) => grp.grpId === message.chatId
           // );
           // console.log(grpArray);
@@ -1930,7 +1929,7 @@ function start(client) {
         RecievedMsgPermission = true;
         console.log("in .roles");
 
-        let selectedGrp = grpData.find(
+        selectedGrp = grpData.find(
           (grp) =>
             grp.grpId === message.chatId.substring(0, message.chatId.length - 3)
         );
@@ -1970,7 +1969,7 @@ function start(client) {
         RecievedMsgPermission = true;
         console.log("in add member role");
 
-        let selectedGrp = grpData.find(
+        selectedGrp = grpData.find(
           (grp) =>
             grp.grpId === message.chatId.substring(0, message.chatId.length - 3)
         );
@@ -1994,7 +1993,7 @@ function start(client) {
           );
           break;
         } else {
-          // let selectedGrp = grpArray.find(
+          // selectedGrp = grpArray.find(
           //   (grp) => grp.grpId === message.chatId
           // );
           // console.log(grpArray);
