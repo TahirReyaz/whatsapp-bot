@@ -1,5 +1,4 @@
 // Supports ES6
-// import { create, Whatsapp } from 'venom-bot';
 const venom = require("venom-bot");
 const truthOrDareFile = require("./data/truth-or-dare.json");
 const axios = require("axios");
@@ -93,7 +92,6 @@ function start(client) {
       }
       grpData.push({ grpId: key, roles: roleData });
     }
-    console.log(grpData[0].roles[1].members);
   });
 
   const grpRoles = [
@@ -157,7 +155,10 @@ function start(client) {
     const queryPart = query.split("-");
     let composeMsg = [],
       msgString = "",
-      list = [];
+      list = [],
+      selectedRoleIndex,
+      selectedRole,
+      roleAbsent = false;
     const songParams = {
       title: queryPart[0],
       artist: queryPart[1],
@@ -330,7 +331,6 @@ function start(client) {
             "\n----------------------------------------------------\n",
           ];
           composeMsg.forEach((txt) => (msgString += txt));
-          // Send the response to the sender
           client
             .getGroupMembersIds(message.chat.groupMetadata.id)
             .then((res) => {
@@ -1980,7 +1980,7 @@ function start(client) {
             grp.grpId === message.chatId.substring(0, message.chatId.length - 3)
         );
 
-        let roleAbsent = false;
+        roleAbsent = false;
         // roleArray.forEach((grp) => {
         //   if (grp.grpId === message.chatId) {
         //     grpAbsent = false;
@@ -1997,10 +1997,10 @@ function start(client) {
           );
           break;
         } else {
-          let selectedRoleIndex = grpData[selectedGrpIndex].roles.findIndex(
+          selectedRoleIndex = grpData[selectedGrpIndex].roles.findIndex(
             (role) => role.roleName === query
           );
-          let selectedRole = grpData[selectedGrpIndex].roles[selectedRoleIndex];
+          selectedRole = grpData[selectedGrpIndex].roles[selectedRoleIndex];
 
           axios
             .post(
@@ -2035,6 +2035,62 @@ function start(client) {
               );
               console.log(err.data);
             });
+        }
+
+        break;
+      //////////////////////////////////SEND ROLE MENTIONS/////////////////////////////////
+      case ".mention":
+      case ".summon":
+      case ".mn":
+        RecievedMsgPermission = true;
+        console.log("in mention");
+
+        selectedGrpIndex = grpData.findIndex(
+          (grp) =>
+            grp.grpId === message.chatId.substring(0, message.chatId.length - 3)
+        );
+
+        roleAbsent = false;
+        // roleArray.forEach((grp) => {
+        //   if (grp.grpId === message.chatId) {
+        //     grpAbsent = false;
+        //   }
+        // });
+
+        // If group doesnt have the selected role
+        if (roleAbsent) {
+          sendReply(
+            message.chatId,
+            `This group is not a ${query} group`,
+            message.id.toString(),
+            "Error when sending warning: "
+          );
+          break;
+        } else {
+          selectedRoleIndex = grpData[selectedGrpIndex].roles.findIndex(
+            (role) => role.roleName === query
+          );
+          selectedRole = grpData[selectedGrpIndex].roles[selectedRoleIndex];
+          let mentionList = [];
+          selectedRole.members.forEach((member) =>
+            mentionList.push(member.memberId)
+          );
+
+          client
+            .sendMentioned(message.chatId, `Summoning ${query}`, menitonList)
+            .then(() => {
+              console.log(
+                "Sent message: " + "summoned" + "\n-------------------"
+              );
+            })
+            .catch((erro) => {
+              console.log("Error when tagging: ", erro);
+            });
+
+          // grpData[selectedGrpIndex].roles[selectedRoleIndex].members.push({
+          //   id: res.data.name,
+          //   memberId: message.sender.id,
+          // });
         }
 
         break;
