@@ -85,7 +85,7 @@ function start(client) {
             : [],
         });
       }
-      grpData.push({ grpId: key, data: roleData });
+      grpData.push({ grpId: key, roles: roleData });
     }
     console.log(grpData[0].data);
   });
@@ -1945,23 +1945,29 @@ function start(client) {
           break;
         }
 
-        // let memberRoles = [];
+        let memberRoles = [];
+        selectedGrp.roles.forEach((role) => {
+          memberRoles.push({
+            title: role.roleName,
+            description: "Send to take this role",
+          });
+        });
 
-        // list = [
-        //   {
-        //     title: "Member Roles",
-        //     rows: memberRoles,
-        //   },
-        // ];
+        list = [
+          {
+            title: "Member Roles",
+            rows: memberRoles,
+          },
+        ];
 
-        // sendListMenu(
-        //   message.chatId,
-        //   "Welcome to THE BOT",
-        //   "Select the type of role",
-        //   "Select the Group Role for this group\n\nThis command is only for admins",
-        //   "Group Roles",
-        //   list
-        // );
+        sendListMenu(
+          message.chatId,
+          "Welcome to THE BOT",
+          "Select the type of role",
+          "Select the Group Role for this group\n\nThis command is only for admins",
+          "Group Roles",
+          list
+        );
         break;
       //////////////////////////////////ADD ROLE TO MEMBER/////////////////////////////////
       case ".amr":
