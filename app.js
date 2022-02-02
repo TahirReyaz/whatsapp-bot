@@ -40,6 +40,8 @@ let RecievedMsgPermission = false;
 // Start the client
 function start(client) {
   buttonsArray = [];
+
+  // Get all groups who have mention all role
   let mentionAllGrps = [];
   axios
     .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/mention-all.json`)
@@ -48,6 +50,8 @@ function start(client) {
         mentionAllGrps.push({ id: key, grpId: res.data[key].grpId });
       }
     });
+
+  // Get all groups who have mention all admin only role
   let mentionAllAdminOnlyGrps = [];
   axios
     .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/mention-all-admin-only.json`)
@@ -56,6 +60,8 @@ function start(client) {
         mentionAllAdminOnlyGrps.push({ id: key, grpId: res.data[key].grpId });
       }
     });
+
+  // Get all groups who have nsfw roast role
   let nsfwRoastGrps = [];
   axios
     .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/nsfw-roast.json`)
@@ -64,6 +70,8 @@ function start(client) {
         nsfwRoastGrps.push({ id: key, grpId: res.data[key].grpId });
       }
     });
+
+  // Get all group data which contains the roles opted by members
   let grpData = [];
   axios.get(`${process.env.FIREBASE_DOMAIN}/grpData.json`).then((res) => {
     for (const key in res.data) {
@@ -1832,6 +1840,7 @@ function start(client) {
         break;
       //////////////////////////////////ADD ROLE/////////////////////////////////
       case ".ar":
+      case "addRole":
         RecievedMsgPermission = true;
         console.log("in add role");
 
@@ -1853,6 +1862,121 @@ function start(client) {
           break;
         }
 
+        let roleAbsent = false;
+        // roleArray.forEach((grp) => {
+        //   if (grp.grpId === message.chatId) {
+        //     grpAbsent = false;
+        //   }
+        // });
+
+        // If group doesnt have the selected role
+        if (roleAbsent) {
+          sendReply(
+            message.chatId,
+            `This group is not a ${query} group`,
+            message.id.toString(),
+            "Error when sending warning: "
+          );
+          break;
+        } else {
+          // let selectedGrp = grpArray.find(
+          //   (grp) => grp.grpId === message.chatId
+          // );
+          // console.log(grpArray);
+          // console.log("selectedgrp:", selectedGrp.id);
+
+          axios
+            .post(
+              `${
+                process.env.FIREBASE_DOMAIN
+              }/grpData/${message.chatId.substring(
+                0,
+                message.chatId.length - 3
+              )}.json`,
+              { roleName: query }
+            )
+            .then((res) => {
+              // let updatedGrpArr = grpArray.filter((grp) => {
+              //   console.log(
+              //     message.chatId !== grp.grpId,
+              //     message.chatId != grp.grpId
+              //   );
+              //   return message.chatId !== grp.grpId;
+              // });
+              // console.log("grp array", updatedGrpArr);
+
+              sendReply(
+                message.chatId,
+                `Added ${query} role to this group`,
+                message.id.toString(),
+                "Error when sending grp addition: "
+              );
+              console.log(res.data);
+            })
+            .catch((err) => {
+              sendReply(
+                message.chatId,
+                "An error occurred\nCheck spellings and syntax",
+                message.id.toString(),
+                "Error when sending error: "
+              );
+              console.log(err.data);
+            });
+        }
+
+        break;
+      //////////////////////////////////MEMBER ROLES/////////////////////////////////
+      case ".roles":
+        RecievedMsgPermission = true;
+        console.log("in .roles");
+
+        let selectedGrp = grpData.find(
+          (grp) =>
+            grp.grpId === message.chatId.substring(0, message.chatId.length - 3)
+        );
+
+        console.log(selectedGrp);
+        if (!selectedGrp) {
+          sendReply(
+            message.chatId,
+            "This group has no roles\n\nAsk admin to add some",
+            message.id.toString(),
+            "Error when sending warning: "
+          );
+          break;
+        }
+
+        // let memberRoles = [];
+
+        // list = [
+        //   {
+        //     title: "Member Roles",
+        //     rows: memberRoles,
+        //   },
+        // ];
+
+        // sendListMenu(
+        //   message.chatId,
+        //   "Welcome to THE BOT",
+        //   "Select the type of role",
+        //   "Select the Group Role for this group\n\nThis command is only for admins",
+        //   "Group Roles",
+        //   list
+        // );
+        break;
+      //////////////////////////////////ADD ROLE TO MEMBER/////////////////////////////////
+      case ".amr":
+      case "addMemeberRole":
+        RecievedMsgPermission = true;
+        console.log("in add member role");
+
+        let selectedGrp = grpData.find(
+          (grp) =>
+            grp.grpId === message.chatId.substring(0, message.chatId.length - 3)
+        );
+
+        console.log(selectedGrp);
+        break;
         let roleAbsent = false;
         // roleArray.forEach((grp) => {
         //   if (grp.grpId === message.chatId) {
