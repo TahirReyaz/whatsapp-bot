@@ -71,7 +71,10 @@ function start(client) {
       for (const roleKey in res.data[key]) {
         roleData.push({
           roleId: roleKey,
-          roleName: res.data[key][roleKey],
+          roleName: res.data[key][roleKey].roleName,
+          members: res.data[key][roleKey].members
+            ? res.data[key][roleKey].members
+            : [],
         });
       }
       grpData.push({ grpId: key, data: roleData });
