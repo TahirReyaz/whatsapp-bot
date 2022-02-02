@@ -289,6 +289,10 @@ function start(client) {
           }
         });
 
+        console.log(mentionAllAdminOnlyGrps);
+
+        console.log(mentionAllGrps);
+
         mentionAllAdminOnlyGrps.forEach((grp) => {
           if (message.isGroupMsg && message.chatId === grp.grpId && isAdmin) {
             annoyPerm = true;
