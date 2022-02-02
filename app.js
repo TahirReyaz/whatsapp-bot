@@ -2067,14 +2067,18 @@ function start(client) {
           );
           break;
         } else {
+          console.log('in else')
           selectedRoleIndex = grpData[selectedGrpIndex].roles.findIndex(
             (role) => role.roleName === query
           );
           selectedRole = grpData[selectedGrpIndex].roles[selectedRoleIndex];
+          console.log(selectedRole);
+
           let mentionList = [];
           selectedRole.members.forEach((member) =>
             mentionList.push(member.memberId)
           );
+          console.log('mention list', mentionList);
 
           client
             .sendMentioned(message.chatId, `Summoning ${query}`, menitonList)
