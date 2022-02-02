@@ -69,7 +69,7 @@ function start(client) {
   let grpData = [];
   axios.get(`${process.env.FIREBASE_DOMAIN}/grpData.json`).then((res) => {
     for (const key in res.data) {
-      grpData.push({ id: key, data: res.data[key].data });
+      grpData.push({ id: key, data: res.data });
     }
     console.log(grpData);
   });
@@ -1877,7 +1877,12 @@ function start(client) {
 
           axios
             .post(
-              `${process.env.FIREBASE_DOMAIN}/grpData/${message.chatId}.json`,
+              `${
+                process.env.FIREBASE_DOMAIN
+              }/grpData/${message.chatId.substring(
+                0,
+                message.chatId.length - 3
+              )}.json`,
               { roleName: query }
             )
             .then((res) => {
@@ -1906,7 +1911,7 @@ function start(client) {
                 "Error when sending error: "
               );
               console.log(err.data);
-              console.log(err);
+              // console.log(err);
             });
         }
 
