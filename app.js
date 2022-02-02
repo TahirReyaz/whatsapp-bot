@@ -2082,11 +2082,11 @@ function start(client) {
           msgString = `Summoning ${query}\n`;
           selectedRole.members.forEach((member) => {
             mentionList.push(
-              member.memberId.substring(0, member.memberId.length - 3)
+              member.memberId.substring(0, member.memberId.length - 5)
             );
             msgString += `@${member.memberId.substring(
               0,
-              member.memberId.length - 3
+              member.memberId.length - 5
             )} | `;
           });
           console.log("mention list", mentionList);
