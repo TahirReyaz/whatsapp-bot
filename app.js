@@ -1895,22 +1895,13 @@ function start(client) {
                   message.chatId.substring(0, message.chatId.length - 3)
               );
 
-              let updatedGrpData = grpData[selectedGrpIndex].roles.push({
+              let updatedRoles = grpData[selectedGrpIndex].roles.push({
                 roleId: res.data.name,
                 roleName: query,
                 members: [],
               });
 
-              grpData[selectedGrpIndex] = updatedGrpData;
-
-              // let updatedGrpArr = grpArray.filter((grp) => {
-              //   console.log(
-              //     message.chatId !== grp.grpId,
-              //     message.chatId != grp.grpId
-              //   );
-              //   return message.chatId !== grp.grpId;
-              // });
-              // console.log("grp array", updatedGrpArr);
+              grpData[selectedGrpIndex].roles = updatedRoles;
 
               sendReply(
                 message.chatId,
