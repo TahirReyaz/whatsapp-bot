@@ -1975,7 +1975,6 @@ function start(client) {
         );
 
         console.log("selectedGrp", selectedGrp);
-        break;
         let roleAbsent = false;
         // roleArray.forEach((grp) => {
         //   if (grp.grpId === message.chatId) {
