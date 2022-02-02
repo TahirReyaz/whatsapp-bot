@@ -87,7 +87,7 @@ function start(client) {
       }
       grpData.push({ grpId: key, roles: roleData });
     }
-    console.log(grpData[0].data);
+    console.log(grpData[0].roles);
   });
 
   const grpRoles = [
@@ -1878,12 +1878,6 @@ function start(client) {
           );
           break;
         } else {
-          // selectedGrp = grpArray.find(
-          //   (grp) => grp.grpId === message.chatId
-          // );
-          // console.log(grpArray);
-          // console.log("selectedgrp:", selectedGrp.id);
-
           axios
             .post(
               `${
@@ -1895,6 +1889,20 @@ function start(client) {
               { roleName: query }
             )
             .then((res) => {
+              let selectedGrpIndex = grpData.findIndex(
+                (grp) =>
+                  grp.grpId ===
+                  message.chatId.substring(0, message.chatId.length - 3)
+              );
+
+              let updatedGrpData = grpData[selectedGrpIndex].roles.push({
+                roleId: res.data.name,
+                roleName: query,
+                members: [],
+              });
+
+              grpData[selectedGrpIndex] = updatedGrpData;
+
               // let updatedGrpArr = grpArray.filter((grp) => {
               //   console.log(
               //     message.chatId !== grp.grpId,
@@ -1933,8 +1941,6 @@ function start(client) {
           (grp) =>
             grp.grpId === message.chatId.substring(0, message.chatId.length - 3)
         );
-
-        console.log(selectedGrp);
         if (!selectedGrp) {
           sendReply(
             message.chatId,
@@ -1948,7 +1954,7 @@ function start(client) {
         let memberRoles = [];
         selectedGrp.roles.forEach((role) => {
           memberRoles.push({
-            title: role.roleName,
+            title: `.amr ${role.roleName}`,
             description: "Send to take this role",
           });
         });
