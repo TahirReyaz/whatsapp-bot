@@ -1999,6 +1999,10 @@ function start(client) {
           // console.log(grpArray);
           // console.log("selectedgrp:", selectedGrp.id);
 
+          let selectedRole = selectedGrp.roles.find(
+            (role) => role.roleName === query
+          );
+
           axios
             .post(
               `${
@@ -2006,8 +2010,8 @@ function start(client) {
               }/grpData/${message.chatId.substring(
                 0,
                 message.chatId.length - 3
-              )}.json`,
-              { roleName: query }
+              )}/${selectedRole.roledId}/members.json`,
+              { memberId: message.sender.id }
             )
             .then((res) => {
               // let updatedGrpArr = grpArray.filter((grp) => {
@@ -2021,7 +2025,7 @@ function start(client) {
 
               sendReply(
                 message.chatId,
-                `Added ${query} role to this group`,
+                `Added you to ${query}`,
                 message.id.toString(),
                 "Error when sending grp addition: "
               );
