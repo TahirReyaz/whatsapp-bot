@@ -1975,7 +1975,7 @@ function start(client) {
         RecievedMsgPermission = true;
         console.log("in add member role");
 
-        selectedGrp = grpData.find(
+        selectedGrpIndex = grpData.findIndex(
           (grp) =>
             grp.grpId === message.chatId.substring(0, message.chatId.length - 3)
         );
@@ -1997,9 +1997,10 @@ function start(client) {
           );
           break;
         } else {
-          let selectedRole = selectedGrp.roles.find(
+          let selectedRoleIndex = grpData[selectedGrpIndex].roles.findIndex(
             (role) => role.roleName === query
           );
+          let selectedRole = grpData[selectedGrpIndex].roles[selectedRoleIndex];
 
           axios
             .post(
@@ -2012,14 +2013,11 @@ function start(client) {
               { memberId: message.sender.id }
             )
             .then((res) => {
-              // let updatedGrpArr = grpArray.filter((grp) => {
-              //   console.log(
-              //     message.chatId !== grp.grpId,
-              //     message.chatId != grp.grpId
-              //   );
-              //   return message.chatId !== grp.grpId;
-              // });
-              // console.log("grp array", updatedGrpArr);
+              grpData[selectedGrpIndex].roles[selectedRoleIndex].members.push({
+                id: res.data.name,
+                memberId: message.senderId,
+              });
+              console.log(grpData[0].roles[1].members);
 
               sendReply(
                 message.chatId,
