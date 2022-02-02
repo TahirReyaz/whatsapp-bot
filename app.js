@@ -342,7 +342,6 @@ function start(client) {
               res.forEach((member) => {
                 members.push(member.user.toString());
                 msgString += `@${member.user.toString()} | `;
-                console.log(member.user);
               });
               client
                 .sendMentioned(message.chatId, msgString, members)
@@ -2082,8 +2081,13 @@ function start(client) {
           let mentionList = [];
           msgString = `Summoning ${query}\n`;
           selectedRole.members.forEach((member) => {
-            mentionList.push(member.memberId);
-            msgString += `@${member.memberId} | `;
+            mentionList.push(
+              member.memberId.substring(0, member.memberId.length - 3)
+            );
+            msgString += `@${member.memberId.substring(
+              0,
+              member.memberId.length - 3
+            )} | `;
           });
           console.log("mention list", mentionList);
 
