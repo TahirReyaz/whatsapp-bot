@@ -296,7 +296,7 @@ function start(client) {
         if (!annoyPerm) {
           message.isGroupMsg
             ? (msgString =
-                "People get annoyed by useless mentioning😔\n\nAsk admins for activating this command in this group\n\nIf you are an admin yourself, then use GroupRoles command for activating this command in this group.")
+                "People get annoyed by useless mentioning😔\n\nAsk admins for activating this command in this group\n\nIf you are an admin yourself, then use GroupRoles command for activating this command in this group.\n\nFor example:\nGroupRoles")
             : (msgString = "This command is not supported in dms😁");
 
           // Send the response to the sender
@@ -1894,15 +1894,11 @@ function start(client) {
                   grp.grpId ===
                   message.chatId.substring(0, message.chatId.length - 3)
               );
-              console.log("old grp role", grpData[selectedGrpIndex].roles);
               grpData[selectedGrpIndex].roles.push({
                 roleId: res.data.name,
                 roleName: query,
                 members: [],
               });
-              // console.log("updated roles", updatedRoles);
-              // grpData[selectedGrpIndex].roles = updatedRoles;
-              console.log("new grp roles", grpData[selectedGrpIndex].roles);
 
               sendReply(
                 message.chatId,
@@ -2540,14 +2536,14 @@ function start(client) {
           if (!err) {
             sendReply(
               message.chatId,
-              "Image editing completed🦾\n\nSending Sticker",
+              "Image editing completed🦾\n\nSending Sticker\n\nTry again\n\nThis command is not working please dont use it",
               message.id.toString(),
               "Error when sending sticker progress: "
             );
           } else {
             sendReply(
               message.chatId,
-              "Image editing failed😞\n\nTry again\n\nThis command is not working please dont use it",
+              "Image editing failed😞",
               message.id.toString(),
               "Error when sending sticker progress: "
             );
