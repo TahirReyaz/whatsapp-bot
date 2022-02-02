@@ -76,7 +76,7 @@ function start(client) {
       }
       grpData.push({ grpId: key, data: roleData });
     }
-    console.log(grpData);
+    console.log(grpData[0].data);
   });
 
   const grpRoles = [
