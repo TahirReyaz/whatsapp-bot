@@ -1992,12 +1992,7 @@ function start(client) {
           );
           break;
         } else {
-          console.log("in else", selectedGrp.roles);
-          // selectedGrp = grpArray.find(
-          //   (grp) => grp.grpId === message.chatId
-          // );
-          // console.log(grpArray);
-          // console.log("selectedgrp:", selectedGrp.id);
+          console.log("in else", selectedGrp.roles[1].roleName);
 
           let selectedRole = selectedGrp.roles.find((role) => {
             console.log(role, "\nrolename", roleName, "query", query);
