@@ -338,6 +338,7 @@ function start(client) {
               res.forEach((member) => {
                 members.push(member.user.toString());
                 msgString += `@${member.user.toString()} | `;
+                console.log(member.user);
               });
               client
                 .sendMentioned(message.chatId, msgString, members)
