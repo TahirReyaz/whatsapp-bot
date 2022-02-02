@@ -1974,7 +1974,6 @@ function start(client) {
             grp.grpId === message.chatId.substring(0, message.chatId.length - 3)
         );
 
-        console.log("selectedGrp", selectedGrp);
         let roleAbsent = false;
         // roleArray.forEach((grp) => {
         //   if (grp.grpId === message.chatId) {
@@ -1994,11 +1993,9 @@ function start(client) {
         } else {
           console.log("in else", selectedGrp.roles[1].roleName);
 
-          let selectedRole = selectedGrp.roles.find((role) => {
-            console.log(role, "\nrolename", role.roleName, "query", query);
-            return role.roleName === query;
-          });
-          console.log("selectedRole", selectedRole);
+          let selectedRole = selectedGrp.roles.find(
+            (role) => role.roleName === query
+          );
 
           axios
             .post(
