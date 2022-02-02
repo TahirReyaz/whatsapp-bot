@@ -66,6 +66,13 @@ function start(client) {
         nsfwRoastGrps.push({ id: key, grpId: res.data[key].grpId });
       }
     });
+  let grpData = [];
+  axios.get(`${process.env.FIREBASE_DOMAIN}/grpData.json`).then((res) => {
+    for (const key in res.data) {
+      grpData.push({ id: key, data: res.data[key].data });
+    }
+    console.log(grpData);
+  });
 
   const grpRoles = [
     {
@@ -1801,6 +1808,89 @@ function start(client) {
                 `Removed ${query} role from this group`,
                 message.id.toString(),
                 "Error when sending warning: "
+              );
+            })
+            .catch((err) => {
+              sendReply(
+                message.chatId,
+                "An error occurred\nCheck spellings and syntax",
+                message.id.toString(),
+                "Error when sending error: "
+              );
+              console.log(err.data);
+            });
+        }
+
+        break;
+      //////////////////////////////////ADD ROLE/////////////////////////////////
+      case ".ar":
+        RecievedMsgPermission = true;
+        console.log("in add role");
+
+        // Check whether the sender is an admin
+        perm = false;
+        message.chat.groupMetadata.participants.forEach((participant) => {
+          if (participant.isAdmin && participant.id === message.sender.id) {
+            perm = true;
+          }
+        });
+        // If sender is not an admin then send warning
+        if (!perm && !message.fromMe) {
+          sendReply(
+            message.chatId,
+            "This command is used for deleting a group role.\n\nThis commands is only for admins",
+            message.id.toString(),
+            "Error when sending warning: "
+          );
+          break;
+        }
+
+        // Select the group to work on
+        console.log(query);
+
+        let roleAbsent = false;
+        // roleArray.forEach((grp) => {
+        //   if (grp.grpId === message.chatId) {
+        //     grpAbsent = false;
+        //   }
+        // });
+
+        // If group doesnt have the selected role
+        if (roleAbsent) {
+          sendReply(
+            message.chatId,
+            `This group is not a ${query} group`,
+            message.id.toString(),
+            "Error when sending warning: "
+          );
+          break;
+        } else {
+          // let selectedGrp = grpArray.find(
+          //   (grp) => grp.grpId === message.chatId
+          // );
+          // console.log(grpArray);
+          // console.log("selectedgrp:", selectedGrp.id);
+
+          axios
+            .post(
+              `${process.env.FIREBASE_DOMAIN}/grpData/${message.chatId}.json`,
+              { [query]: [] }
+            )
+            .then((res) => {
+              // let updatedGrpArr = grpArray.filter((grp) => {
+              //   console.log(
+              //     message.chatId !== grp.grpId,
+              //     message.chatId != grp.grpId
+              //   );
+              //   return message.chatId !== grp.grpId;
+              // });
+              // console.log("grp array", updatedGrpArr);
+
+              sendReply(
+                message.chatId,
+                `Added ${query} role in this group`,
+                message.id.toString(),
+                "Error when sending grp addition: "
               );
             })
             .catch((err) => {
