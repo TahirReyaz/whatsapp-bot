@@ -67,7 +67,14 @@ function start(client) {
   let grpData = [];
   axios.get(`${process.env.FIREBASE_DOMAIN}/grpData.json`).then((res) => {
     for (const key in res.data) {
-      grpData.push({ grpId: key, data: res.data[key] });
+      let roleData = [];
+      for (const roleKey in res.data[key]) {
+        roleData.push({
+          roleId: roleKey,
+          roleName: res.data[key][roleKey],
+        });
+      }
+      grpData.push({ grpId: key, data: roleData });
     }
     console.log(grpData);
   });
