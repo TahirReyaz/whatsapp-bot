@@ -1847,8 +1847,8 @@ function start(client) {
         }
 
         // Select the group to work on
-        console.log(message.data);
-        console.log(query);
+        console.log("messgae", message.data);
+        console.log("query", query);
 
         let roleAbsent = false;
         // roleArray.forEach((grp) => {
@@ -1876,7 +1876,7 @@ function start(client) {
           axios
             .post(
               `${process.env.FIREBASE_DOMAIN}/grpData/${message.chatId}.json`,
-              { [query]: [] }
+              { roleName: query, members: {} }
             )
             .then((res) => {
               // let updatedGrpArr = grpArray.filter((grp) => {
