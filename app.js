@@ -28,7 +28,7 @@ const ocrConfig = {
 venom
   .create({
     session: "session-name", //name of session
-    multidevice: false, // for version not multidevice use false.(default: true)
+    multidevice: true, // for version not multidevice use false.(default: true)
   })
   .then((client) => {
     start(client);
@@ -1894,15 +1894,15 @@ function start(client) {
                   grp.grpId ===
                   message.chatId.substring(0, message.chatId.length - 3)
               );
-              console.log(grpData[selectedGrpIndex].roles);
+              console.log("old grp role", grpData[selectedGrpIndex].roles);
               let updatedRoles = grpData[selectedGrpIndex].roles.push({
                 roleId: res.data.name,
                 roleName: query,
                 members: [],
               });
-
+              console.log("updated roles", updatedRoles);
               grpData[selectedGrpIndex].roles = updatedRoles;
-              console.log(grpData[selectedGrpIndex].roles);
+              console.log("new grp roles", grpData[selectedGrpIndex].roles);
 
               sendReply(
                 message.chatId,
