@@ -2015,9 +2015,8 @@ function start(client) {
             .then((res) => {
               grpData[selectedGrpIndex].roles[selectedRoleIndex].members.push({
                 id: res.data.name,
-                memberId: message.senderId,
+                memberId: message.sender.id,
               });
-              console.log(grpData[0].roles[1].members);
 
               sendReply(
                 message.chatId,
