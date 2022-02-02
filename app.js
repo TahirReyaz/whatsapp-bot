@@ -77,12 +77,18 @@ function start(client) {
     for (const key in res.data) {
       let roleData = [];
       for (const roleKey in res.data[key]) {
+        let members = [];
+
+        for (const memberKey in res.data[key][roleKey].members) {
+          members.push({
+            id: memberKey,
+            memberId: res.data[key][roleKey].members[memberKey].memberId,
+          });
+        }
         roleData.push({
           roleId: roleKey,
           roleName: res.data[key][roleKey].roleName,
-          members: res.data[key][roleKey].members
-            ? res.data[key][roleKey].members
-            : [],
+          members: members,
         });
       }
       grpData.push({ grpId: key, roles: roleData });
@@ -1991,8 +1997,6 @@ function start(client) {
           );
           break;
         } else {
-          console.log("in else", selectedGrp.roles[1].roleName);
-
           let selectedRole = selectedGrp.roles.find(
             (role) => role.roleName === query
           );
