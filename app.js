@@ -1861,7 +1861,7 @@ function start(client) {
           break;
         }
 
-        let roleAbsent = false;
+        let memberRoleAbsent = false;
         // roleArray.forEach((grp) => {
         //   if (grp.grpId === message.chatId) {
         //     grpAbsent = false;
@@ -1869,7 +1869,7 @@ function start(client) {
         // });
 
         // If group doesnt have the selected role
-        if (roleAbsent) {
+        if (memberRoleAbsent) {
           sendReply(
             message.chatId,
             `This group is not a ${query} group`,
