@@ -131,6 +131,7 @@ function start(client) {
     const queryCutter = botQuery[0] + " ";
     const queryWithDesc = data.substring(queryCutter.length).split("\n"); // Get everything written after the command
     let query = queryWithDesc[0];
+    console.log("query", query, "queryWithDesc", queryWithDesc);
     const queryPart = query.split("-");
     let composeMsg = [],
       msgString = "",
@@ -1846,6 +1847,7 @@ function start(client) {
         }
 
         // Select the group to work on
+        console.log(message.data);
         console.log(query);
 
         let roleAbsent = false;
