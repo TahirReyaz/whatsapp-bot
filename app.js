@@ -2042,6 +2042,7 @@ function start(client) {
       case ".mention":
       case ".summon":
       case ".mn":
+      case "@":
         RecievedMsgPermission = true;
         console.log("in mention");
 
@@ -2067,7 +2068,7 @@ function start(client) {
           );
           break;
         } else {
-          console.log('in else')
+          console.log("in else");
           selectedRoleIndex = grpData[selectedGrpIndex].roles.findIndex(
             (role) => role.roleName === query
           );
@@ -2078,10 +2079,10 @@ function start(client) {
           selectedRole.members.forEach((member) =>
             mentionList.push(member.memberId)
           );
-          console.log('mention list', mentionList);
+          console.log("mention list", mentionList);
 
           client
-            .sendMentioned(message.chatId, `Summoning ${query}`, menitonList)
+            .sendMentioned(message.chatId, `Summoning ${query}`, mentionList)
             .then(() => {
               console.log(
                 "Sent message: " + "summoned" + "\n-------------------"
