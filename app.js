@@ -1981,7 +1981,6 @@ function start(client) {
         //     grpAbsent = false;
         //   }
         // });
-        console.log("after role absent");
 
         // If group doesnt have the selected role
         if (roleAbsent) {
@@ -1993,7 +1992,7 @@ function start(client) {
           );
           break;
         } else {
-          console.log("in else");
+          console.log("in else", selectedGrp.roles);
           // selectedGrp = grpArray.find(
           //   (grp) => grp.grpId === message.chatId
           // );
