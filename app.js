@@ -2007,7 +2007,7 @@ function start(client) {
               }/grpData/${message.chatId.substring(
                 0,
                 message.chatId.length - 3
-              )}/${selectedRole.roledId}/members.json`,
+              )}/${selectedRole.roleId}/members.json`,
               { memberId: message.sender.id }
             )
             .then((res) => {
