@@ -93,7 +93,7 @@ function start(client) {
       }
       grpData.push({ grpId: key, roles: roleData });
     }
-    console.log(grpData[0].roles);
+    console.log(grpData[0].roles[1].members);
   });
 
   const grpRoles = [
