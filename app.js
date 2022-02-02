@@ -131,7 +131,6 @@ function start(client) {
     const queryCutter = botQuery[0] + " ";
     const queryWithDesc = data.substring(queryCutter.length).split("\n"); // Get everything written after the command
     let query = queryWithDesc[0];
-    console.log("query", query, "queryWithDesc", queryWithDesc);
     const queryPart = query.split("-");
     let composeMsg = [],
       msgString = "",
@@ -1847,7 +1846,7 @@ function start(client) {
         }
 
         // Select the group to work on
-        console.log("messgae", message.data);
+        console.log("messgae", message.body);
         console.log("query", query);
 
         let roleAbsent = false;
@@ -1872,11 +1871,14 @@ function start(client) {
           // );
           // console.log(grpArray);
           // console.log("selectedgrp:", selectedGrp.id);
+          console.log(
+            `${process.env.FIREBASE_DOMAIN}/grpData/${message.chatId}.json`
+          );
 
           axios
             .post(
               `${process.env.FIREBASE_DOMAIN}/grpData/${message.chatId}.json`,
-              { roleName: query, members: {} }
+              { roleName: query }
             )
             .then((res) => {
               // let updatedGrpArr = grpArray.filter((grp) => {
@@ -1890,10 +1892,11 @@ function start(client) {
 
               sendReply(
                 message.chatId,
-                `Added ${query} role in this group`,
+                `Added you to ${query}`,
                 message.id.toString(),
                 "Error when sending grp addition: "
               );
+              console.log(res.data);
             })
             .catch((err) => {
               sendReply(
@@ -1903,6 +1906,7 @@ function start(client) {
                 "Error when sending error: "
               );
               console.log(err.data);
+              console.log(err);
             });
         }
 
