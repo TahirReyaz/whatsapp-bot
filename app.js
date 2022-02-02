@@ -1895,13 +1895,13 @@ function start(client) {
                   message.chatId.substring(0, message.chatId.length - 3)
               );
               console.log("old grp role", grpData[selectedGrpIndex].roles);
-              let updatedRoles = grpData[selectedGrpIndex].roles.push({
+              grpData[selectedGrpIndex].roles.push({
                 roleId: res.data.name,
                 roleName: query,
                 members: [],
               });
-              console.log("updated roles", updatedRoles);
-              grpData[selectedGrpIndex].roles = updatedRoles;
+              // console.log("updated roles", updatedRoles);
+              // grpData[selectedGrpIndex].roles = updatedRoles;
               console.log("new grp roles", grpData[selectedGrpIndex].roles);
 
               sendReply(
