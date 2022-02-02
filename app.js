@@ -1995,7 +1995,7 @@ function start(client) {
           console.log("in else", selectedGrp.roles[1].roleName);
 
           let selectedRole = selectedGrp.roles.find((role) => {
-            console.log(role, "\nrolename", roleName, "query", query);
+            console.log(role, "\nrolename", role.roleName, "query", query);
             return role.roleName === query;
           });
           console.log("selectedRole", selectedRole);
