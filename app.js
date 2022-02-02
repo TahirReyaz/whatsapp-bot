@@ -2073,19 +2073,20 @@ function start(client) {
             (role) => role.roleName === query
           );
           selectedRole = grpData[selectedGrpIndex].roles[selectedRoleIndex];
-          console.log(selectedRole);
 
           let mentionList = [];
-          selectedRole.members.forEach((member) =>
-            mentionList.push(member.memberId)
-          );
+          msgString = `Summoning ${query}\n`;
+          selectedRole.members.forEach((member) => {
+            mentionList.push(member.memberId);
+            msgString += `@${member.memberId} | `;
+          });
           console.log("mention list", mentionList);
 
           client
-            .sendMentioned(message.chatId, `Summoning ${query}`, mentionList)
+            .sendMentioned(message.chatId, msgString, mentionList)
             .then(() => {
               console.log(
-                "Sent message: " + "summoned" + "\n-------------------"
+                "Sent message: " + msgString + "\n-------------------"
               );
             })
             .catch((erro) => {
