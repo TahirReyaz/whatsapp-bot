@@ -47,7 +47,6 @@ function start(client) {
       for (const key in res.data) {
         mentionAllGrps.push({ id: key, grpId: res.data[key].grpId });
       }
-      console.log(mentionAllGrps);
     });
   let mentionAllAdminOnlyGrps = [];
   axios
@@ -56,7 +55,6 @@ function start(client) {
       for (const key in res.data) {
         mentionAllAdminOnlyGrps.push({ id: key, grpId: res.data[key].grpId });
       }
-      console.log(mentionAllAdminOnlyGrps);
     });
   let nsfwRoastGrps = [];
   axios
@@ -69,7 +67,7 @@ function start(client) {
   let grpData = [];
   axios.get(`${process.env.FIREBASE_DOMAIN}/grpData.json`).then((res) => {
     for (const key in res.data) {
-      grpData.push({ id: key, data: res.data });
+      grpData.push({ grpId: key, data: res.data[key] });
     }
     console.log(grpData);
   });
@@ -1845,10 +1843,6 @@ function start(client) {
           break;
         }
 
-        // Select the group to work on
-        console.log("messgae", message.body);
-        console.log("query", query);
-
         let roleAbsent = false;
         // roleArray.forEach((grp) => {
         //   if (grp.grpId === message.chatId) {
@@ -1871,9 +1865,6 @@ function start(client) {
           // );
           // console.log(grpArray);
           // console.log("selectedgrp:", selectedGrp.id);
-          console.log(
-            `${process.env.FIREBASE_DOMAIN}/grpData/${message.chatId}.json`
-          );
 
           axios
             .post(
@@ -1897,7 +1888,7 @@ function start(client) {
 
               sendReply(
                 message.chatId,
-                `Added you to ${query}`,
+                `Added ${query} role to this group`,
                 message.id.toString(),
                 "Error when sending grp addition: "
               );
@@ -1911,7 +1902,6 @@ function start(client) {
                 "Error when sending error: "
               );
               console.log(err.data);
-              // console.log(err);
             });
         }
 
@@ -2420,7 +2410,7 @@ function start(client) {
           } else {
             sendReply(
               message.chatId,
-              "Image editing failed😞\n\nTry again",
+              "Image editing failed😞\n\nTry again\n\nThis command is not working please dont use it",
               message.id.toString(),
               "Error when sending sticker progress: "
             );
