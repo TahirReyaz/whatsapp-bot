@@ -1915,7 +1915,7 @@ function start(client) {
                 members: [],
               };
 
-              if (selectedGrpIndex) {
+              if (selectedGrpIndex !== -1) {
                 console.log("in if", selectedGrpIndex);
                 grpData[selectedGrpIndex].roles.push(newRole);
               } else {
