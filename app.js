@@ -1903,16 +1903,26 @@ function start(client) {
               { roleName: query }
             )
             .then((res) => {
+              console.log("in then block");
               let selectedGrpIndex = grpData.findIndex(
                 (grp) =>
                   grp.grpId ===
                   message.chatId.substring(0, message.chatId.length - 3)
               );
-              grpData[selectedGrpIndex].roles.push({
+              let newRole = {
                 roleId: res.data.name,
                 roleName: query,
                 members: [],
-              });
+              };
+
+              if (selectedGrpIndex) {
+                grpData[selectedGrpIndex].roles.push(newRole);
+              } else {
+                grpData.push({
+                  grpId: message.chatId.substring(0, message.chatId.length - 3),
+                  roles: [newRole],
+                });
+              }
 
               sendReply(
                 message.chatId,
@@ -1929,6 +1939,7 @@ function start(client) {
                 message.id.toString(),
                 "Error when sending error: "
               );
+              console.log(err);
               console.log(err.data);
             });
         }
@@ -1972,8 +1983,8 @@ function start(client) {
           message.chatId,
           "Welcome to THE BOT",
           "Select the type of role",
-          "Select the Group Role for this group\n\nThis command is only for admins",
-          "Group Roles",
+          "Chose appropriate role",
+          "Member Roles",
           list
         );
         break;
