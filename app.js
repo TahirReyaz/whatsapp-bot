@@ -1916,11 +1916,13 @@ function start(client) {
               };
 
               if (selectedGrpIndex) {
+                console.log("in if", selectedGrpIndex);
                 grpData[selectedGrpIndex].roles.push(newRole);
               } else {
+                console.log("in else");
                 grpData.push({
                   grpId: message.chatId.substring(0, message.chatId.length - 3),
-                  roles: [newRole],
+                  roles: [{ ...newRole }],
                 });
               }
 
