@@ -1716,19 +1716,23 @@ function start(client) {
               grpId: message.chatId,
             })
             .then((res) => {
-              let updatedGrpArr = grpArray.push({
+              console.log("in then");
+              grpArray.push({
                 id: res.data.name,
                 grpId: message.chatId,
               });
               switch (query) {
                 case "mention-all":
-                  mentionAllGrps = updatedGrpArr;
+                  mentionAllGrps = grpArray;
+                  console.log(mentionAllGrps);
                   break;
                 case "mention-all-admin-only":
-                  mentionAllAdminOnlyGrps = updatedGrpArr;
+                  mentionAllAdminOnlyGrps = grpArray;
+                  console.log(mentionAllGrps);
                   break;
                 case "nsfw-roast":
-                  nsfwRoastGrps = updatedGrpArr;
+                  nsfwRoastGrps = grpArray;
+                  console.log(mentionAllGrps);
                   break;
               }
 
