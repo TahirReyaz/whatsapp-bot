@@ -1959,7 +1959,7 @@ function start(client) {
         if (!selectedGrp) {
           sendReply(
             message.chatId,
-            "This group has no roles\n\nAsk admin to add some",
+            "This group has no roles\n\nAsk admin to add some\n\nIf You are an admin yourself, add member roles to this group by using the addRole command\n\nFor example\n```.ar admin```\n```.ar active```",
             message.id.toString(),
             "Error when sending warning: "
           );
@@ -2062,7 +2062,6 @@ function start(client) {
       //////////////////////////////////SEND ROLE MENTIONS/////////////////////////////////
       case ".mention":
       case ".summon":
-      case ".mn":
       case "@":
         RecievedMsgPermission = true;
         console.log("in mention");
