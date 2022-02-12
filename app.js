@@ -14,6 +14,7 @@ const gify = require("gify");
 const gm = require("gm").subClass({ imageMagick: true });
 require("dotenv").config();
 const tesseract = require("node-tesseract-ocr");
+const _ = require("lodash");
 
 var Poll = require("./models/poll");
 
@@ -2063,7 +2064,8 @@ function start(client) {
         RecievedMsgPermission = true;
         if(botQuery.length > 0){
 
-          const query = botQuery[1].toLowerCase();
+          console.log(botQuery);
+          const query = botQuery[1].toLowerCase().split("\n")[0];
         
         let options = {
           method: "POST",
@@ -2080,7 +2082,7 @@ function start(client) {
           .request(options)
           .then(function (response) {
             const { data } = response;
-            const messageData = [`Shoung Results for *${botQuery[1]}*`];
+            const messageData = [`Shoung Results for *${_.upperFirst(query)}*`];
 
             for (let key in data) {
               messageData.push(`*${key}*: ${data[key]}`);
@@ -2156,6 +2158,86 @@ function start(client) {
         }
 
         break;
+      /////////////////////////////////////HOROSCOPE MENU/////////////////////////////////////
+      case ".hrmenu": 
+      case ".horoscopeMenu":
+        RecievedMsgPermission = true;
+
+        composeMsg = [
+          "Select the type of Horoscope👇"
+        ]
+
+        composeMsg.forEach((txt) => {
+          msgString += txt;
+        });
+
+        // Configuring the list menu
+        list = [
+          {
+            title: "General Commands",
+            rows: [
+              {
+                title: ".hr aries",
+                description: "March 21 - April 19",
+              },
+              {
+                title: ".hr taurus",
+                description: "April 20 - May 20",
+              },
+              {
+                title: ".hr gemini",
+                description: "May 21 - June 20",
+              },
+              {
+                title: ".hr cancer",
+                description: "June 21 - July 22",
+              },
+              {
+                title: ".hr leo",
+                description: "July 23 - August 22",
+              },
+              {
+                title: ".hr virgo",
+                description: "August 23 - September 22",
+              },
+              {
+                title: ".hr libra",
+                description: "September 23 - October 22",
+              },
+              {
+                title: ".hr scorpio",
+                description: "October 23 - November 21",
+              },
+              {
+                title: ".hr sagittarius",
+                description: "November 22 - December 21",
+              },
+              {
+                title: ".hr capricorn",
+                description: "December 22 - January 19",
+              },
+              {
+                title: ".hr aquarius",
+                description: "January 20 - February 18",
+              },
+              {
+                title: ".hr pisces",
+                description: "February 19 - March 20",
+              }
+            ],
+          },
+        ];
+
+        sendListMenu(
+          message.chatId,
+          "Daily Horoscope",
+          "Select the type of Horoscope",
+          msgString,
+          "Commands",
+          list
+        );
+        break;
+
       /////////////////////////////////////BOT MENU/////////////////////////////////////
       case ".help":
       case "BotHelp":
