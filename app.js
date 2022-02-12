@@ -42,58 +42,61 @@ function start(client) {
 
   // Get all groups who have mention all role
   let mentionAllGrps = [];
-  axios
-    .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/mention-all.json`)
-    .then((res) => {
+  if (process.env.FIREBASE_DOMAIN != undefined) {
+    axios
+      .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/mention-all.json`)
+      .then((res) => {
+        for (const key in res.data) {
+          mentionAllGrps.push({ id: key, grpId: res.data[key].grpId });
+        }
+      });
+
+    // Get all groups who have mention all admin only role
+    let mentionAllAdminOnlyGrps = [];
+    axios
+      .get(
+        `${process.env.FIREBASE_DOMAIN}/grpFlags/mention-all-admin-only.json`
+      )
+      .then((res) => {
+        for (const key in res.data) {
+          mentionAllAdminOnlyGrps.push({ id: key, grpId: res.data[key].grpId });
+        }
+      });
+
+    // Get all groups who have nsfw roast role
+    let nsfwRoastGrps = [];
+    axios
+      .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/nsfw-roast.json`)
+      .then((res) => {
+        for (const key in res.data) {
+          nsfwRoastGrps.push({ id: key, grpId: res.data[key].grpId });
+        }
+      });
+
+    // Get all group data which contains the roles opted by members
+    let grpData = [];
+    axios.get(`${process.env.FIREBASE_DOMAIN}/grpData.json`).then((res) => {
       for (const key in res.data) {
-        mentionAllGrps.push({ id: key, grpId: res.data[key].grpId });
-      }
-    });
+        let roleData = [];
+        for (const roleKey in res.data[key]) {
+          let members = [];
 
-  // Get all groups who have mention all admin only role
-  let mentionAllAdminOnlyGrps = [];
-  axios
-    .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/mention-all-admin-only.json`)
-    .then((res) => {
-      for (const key in res.data) {
-        mentionAllAdminOnlyGrps.push({ id: key, grpId: res.data[key].grpId });
-      }
-    });
-
-  // Get all groups who have nsfw roast role
-  let nsfwRoastGrps = [];
-  axios
-    .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/nsfw-roast.json`)
-    .then((res) => {
-      for (const key in res.data) {
-        nsfwRoastGrps.push({ id: key, grpId: res.data[key].grpId });
-      }
-    });
-
-  // Get all group data which contains the roles opted by members
-  let grpData = [];
-  axios.get(`${process.env.FIREBASE_DOMAIN}/grpData.json`).then((res) => {
-    for (const key in res.data) {
-      let roleData = [];
-      for (const roleKey in res.data[key]) {
-        let members = [];
-
-        for (const memberKey in res.data[key][roleKey].members) {
-          members.push({
-            id: memberKey,
-            memberId: res.data[key][roleKey].members[memberKey].memberId,
+          for (const memberKey in res.data[key][roleKey].members) {
+            members.push({
+              id: memberKey,
+              memberId: res.data[key][roleKey].members[memberKey].memberId,
+            });
+          }
+          roleData.push({
+            roleId: roleKey,
+            roleName: res.data[key][roleKey].roleName,
+            members: members,
           });
         }
-        roleData.push({
-          roleId: roleKey,
-          roleName: res.data[key][roleKey].roleName,
-          members: members,
-        });
+        grpData.push({ grpId: key, roles: roleData });
       }
-      grpData.push({ grpId: key, roles: roleData });
-    }
-  });
-
+    });
+  }
   const grpRoles = [
     {
       title: ".agr mention-all",
@@ -2002,11 +2005,6 @@ function start(client) {
         );
 
         roleAbsent = false;
-        // roleArray.forEach((grp) => {
-        //   if (grp.grpId === message.chatId) {
-        //     grpAbsent = false;
-        //   }
-        // });
 
         // If group doesnt have the selected role
         if (roleAbsent) {
@@ -2059,6 +2057,44 @@ function start(client) {
         }
 
         break;
+      ///////////////////////////////////HOROSCOPE ////////////////////////////////////
+      case ".hr":
+      case ".horoscope":
+        RecievedMsgPermission = true;
+        if(botQuery.length > 0){
+
+          const query = botQuery[1].toLowerCase();
+        
+        let options = {
+          method: "POST",
+          url: "https://sameer-kumar-aztro-v1.p.rapidapi.com/",
+          params: { sign: query, day: "today" },
+          headers: {
+            "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
+            "x-rapidapi-key":
+              "3d94dcb981mshd51b9a0eed6bfa7p10fa73jsnafe2ad17ad6e",
+          },
+        };
+
+        axios
+          .request(options)
+          .then(function (response) {
+            const { data } = response;
+            const messageData = [`Shoung Results for *${botQuery[1]}*`];
+
+            for (let key in data) {
+              messageData.push(`*${key}*: ${data[key]}`);
+            }
+            const sendmsg = messageData.join("\n");
+            sendReply(message.chatId, sendmsg, message.id.toString(), "Error when sending horoscope: ");
+          })
+          .catch(function (error) {
+            sendReply(message.chatId, "An error occurred\nCheck spellings and syntax", message.id.toString(), "Error when sending error: ");
+          });
+
+        }else{
+          sendText(message.chatId, "Please enter a valid sign");
+        }
       //////////////////////////////////SEND ROLE MENTIONS/////////////////////////////////
       case ".mention":
       case ".summon":
@@ -2072,11 +2108,6 @@ function start(client) {
         );
 
         roleAbsent = false;
-        // roleArray.forEach((grp) => {
-        //   if (grp.grpId === message.chatId) {
-        //     grpAbsent = false;
-        //   }
-        // });
 
         // If group doesnt have the selected role
         if (roleAbsent) {
@@ -2406,6 +2437,7 @@ function start(client) {
           list
         );
         break;
+
       ///////////////////////////////////ANIME MENU////////////////////////////////////
       case ".ahelp":
       case "AnimeHelp":
