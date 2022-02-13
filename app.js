@@ -9,7 +9,6 @@ const wyr = require("wyr");
 const openai = require("openai-grammaticalcorrection");
 const fs = require("fs");
 const mime = require("mime-types");
-const { MediaType } = require("venom-bot/dist/api/model/enum");
 const gify = require("gify");
 const gm = require("gm").subClass({ imageMagick: true });
 require("dotenv").config();
@@ -41,6 +40,7 @@ let RecievedMsgPermission = false;
 function start(client) {
   // Get all groups who have mention all role
   let mentionAllGrps = [];
+  console.log("domain", process.env.FIREBASE_DOMAIN);
   if (process.env.FIREBASE_DOMAIN != undefined) {
     axios
       .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/mention-all.json`)
@@ -48,6 +48,7 @@ function start(client) {
         for (const key in res.data) {
           mentionAllGrps.push({ id: key, grpId: res.data[key].grpId });
         }
+        console.log(mentionAllGrps);
       });
 
     // Get all groups who have mention all admin only role
@@ -94,6 +95,7 @@ function start(client) {
         }
         grpData.push({ grpId: key, roles: roleData });
       }
+      console.log(grpData);
     });
   }
   const grpRoles = [
