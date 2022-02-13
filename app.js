@@ -1954,22 +1954,12 @@ function start(client) {
       //////////////////////////////////MEMBER ROLES/////////////////////////////////
       case ".roles":
         RecievedMsgPermission = true;
-        console.log("in .roles");
 
-        try {
-          selectedGrp = grpData.find((grp) => {
-            console.log(grp.grpId);
-            return (
-              grp.grpId ===
-              message.chatId.substring(0, message.chatId.length - 3)
-            );
-          });
-        } catch (err) {
-          console.log(err.message);
-        }
-        console.log("sg", selectedGrp);
+        selectedGrp = grpData.find(
+          (grp) =>
+            grp.grpId === message.chatId.substring(0, message.chatId.length - 3)
+        );
         if (!selectedGrp) {
-          console.log("not selected grp");
           sendReply(
             message.chatId,
             "This group has no roles\n\nAsk admin to add some\n\nIf You are an admin yourself, add member roles to this group by using the addRole command\n\nFor example\n```.ar admin```\n```.ar active```",
@@ -1980,14 +1970,12 @@ function start(client) {
         }
 
         let memberRoles = [];
-        console.log("before for Each");
         selectedGrp.roles.forEach((role) => {
           memberRoles.push({
             title: `.amr ${role.roleName}`,
             description: "Send to take this role",
           });
         });
-        console.log("after for each", memberRoles);
 
         list = [
           {
@@ -2101,10 +2089,10 @@ function start(client) {
           let mentionList = [];
           msgString = `Summoning ${query}
           ${
-            query
+            queryWithDesc
               ? "\n----------------------------------------------------\n"
               : ""
-          }${query ? query : ""}
+          }${queryWithDesc ? queryWithDesc : ""}
           ----------------------------------------------------\n`;
           selectedRole.members.forEach((member) => {
             mentionList.push(
