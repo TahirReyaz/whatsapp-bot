@@ -2229,7 +2229,7 @@ function start(client) {
             .then((response) => {
               const { data } = response;
               composeMsg = [
-                "*${_.upperFirst(query)}'s* Horoscope for today",
+                `*${_.upperFirst(query)}'s* Horoscope for today\n`,
                 "\n----------------------------------------------\n",
                 data.description,
                 "\n----------------------------------------------\n",
@@ -2306,6 +2306,11 @@ function start(client) {
               {
                 title: "@everyone <message>",
                 description: "For tagging everyone like discord",
+              },
+              {
+                title: "horoscopeMenu",
+                description:
+                  "For checking out today's Horoscope\nShort command: .hsm",
               },
               {
                 title: "GroupRoles",
