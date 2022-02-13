@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "node ./app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "TahirReyaz",
@@ -14,6 +15,7 @@
     "dotenv": "^10.0.0",
     "gify": "^0.2.0",
     "gm": "^1.23.1",
+    "lodash": "^4.17.21",
     "mal-scraper": "^2.11.3",
     "music-info": "^1.2.1",
     "node-tesseract-ocr": "^2.2.1",
