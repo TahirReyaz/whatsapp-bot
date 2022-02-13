@@ -144,7 +144,8 @@ function start(client) {
     op2percent = 0,
     pollerId = "",
     pollerName = "",
-    pollerGrp = "";
+    pollerGrp = "",
+    selectedGrpIndex;
   let poll = [{}],
     perm = false;
   let grpArray = [],
@@ -2132,7 +2133,7 @@ function start(client) {
       case "horoscopeMenu":
         RecievedMsgPermission = true;
 
-        composeMsg = ["Select the type of Horoscope👇"];
+        composeMsg = ["Select your Zodiac sign👇"];
 
         composeMsg.forEach((txt) => {
           msgString += txt;
