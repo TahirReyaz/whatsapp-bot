@@ -40,7 +40,6 @@ let RecievedMsgPermission = false;
 function start(client) {
   // Get all groups who have mention all role
   let mentionAllGrps = [];
-  console.log("domain", process.env.FIREBASE_DOMAIN);
   axios
     .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/mention-all.json`)
     .then((res) => {
@@ -2089,10 +2088,10 @@ function start(client) {
           let mentionList = [];
           msgString = `Summoning ${query}
           ${
-            queryWithDesc
+            queryWithDesc[1]
               ? "\n----------------------------------------------------\n"
               : ""
-          }${queryWithDesc ? queryWithDesc : ""}
+          }${queryWithDesc[1] ? queryWithDesc[1] : ""}
           ----------------------------------------------------\n`;
           selectedRole.members.forEach((member) => {
             mentionList.push(
