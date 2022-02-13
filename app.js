@@ -1961,12 +1961,17 @@ function start(client) {
         RecievedMsgPermission = true;
         console.log("in .roles");
 
-        selectedGrp = grpData.find((grp) => {
-          console.log(grp.grpId);
-          return (
-            grp.grpId === message.chatId.substring(0, message.chatId.length - 3)
-          );
-        });
+        try {
+          selectedGrp = grpData.find((grp) => {
+            console.log(grp.grpId);
+            return (
+              grp.grpId ===
+              message.chatId.substring(0, message.chatId.length - 3)
+            );
+          });
+        } catch (err) {
+          console.log(err.message);
+        }
         console.log("sg", selectedGrp);
         if (!selectedGrp) {
           console.log("not selected grp");
