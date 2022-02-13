@@ -2129,11 +2129,7 @@ function start(client) {
       case "horoscopeMenu":
         RecievedMsgPermission = true;
 
-        composeMsg = ["Select your Zodiac sign👇"];
-
-        composeMsg.forEach((txt) => {
-          msgString += txt;
-        });
+        msgString = "Select your Zodiac sign👇";
 
         // Configuring the list menu
         list = [
@@ -2141,57 +2137,57 @@ function start(client) {
             title: "General Commands",
             rows: [
               {
-                title: ".hr aries",
-                description: "March 21 - April 19",
+                title: ".hs aries",
+                description: "March 21 - April 19\nSend to see the Horoscope",
               },
               {
-                title: ".hr taurus",
-                description: "April 20 - May 20",
+                title: ".hs taurus",
+                description: "April 20 - May 20\nSend to see the Horoscope",
               },
               {
-                title: ".hr gemini",
-                description: "May 21 - June 20",
+                title: ".hs gemini",
+                description: "May 21 - June 20\nSend to see the Horoscope",
               },
               {
-                title: ".hr cancer",
-                description: "June 21 - July 22",
+                title: ".hs cancer",
+                description: "June 21 - July 22\nSend to see the Horoscope",
               },
               {
-                title: ".hr leo",
+                title: ".hs leo",
                 description: "July 23 - August 22\nSend to see the Horoscope",
               },
               {
-                title: ".hr virgo",
+                title: ".hs virgo",
                 description:
                   "August 23 - September 22\nSend to see the Horoscope",
               },
               {
-                title: ".hr libra",
+                title: ".hs libra",
                 description:
                   "September 23 - October 22\nSend to see the Horoscope",
               },
               {
-                title: ".hr scorpio",
+                title: ".hs scorpio",
                 description:
                   "October 23 - November 21\nSend to see the Horoscope",
               },
               {
-                title: ".hr sagittarius",
+                title: ".hs sagittarius",
                 description:
                   "November 22 - December 21\nSend to see the Horoscope",
               },
               {
-                title: ".hr capricorn",
+                title: ".hs capricorn",
                 description:
                   "December 22 - January 19\nSend to see the Horoscope",
               },
               {
-                title: ".hr aquarius",
+                title: ".hs aquarius",
                 description:
                   "January 20 - February 18\nSend to see the Horoscope",
               },
               {
-                title: ".hr pisces",
+                title: ".hs pisces",
                 description:
                   "February 19 - March 20\nSend to see the Horoscope",
               },
@@ -2232,19 +2228,19 @@ function start(client) {
             .request(options)
             .then((response) => {
               const { data } = response;
-              msgString = `*${_.upperFirst(query)}'s* Horoscope for today
-                ----------------------------------------------
-                ${data.description}
-                ----------------------------------------------
+              composeMsg = [
+                "*${_.upperFirst(query)}'s* Horoscope for today",
+                "\n----------------------------------------------\n",
+                data.description,
+                "\n----------------------------------------------\n",
+                `You are compatible with *${data.compatibility}*\n`,
+                `Make your move on them at ${data.lucky_time} cause that's your lucky time.\n\n`,
+                `*Mood*: ${data.mood}\n`,
+                `*Color*: ${data.color}\n`,
+                `*Lucky Number*: ${data.lucky_number}\n`,
+              ];
 
-                You are compatible with ${data.compatibility}
-                Make your move on them at ${
-                  data.lucky_time
-                } cause that's your lucky time.
-                
-                *Mood*: ${data.mood}
-                *Color*: ${data.color}
-                *Lucky Number*: ${data.lucky_number}`;
+              composeMsg.forEach((txt) => (msgString += txt));
 
               sendReply(
                 message.chatId,
