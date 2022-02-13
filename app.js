@@ -48,7 +48,7 @@ function start(client) {
         for (const key in res.data) {
           mentionAllGrps.push({ id: key, grpId: res.data[key].grpId });
         }
-        console.log(mentionAllGrps);
+        // console.log(mentionAllGrps);
       });
 
     // Get all groups who have mention all admin only role
@@ -1961,11 +1961,15 @@ function start(client) {
         RecievedMsgPermission = true;
         console.log("in .roles");
 
-        selectedGrp = grpData.find(
-          (grp) =>
+        selectedGrp = grpData.find((grp) => {
+          console.log(grp.grpId);
+          return (
             grp.grpId === message.chatId.substring(0, message.chatId.length - 3)
-        );
+          );
+        });
+        console.log("sg", selectedGrp);
         if (!selectedGrp) {
+          console.log("not selected grp");
           sendReply(
             message.chatId,
             "This group has no roles\n\nAsk admin to add some\n\nIf You are an admin yourself, add member roles to this group by using the addRole command\n\nFor example\n```.ar admin```\n```.ar active```",
