@@ -39,8 +39,6 @@ venom
 let RecievedMsgPermission = false;
 // Start the client
 function start(client) {
-  buttonsArray = [];
-
   // Get all groups who have mention all role
   let mentionAllGrps = [];
   if (process.env.FIREBASE_DOMAIN != undefined) {
@@ -128,8 +126,11 @@ function start(client) {
     "pendicul",
     "testing",
   ];
+
+  // variables and constants used in the code
   const wikiEndpoint = "https://en.wikipedia.org/w/api.php?";
   const mathsEndpoint = "http://api.mathjs.org/v4/?expr=";
+  let buttonsArray = [];
   let params = {},
     op1count = 0,
     op2count = 0,
@@ -149,14 +150,15 @@ function start(client) {
   let grpArray = [],
     selectedGrp = [];
 
+  // This function executes whenever a message is sent or recieved
   client.onAnyMessage((message) => {
     // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
     const queryCutter = botQuery[0] + " ";
     const queryWithDesc = data.substring(queryCutter.length).split("\n"); // Get everything written after the command
-    let query = queryWithDesc[0];
-    const queryPart = query.split("-");
+    let query = queryWithDesc[0]; // This is used as the option people type after the command
+    const queryPart = query.split("-"); // This is used as extra options that people type after the above query
     let composeMsg = [],
       msgString = "",
       list = [],
@@ -2058,45 +2060,6 @@ function start(client) {
         }
 
         break;
-      ///////////////////////////////////HOROSCOPE ////////////////////////////////////
-      case ".hr":
-      case ".horoscope":
-        RecievedMsgPermission = true;
-        if(botQuery.length > 0){
-
-          console.log(botQuery);
-          const query = botQuery[1].toLowerCase().split("\n")[0];
-        
-        let options = {
-          method: "POST",
-          url: "https://sameer-kumar-aztro-v1.p.rapidapi.com/",
-          params: { sign: query, day: "today" },
-          headers: {
-            "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
-            "x-rapidapi-key":
-              "3d94dcb981mshd51b9a0eed6bfa7p10fa73jsnafe2ad17ad6e",
-          },
-        };
-
-        axios
-          .request(options)
-          .then(function (response) {
-            const { data } = response;
-            const messageData = [`Shoung Results for *${_.upperFirst(query)}*`];
-
-            for (let key in data) {
-              messageData.push(`*${key}*: ${data[key]}`);
-            }
-            const sendmsg = messageData.join("\n");
-            sendReply(message.chatId, sendmsg, message.id.toString(), "Error when sending horoscope: ");
-          })
-          .catch(function (error) {
-            sendReply(message.chatId, "An error occurred\nCheck spellings and syntax", message.id.toString(), "Error when sending error: ");
-          });
-
-        }else{
-          sendText(message.chatId, "Please enter a valid sign");
-        }
       //////////////////////////////////SEND ROLE MENTIONS/////////////////////////////////
       case ".mention":
       case ".summon":
@@ -2121,14 +2084,19 @@ function start(client) {
           );
           break;
         } else {
-          console.log("in else");
           selectedRoleIndex = grpData[selectedGrpIndex].roles.findIndex(
             (role) => role.roleName === query
           );
           selectedRole = grpData[selectedGrpIndex].roles[selectedRoleIndex];
 
           let mentionList = [];
-          msgString = `Summoning ${query}\n`;
+          msgString = `Summoning ${query}
+          ${
+            query
+              ? "\n----------------------------------------------------\n"
+              : ""
+          }${query ? query : ""}
+          ----------------------------------------------------\n`;
           selectedRole.members.forEach((member) => {
             mentionList.push(
               member.memberId.substring(0, member.memberId.length - 5)
@@ -2159,13 +2127,12 @@ function start(client) {
 
         break;
       /////////////////////////////////////HOROSCOPE MENU/////////////////////////////////////
-      case ".hrmenu": 
-      case ".horoscopeMenu":
+      case ".hrmenu":
+      case ".hrm":
+      case "horoscopeMenu":
         RecievedMsgPermission = true;
 
-        composeMsg = [
-          "Select the type of Horoscope👇"
-        ]
+        composeMsg = ["Select the type of Horoscope👇"];
 
         composeMsg.forEach((txt) => {
           msgString += txt;
@@ -2194,36 +2161,43 @@ function start(client) {
               },
               {
                 title: ".hr leo",
-                description: "July 23 - August 22",
+                description: "July 23 - August 22\nSend to see the Horoscope",
               },
               {
                 title: ".hr virgo",
-                description: "August 23 - September 22",
+                description:
+                  "August 23 - September 22\nSend to see the Horoscope",
               },
               {
                 title: ".hr libra",
-                description: "September 23 - October 22",
+                description:
+                  "September 23 - October 22\nSend to see the Horoscope",
               },
               {
                 title: ".hr scorpio",
-                description: "October 23 - November 21",
+                description:
+                  "October 23 - November 21\nSend to see the Horoscope",
               },
               {
                 title: ".hr sagittarius",
-                description: "November 22 - December 21",
+                description:
+                  "November 22 - December 21\nSend to see the Horoscope",
               },
               {
                 title: ".hr capricorn",
-                description: "December 22 - January 19",
+                description:
+                  "December 22 - January 19\nSend to see the Horoscope",
               },
               {
                 title: ".hr aquarius",
-                description: "January 20 - February 18",
+                description:
+                  "January 20 - February 18\nSend to see the Horoscope",
               },
               {
                 title: ".hr pisces",
-                description: "February 19 - March 20",
-              }
+                description:
+                  "February 19 - March 20\nSend to see the Horoscope",
+              },
             ],
           },
         ];
@@ -2231,13 +2205,65 @@ function start(client) {
         sendListMenu(
           message.chatId,
           "Daily Horoscope",
-          "Select the type of Horoscope",
+          "Select your Zodiac sign",
           msgString,
-          "Commands",
+          "Zodiac Signs",
           list
         );
         break;
+      ///////////////////////////////////HOROSCOPE ////////////////////////////////////
+      case ".hr":
+      case ".horoscope":
+        RecievedMsgPermission = true;
+        if (botQuery.length > 0) {
+          console.log(botQuery);
+          query = botQuery[1].toLowerCase().split("\n")[0];
+          console.log(query);
 
+          let options = {
+            method: "POST",
+            url: "https://sameer-kumar-aztro-v1.p.rapidapi.com/",
+            params: { sign: query, day: "today" },
+            headers: {
+              "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
+              "x-rapidapi-key":
+                "3d94dcb981mshd51b9a0eed6bfa7p10fa73jsnafe2ad17ad6e",
+            },
+          };
+
+          axios
+            .request(options)
+            .then((response) => {
+              const { data } = response;
+              const messageData = [
+                `Showing Results for *${_.upperFirst(query)}*`,
+              ];
+
+              for (let key in data) {
+                messageData.push(`*${key}*: ${data[key]}`);
+              }
+              const sendmsg = messageData.join("\n");
+              sendReply(
+                message.chatId,
+                sendmsg,
+                message.id.toString(),
+                "Error when sending horoscope: "
+              );
+            })
+            .catch((error) => {
+              sendReply(
+                message.chatId,
+                "An error occurred\nCheck spellings and syntax",
+                message.id.toString(),
+                "Error when sending error: "
+              );
+              console.log(error);
+            });
+        } else {
+          sendText(message.chatId, "Please enter a valid sign");
+        }
+
+        break;
       /////////////////////////////////////BOT MENU/////////////////////////////////////
       case ".help":
       case "BotHelp":
