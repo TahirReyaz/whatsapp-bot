@@ -41,63 +41,58 @@ function start(client) {
   // Get all groups who have mention all role
   let mentionAllGrps = [];
   console.log("domain", process.env.FIREBASE_DOMAIN);
-  if (process.env.FIREBASE_DOMAIN != undefined) {
-    axios
-      .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/mention-all.json`)
-      .then((res) => {
-        for (const key in res.data) {
-          mentionAllGrps.push({ id: key, grpId: res.data[key].grpId });
-        }
-        // console.log(mentionAllGrps);
-      });
-
-    // Get all groups who have mention all admin only role
-    let mentionAllAdminOnlyGrps = [];
-    axios
-      .get(
-        `${process.env.FIREBASE_DOMAIN}/grpFlags/mention-all-admin-only.json`
-      )
-      .then((res) => {
-        for (const key in res.data) {
-          mentionAllAdminOnlyGrps.push({ id: key, grpId: res.data[key].grpId });
-        }
-      });
-
-    // Get all groups who have nsfw roast role
-    let nsfwRoastGrps = [];
-    axios
-      .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/nsfw-roast.json`)
-      .then((res) => {
-        for (const key in res.data) {
-          nsfwRoastGrps.push({ id: key, grpId: res.data[key].grpId });
-        }
-      });
-
-    // Get all group data which contains the roles opted by members
-    let grpData = [];
-    axios.get(`${process.env.FIREBASE_DOMAIN}/grpData.json`).then((res) => {
+  axios
+    .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/mention-all.json`)
+    .then((res) => {
       for (const key in res.data) {
-        let roleData = [];
-        for (const roleKey in res.data[key]) {
-          let members = [];
+        mentionAllGrps.push({ id: key, grpId: res.data[key].grpId });
+      }
+      // console.log(mentionAllGrps);
+    });
 
-          for (const memberKey in res.data[key][roleKey].members) {
-            members.push({
-              id: memberKey,
-              memberId: res.data[key][roleKey].members[memberKey].memberId,
-            });
-          }
-          roleData.push({
-            roleId: roleKey,
-            roleName: res.data[key][roleKey].roleName,
-            members: members,
+  // Get all groups who have mention all admin only role
+  let mentionAllAdminOnlyGrps = [];
+  axios
+    .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/mention-all-admin-only.json`)
+    .then((res) => {
+      for (const key in res.data) {
+        mentionAllAdminOnlyGrps.push({ id: key, grpId: res.data[key].grpId });
+      }
+    });
+
+  // Get all groups who have nsfw roast role
+  let nsfwRoastGrps = [];
+  axios
+    .get(`${process.env.FIREBASE_DOMAIN}/grpFlags/nsfw-roast.json`)
+    .then((res) => {
+      for (const key in res.data) {
+        nsfwRoastGrps.push({ id: key, grpId: res.data[key].grpId });
+      }
+    });
+
+  // Get all group data which contains the roles opted by members
+  let grpData = [];
+  axios.get(`${process.env.FIREBASE_DOMAIN}/grpData.json`).then((res) => {
+    for (const key in res.data) {
+      let roleData = [];
+      for (const roleKey in res.data[key]) {
+        let members = [];
+
+        for (const memberKey in res.data[key][roleKey].members) {
+          members.push({
+            id: memberKey,
+            memberId: res.data[key][roleKey].members[memberKey].memberId,
           });
         }
-        grpData.push({ grpId: key, roles: roleData });
+        roleData.push({
+          roleId: roleKey,
+          roleName: res.data[key][roleKey].roleName,
+          members: members,
+        });
       }
-      console.log(grpData);
-    });
-  }
+      grpData.push({ grpId: key, roles: roleData });
+    }
+  });
   const grpRoles = [
     {
       title: ".agr mention-all",
