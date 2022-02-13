@@ -2091,8 +2091,9 @@ function start(client) {
             queryWithDesc[1]
               ? "\n----------------------------------------------------\n"
               : ""
-          }${queryWithDesc[1] ? queryWithDesc[1] : ""}
-          ----------------------------------------------------\n`;
+          }${
+            queryWithDesc[1] ? queryWithDesc[1] : ""
+          }----------------------------------------------------\n`;
           selectedRole.members.forEach((member) => {
             mentionList.push(
               member.memberId.substring(0, member.memberId.length - 5)
@@ -2123,8 +2124,8 @@ function start(client) {
 
         break;
       /////////////////////////////////////HOROSCOPE MENU/////////////////////////////////////
-      case ".hrmenu":
-      case ".hrm":
+      case ".hsmenu":
+      case ".hsm":
       case "horoscopeMenu":
         RecievedMsgPermission = true;
 
@@ -2208,7 +2209,7 @@ function start(client) {
         );
         break;
       ///////////////////////////////////HOROSCOPE ////////////////////////////////////
-      case ".hr":
+      case ".hs":
       case ".horoscope":
         RecievedMsgPermission = true;
         if (botQuery.length > 0) {
@@ -2231,17 +2232,23 @@ function start(client) {
             .request(options)
             .then((response) => {
               const { data } = response;
-              const messageData = [
-                `Showing Results for *${_.upperFirst(query)}*`,
-              ];
+              msgString = `*${_.upperFirst(query)}'s* Horoscope for today
+                ----------------------------------------------
+                ${data.description}
+                ----------------------------------------------
 
-              for (let key in data) {
-                messageData.push(`*${key}*: ${data[key]}`);
-              }
-              const sendmsg = messageData.join("\n");
+                You are compatible with ${data.compatibility}
+                Make your move on them at ${
+                  data.lucky_time
+                } cause that's your lucky time.
+                
+                *Mood*: ${data.mood}
+                *Color*: ${data.color}
+                *Lucky Number*: ${data.lucky_number}`;
+
               sendReply(
                 message.chatId,
-                sendmsg,
+                msgString,
                 message.id.toString(),
                 "Error when sending horoscope: "
               );
