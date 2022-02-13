@@ -1974,12 +1974,14 @@ function start(client) {
         }
 
         let memberRoles = [];
+        console.log("before for Each");
         selectedGrp.roles.forEach((role) => {
           memberRoles.push({
             title: `.amr ${role.roleName}`,
             description: "Send to take this role",
           });
         });
+        console.log("after for each", memberRoles);
 
         list = [
           {
