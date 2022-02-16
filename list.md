@@ -8,10 +8,10 @@
 - Add rolesCommands in .help menu.
 - Add roleHelp command and its menu.
 - Better replies for roles related commands.
-- Extra message in summon command
 
 # List of features to be added
 
 - Download songs from YouTube and send them as an audio file.
-- Remove.bg api to remove background of images and do other things
-- Add text on images while generating stickers
+- Remove.bg api to remove background of images and do other things.
+- Add text on images while generating stickers.
+- Banned words recognition and warning using lodash and firebase rtdb.
