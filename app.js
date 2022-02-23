@@ -50,9 +50,10 @@ function start(client) {
           msg: res.data[key][remKey].msg,
         });
       }
-      reminders.push({ chatId: key, reminders: remArray });
+      reminders.push({ chatId: key + ".us", reminders: remArray });
     }
     console.log(reminders);
+    console.log(reminders[0].reminders);
   });
 
   // Get all groups who have mention all role
