@@ -1620,6 +1620,80 @@ function start(client) {
               });
           });
         break;
+      ////////////////////////////////////REMINDER/////////////////////////////////
+      case ".remind":
+      case ".rem":
+      case "BotRemind":
+      case "botremind":
+        RecievedMsgPermission = true;
+        console.log("chat id", message.chatId);
+        axios
+          .post(
+            `${
+              process.env.FIREBASE_DOMAIN
+            }/reminders/${message.chatId.substring(
+              0,
+              message.chatId.length - 3
+            )}.json`,
+            { time: query, msg: queryWithDesc[1] ? queryWithDesc[1] : "" }
+          )
+          .then((res) => {
+            console.log("in then block");
+            msgString = `Will reply to you at ${query}
+          ${
+            queryWithDesc[1]
+              ? "\n----------------------------------------------------\n"
+              : ""
+          }${queryWithDesc[1] ? queryWithDesc[1] : ""}`;
+
+            sendReply(
+              message.chatId,
+              msgString,
+              message.id.toString(),
+              "Error when sending error: "
+            );
+
+            // let selectedGrpIndex = grpData.findIndex(
+            //   (grp) =>
+            //     grp.grpId ===
+            //     message.chatId.substring(0, message.chatId.length - 3)
+            // );
+            // let newRole = {
+            //   roleId: res.data.name,
+            //   roleName: query,
+            //   members: [],
+            // };
+
+            // if (selectedGrpIndex !== -1) {
+            //   console.log("in if", selectedGrpIndex);
+            //   grpData[selectedGrpIndex].roles.push(newRole);
+            // } else {
+            //   console.log("in else");
+            //   grpData.push({
+            //     grpId: message.chatId.substring(0, message.chatId.length - 3),
+            //     roles: [{ ...newRole }],
+            //   });
+            // }
+
+            // sendReply(
+            //   message.chatId,
+            //   `Added ${query} role to this group`,
+            //   message.id.toString(),
+            //   "Error when sending grp addition: "
+            // );
+            console.log(res.data);
+          })
+          .catch((err) => {
+            sendReply(
+              message.chatId,
+              "An error occurred\nCheck spellings and syntax",
+              message.id.toString(),
+              "Error when sending error: "
+            );
+            console.log(err);
+            console.log(err.data);
+          });
+        break;
       ////////////////////////////////////GRP ROLES/////////////////////////////////
       case ".grpRoles":
       case ".groupRoles":
