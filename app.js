@@ -1671,27 +1671,27 @@ function start(client) {
               "Error when sending error: "
             );
 
-            // let selectedGrpIndex = grpData.findIndex(
-            //   (grp) =>
-            //     grp.grpId ===
-            //     message.chatId.substring(0, message.chatId.length - 3)
-            // );
-            // let newRole = {
-            //   roleId: res.data.name,
-            //   roleName: query,
-            //   members: [],
-            // };
+            let selectedGrpIndex = reminders.findIndex(
+              (grp) =>
+                grp.grpId ===
+                message.chatId.substring(0, message.chatId.length - 3)
+            );
+            let newReminder = {
+              id: res.data.name,
+              time: query,
+              msg: queryWithDesc[1] ? queryWithDesc[1] : "",
+            };
 
-            // if (selectedGrpIndex !== -1) {
-            //   console.log("in if", selectedGrpIndex);
-            //   grpData[selectedGrpIndex].roles.push(newRole);
-            // } else {
-            //   console.log("in else");
-            //   grpData.push({
-            //     grpId: message.chatId.substring(0, message.chatId.length - 3),
-            //     roles: [{ ...newRole }],
-            //   });
-            // }
+            if (selectedGrpIndex !== -1) {
+              console.log("in if", selectedGrpIndex);
+              reminders[selectedGrpIndex].reminders.push(newReminder);
+            } else {
+              console.log("in else");
+              reminders.push({
+                chatId: message.chatId,
+                reminders: [{ ...newReminder }],
+              });
+            }
 
             // sendReply(
             //   message.chatId,
@@ -1700,6 +1700,7 @@ function start(client) {
             //   "Error when sending grp addition: "
             // );
             console.log(res.data);
+            console.log(reminders);
           })
           .catch((err) => {
             sendReply(
