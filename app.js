@@ -38,6 +38,23 @@ venom
 let RecievedMsgPermission = false;
 // Start the client
 function start(client) {
+  // Get reminder data from database
+  let reminders = [];
+  axios.get(`${process.env.FIREBASE_DOMAIN}/reminders.json`).then((res) => {
+    for (const key in res.data) {
+      let remArray = [];
+      for (const remKey in res.data[key]) {
+        remArray.push({
+          id: remKey,
+          time: res.data[key][remKey].time,
+          msg: res.data[key][remKey].msg,
+        });
+      }
+      reminders.push({ chatId: key, reminders: remArray });
+    }
+    console.log(reminders);
+  });
+
   // Get all groups who have mention all role
   let mentionAllGrps = [];
   axios
