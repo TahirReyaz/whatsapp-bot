@@ -15,6 +15,8 @@ require("dotenv").config();
 const tesseract = require("node-tesseract-ocr");
 const _ = require("lodash");
 
+const { remind } = require("./functions/reminders");
+
 var Poll = require("./models/poll");
 
 const ocrConfig = {
@@ -40,7 +42,9 @@ let RecievedMsgPermission = false;
 function start(client) {
   // Get reminder data from database
   let reminders = [];
+  let reminderTimeouts = [];
   axios.get(`${process.env.FIREBASE_DOMAIN}/reminders.json`).then((res) => {
+    let index = 0;
     for (const key in res.data) {
       let remArray = [];
       for (const remKey in res.data[key]) {
@@ -49,11 +53,15 @@ function start(client) {
           time: res.data[key][remKey].time,
           msg: res.data[key][remKey].msg,
         });
+        reminderTimeouts[index] = remind(
+          client,
+          res.data[key][remKey].time,
+          key + ".us"
+        );
+        index++;
       }
       reminders.push({ chatId: key + ".us", reminders: remArray });
     }
-    console.log(reminders);
-    console.log(reminders[0].reminders);
   });
 
   // Get all groups who have mention all role
@@ -1672,9 +1680,7 @@ function start(client) {
             );
 
             let selectedGrpIndex = reminders.findIndex(
-              (grp) =>
-                grp.grpId ===
-                message.chatId.substring(0, message.chatId.length - 3)
+              (chat) => chat.chatId === message.chatId
             );
             let newReminder = {
               id: res.data.name,
@@ -1685,12 +1691,14 @@ function start(client) {
             if (selectedGrpIndex !== -1) {
               console.log("in if", selectedGrpIndex);
               reminders[selectedGrpIndex].reminders.push(newReminder);
+              console.log(reminders[selectedGrpIndex]);
             } else {
               console.log("in else");
               reminders.push({
                 chatId: message.chatId,
                 reminders: [{ ...newReminder }],
               });
+              console.log(reminders);
             }
 
             // sendReply(
@@ -1700,7 +1708,6 @@ function start(client) {
             //   "Error when sending grp addition: "
             // );
             console.log(res.data);
-            console.log(reminders);
           })
           .catch((err) => {
             sendReply(
