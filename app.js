@@ -1701,6 +1701,8 @@ function start(client) {
               console.log(reminders);
             }
 
+            reminderTimeouts.push(remind(client, query, message.chatId));
+
             // sendReply(
             //   message.chatId,
             //   `Added ${query} role to this group`,

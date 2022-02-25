@@ -6,21 +6,18 @@ module.exports.remind = (client, time, chatId) => {
   if (remTime < 0) {
     remTime += 86400000;
   }
+  const msg = "Will remind you at " + time;
+
   const timer = setTimeout(
-    () => replyAndRemove(client, timer, chatId),
+    () => replyAndRemove(client, timer, chatId, msg),
     remTime
   );
 
   return timer;
 };
 
-const replyAndRemove = (client, timer, chatId) => {
+const replyAndRemove = (client, timer, chatId, msg) => {
   console.log("meh");
-  sendText(
-    client,
-    chatId,
-    "No need to say hi to me, I am always here, reading every message you send to this guy.😁\nSend 'HelpBot' for commands",
-    "Error when sending: "
-  );
-  clearTimeout(timer);
+  sendText(client, chatId, msg, "Error when sending: ");
+  // clearTimeout(timer);
 };
