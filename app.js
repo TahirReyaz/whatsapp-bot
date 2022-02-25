@@ -41,26 +41,17 @@ let RecievedMsgPermission = false;
 // Start the client
 function start(client) {
   // Get reminder data from database
-  let reminders = [];
-  let reminderTimeouts = [];
   axios.get(`${process.env.FIREBASE_DOMAIN}/reminders.json`).then((res) => {
-    let index = 0;
     for (const key in res.data) {
-      let remArray = [];
       for (const remKey in res.data[key]) {
-        remArray.push({
-          id: remKey,
-          time: res.data[key][remKey].time,
-          msg: res.data[key][remKey].msg,
-        });
-        reminderTimeouts[index] = remind(
+        remind(
           client,
           res.data[key][remKey].time,
-          key + ".us"
+          res.data[key][remKey].msg,
+          key + ".us",
+          remKey
         );
-        index++;
       }
-      reminders.push({ chatId: key + ".us", reminders: remArray });
     }
   });
 
@@ -1652,7 +1643,6 @@ function start(client) {
       case "BotRemind":
       case "botremind":
         RecievedMsgPermission = true;
-        console.log("chat id", message.chatId);
         axios
           .post(
             `${
@@ -1664,7 +1654,6 @@ function start(client) {
             { time: query, msg: queryWithDesc[1] ? queryWithDesc[1] : "" }
           )
           .then((res) => {
-            console.log("in then block");
             msgString = `Will reply to you at ${query}
           ${
             queryWithDesc[1]
@@ -1679,36 +1668,17 @@ function start(client) {
               "Error when sending error: "
             );
 
-            let selectedGrpIndex = reminders.findIndex(
-              (chat) => chat.chatId === message.chatId
+            remind(
+              client,
+              query,
+              queryWithDesc[1] ? queryWithDesc[1] : "",
+              message.chatId,
+              res.data.name
             );
-            let newReminder = {
-              id: res.data.name,
-              time: query,
-              msg: queryWithDesc[1] ? queryWithDesc[1] : "",
-            };
 
-            if (selectedGrpIndex !== -1) {
-              console.log("in if", selectedGrpIndex);
-              reminders[selectedGrpIndex].reminders.push(newReminder);
-              console.log(reminders[selectedGrpIndex]);
-            } else {
-              console.log("in else");
-              reminders.push({
-                chatId: message.chatId,
-                reminders: [{ ...newReminder }],
-              });
-              console.log(reminders);
-            }
+            // Remove the new reminder from the new array
+            // There's no need to construct a reminder array nor to store the reminder tokens here
 
-            reminderTimeouts.push(remind(client, query, message.chatId));
-
-            // sendReply(
-            //   message.chatId,
-            //   `Added ${query} role to this group`,
-            //   message.id.toString(),
-            //   "Error when sending grp addition: "
-            // );
             console.log(res.data);
           })
           .catch((err) => {
