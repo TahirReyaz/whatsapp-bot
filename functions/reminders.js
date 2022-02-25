@@ -1,5 +1,6 @@
 const { sendText } = require("./venomFunctions");
 require("dotenv").config();
+const axios = require("axios");
 
 module.exports.remind = (client, time, msg, chatId, remId) => {
   const now = new Date();
@@ -8,6 +9,8 @@ module.exports.remind = (client, time, msg, chatId, remId) => {
   if (remTime < 0) {
     remTime += 86400000; // If the time has already passed then schedule it to the next day
   }
+
+  console.log(remTime);
 
   const timer = setTimeout(
     () => replyAndRemove(client, timer, chatId, msg, remId),
