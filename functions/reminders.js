@@ -7,6 +7,7 @@ module.exports.remind = (client, time, chatId) => {
     remTime += 86400000;
   }
   const msg = "Will remind you at " + time;
+  console.log(remTime);
 
   const timer = setTimeout(
     () => replyAndRemove(client, timer, chatId, msg),
