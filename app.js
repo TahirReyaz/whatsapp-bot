@@ -1649,7 +1649,7 @@ function start(client) {
         if (!RemTimeIsValid) {
           sendReply(
             message.chatId,
-            "Time should be in 24 hour format\nFor example:\n13:45",
+            "Time should be in 24 hour format\nFor example:\n13:45\nAnother example:\n09:15",
             message.id.toString(),
             "Error when sending regex error: "
           );
