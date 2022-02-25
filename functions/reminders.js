@@ -5,6 +5,7 @@ module.exports.remind = (client, time, chatId) => {
   console.log("time", time);
   let remTime = new Date(`${now.toLocaleDateString()} ${time}:00`) - now;
   console.log("rembef", remTime);
+  remTime -= 19800000;
   if (remTime < 0) {
     remTime += 86400000;
   }
