@@ -1643,6 +1643,19 @@ function start(client) {
       case "BotRemind":
       case "botremind":
         RecievedMsgPermission = true;
+
+        const RemTimeIsValid =
+          /^(?:[01][0-9]|2[0-3]):[0-5][0-9](?::[0-5][0-9])?$/.test(query);
+        if (!RemTimeIsValid) {
+          sendReply(
+            message.chatId,
+            "Time should be in 24 hour format\nFor example:\n13:45",
+            message.id.toString(),
+            "Error when sending regex error: "
+          );
+          break;
+        }
+
         axios
           .post(
             `${
@@ -2374,6 +2387,11 @@ function start(client) {
               {
                 title: ".talk Who are you",
                 description: "To talk with an AI",
+              },
+              {
+                title: ".remind 13:01",
+                description:
+                  "For setting a reminder (In 24 hour format). Bot remind you at the specified time. Write the additional message in the next line",
               },
               {
                 title: "@everyone <message>",
