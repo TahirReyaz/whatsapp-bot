@@ -2155,21 +2155,30 @@ function start(client) {
             grp.grpId === message.chatId.substring(0, message.chatId.length - 3)
         );
 
-        roleAbsent = false;
-
-        // If group doesnt have the selected role
-        if (roleAbsent) {
+        if (!selectedGrpIndex) {
           sendReply(
             message.chatId,
-            `This group is not a ${query} group`,
+            `There are no member roles in this group\nAsk admins to add some using the .ar command\n\nFor example:\n.ar coders`,
+            message.id.toString(),
+            "Error when sending warning: "
+          );
+          break;
+        }
+
+        selectedRoleIndex = grpData[selectedGrpIndex].roles.findIndex(
+          (role) => role.roleName === query
+        );
+
+        // If group doesnt have the selected role
+        if (!selectedRoleIndex) {
+          sendReply(
+            message.chatId,
+            `${query} role not present in the group`,
             message.id.toString(),
             "Error when sending warning: "
           );
           break;
         } else {
-          selectedRoleIndex = grpData[selectedGrpIndex].roles.findIndex(
-            (role) => role.roleName === query
-          );
           selectedRole = grpData[selectedGrpIndex].roles[selectedRoleIndex];
 
           let mentionList = [];
