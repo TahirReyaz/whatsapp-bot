@@ -2851,14 +2851,14 @@ function start(client) {
           if (!err) {
             sendReply(
               message.chatId,
-              "Image editing completed🦾\n\nSending Sticker\n\nTry again\n\nThis command is not working please dont use it",
+              "Image editing completed🦾\n\nSending Sticker",
               message.id.toString(),
               "Error when sending sticker progress: "
             );
           } else {
             sendReply(
               message.chatId,
-              "Image editing failed😞",
+              "Image editing failed😞\n\nTry Again",
               message.id.toString(),
               "Error when sending sticker progress: "
             );
