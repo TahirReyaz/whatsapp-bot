@@ -1,14 +1,16 @@
 module.exports.sendReply = (client, sender, text, messageId, errMsg) => {
-  let returnValue;
+  let returnValue = "meh";
   client
     .reply(sender, text, messageId)
     .then((res) => {
       console.log("Reply sent:\n" + text + "\n------------------------------");
-      console.log(res);
+      returnValue = res.to._serialized;
     })
     .catch((erro) => {
       console.error(errMsg, erro);
     });
+
+  return returnValue;
 };
 
 module.exports.sendText = (client, sender, text, errMsg) => {

@@ -16,7 +16,7 @@ const tesseract = require("node-tesseract-ocr");
 const _ = require("lodash");
 
 const { remind } = require("./functions/reminders");
-const {delMsg} = require('./functions/venomFunctions')
+const { delMsg, sendReply: funcReply } = require("./functions/venomFunctions");
 
 var Poll = require("./models/poll");
 
@@ -2823,7 +2823,7 @@ function start(client) {
     client
       .reply(senderTo, text, messageId)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         console.log(
           "Reply sent:\n" + text + "\n------------------------------"
         );
@@ -2849,7 +2849,8 @@ function start(client) {
     console.log("Buffer generated");
     let fileName = `some-file-name.${mime.extension(message.mimetype)}`;
     fs.writeFile(fileName, buffer, (err) => {
-      sendReply(
+      const dwnldMsgId = funcReply(
+        client,
         message.chatId,
         "Image Downloaded successfully🦾",
         message.id.toString(),
@@ -2860,6 +2861,7 @@ function start(client) {
         .gravity("Center")
         .write(fileName, function (err) {
           if (!err) {
+            delMsg(client, message.chatId, dwnldMsgId, "Error while deleting");
             sendReply(
               message.chatId,
               "Image editing completed🦾\n\nSending Sticker",
