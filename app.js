@@ -16,6 +16,7 @@ const tesseract = require("node-tesseract-ocr");
 const _ = require("lodash");
 
 const { remind } = require("./functions/reminders");
+const {delMsg} = require('./functions/venomFunctions')
 
 var Poll = require("./models/poll");
 
@@ -2821,7 +2822,8 @@ function start(client) {
   const sendReply = (senderTo, text, messageId, errMsg) => {
     client
       .reply(senderTo, text, messageId)
-      .then(() => {
+      .then((res) => {
+        console.log(res)
         console.log(
           "Reply sent:\n" + text + "\n------------------------------"
         );
