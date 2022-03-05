@@ -166,8 +166,6 @@ function start(client) {
 
   // This function executes whenever a message is sent or recieved
   client.onAnyMessage((message) => {
-    console.log("chat id", message.chatId);
-    console.log("msg id", message.id.toString());
     // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
@@ -365,6 +363,8 @@ function start(client) {
                 members.push(member.user.toString());
                 msgString += `@${member.user.toString()} | `;
               });
+              msgString += `\n_Total members: ${members.length}_`;
+
               client
                 .sendMentioned(message.chatId, msgString, members)
                 .then(() => {
