@@ -2848,8 +2848,8 @@ function start(client) {
     const buffer = await client.decryptFile(message);
     console.log("Buffer generated");
     let fileName = `some-file-name.${mime.extension(message.mimetype)}`;
-    fs.writeFile(fileName, buffer, (err) => {
-      const dwnldMsgId = funcReply(
+    fs.writeFile(fileName, buffer, async (err) => {
+      const dwnldMsgId = await funcReply(
         client,
         message.chatId,
         "Image Downloaded successfully🦾",
