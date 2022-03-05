@@ -2294,15 +2294,12 @@ function start(client) {
       case ".horoscope":
         RecievedMsgPermission = true;
         if (botQuery.length > 0) {
-          console.log(botQuery);
-          query = botQuery[1].toLowerCase().split("\n")[0];
-          console.log(query);
-
+          const zodiacSign = query.toLowerCase();
           const zodiacDay = queryPart[1] ? queryPart[1] : "today";
 
           axios
             .post(
-              `https://aztro.sameerkumar.website/?sign=${queryPart[0]}&day=${zodiacDay}`
+              `https://aztro.sameerkumar.website/?sign=${zodiacSign}&day=${zodiacDay}`
             )
             .then((response) => {
               const { data } = response;
