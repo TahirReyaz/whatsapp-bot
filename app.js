@@ -2298,19 +2298,12 @@ function start(client) {
           query = botQuery[1].toLowerCase().split("\n")[0];
           console.log(query);
 
-          let options = {
-            method: "POST",
-            url: "https://sameer-kumar-aztro-v1.p.rapidapi.com/",
-            params: { sign: query, day: "today" },
-            headers: {
-              "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
-              "x-rapidapi-key":
-                "3d94dcb981mshd51b9a0eed6bfa7p10fa73jsnafe2ad17ad6e",
-            },
-          };
+          const zodiacDay = queryPart[1] ? queryPart[1] : "today";
 
           axios
-            .request(options)
+            .post(
+              `https://aztro.sameerkumar.website/?sign=${queryPart[0]}&day=${zodiacDay}`
+            )
             .then((response) => {
               const { data } = response;
               composeMsg = [
