@@ -2848,27 +2848,32 @@ function start(client) {
     const buffer = await client.decryptFile(message);
     console.log("Buffer generated");
     let fileName = `some-file-name.${mime.extension(message.mimetype)}`;
-    fs.writeFile(fileName, buffer, async (err) => {
-      const dwnldMsgId = await funcReply(
-        client,
-        message.chatId,
-        "Image Downloaded successfully🦾",
-        message.id.toString(),
-        "Error when sending sticker progress: "
-      );
+    fs.writeFile(fileName, buffer, (err) => {
+      let updateMsgId;
+      const sendUpdate = (msg) => {
+        updateMsgId = funcReply(
+          client,
+          message.chatId,
+          msg,
+          message.id.toString(),
+          "Error when sending sticker progress: "
+        );
+      };
+
       gm(fileName)
         .resizeExact(500, 500)
         .gravity("Center")
-        .write(fileName, function (err) {
+        .write(fileName, async (err) => {
           if (!err) {
-            // delMsg(client, message.chatId, dwnldMsgId, "Error while deleting");
-            console.log("dsn msg id", dwnldMsgId);
-            sendReply(
-              message.chatId,
-              "Image editing completed🦾\n\nSending Sticker",
-              dwnldMsgId,
-              "Error when sending sticker progress: "
-            );
+            await sendUpdate("Image Downloaded successfully🦾");
+            delMsg(client, message.chatId, updateMsgId, "Error while deleting");
+            console.log("dsn msg id", updateMsgId);
+            // sendReply(
+            //   message.chatId,
+            //   "Image editing completed🦾\n\nSending Sticker",
+            //   dwnldMsgId,
+            //   "Error when sending sticker progress: "
+            // );
             sendReply(
               message.chatId,
               "Image editing completed🦾\n\nSending Sticker",
