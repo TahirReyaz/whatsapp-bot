@@ -166,6 +166,8 @@ function start(client) {
 
   // This function executes whenever a message is sent or recieved
   client.onAnyMessage((message) => {
+    console.log("chat id", message.chatId);
+    console.log("msg id", message.id.toString());
     // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
@@ -2315,7 +2317,7 @@ function start(client) {
                 `*Mood*: ${data.mood}\n`,
                 `*Color*: ${data.color}\n`,
                 `*Lucky Number*: ${data.lucky_number}\n`,
-                `\n\n\n_${_.upperFirst(queryPart[0])}: ${data.date_range}_`,
+                `\n\n_${_.upperFirst(queryPart[0])}: ${data.date_range}_`,
               ];
 
               composeMsg.forEach((txt) => (msgString += txt));
@@ -2807,9 +2809,9 @@ function start(client) {
       });
   };
 
-  const sendReply = (sender, text, messageId, errMsg) => {
+  const sendReply = (senderTo, text, messageId, errMsg) => {
     client
-      .reply(sender, text, messageId)
+      .reply(senderTo, text, messageId)
       .then(() => {
         console.log(
           "Reply sent:\n" + text + "\n------------------------------"
