@@ -2849,15 +2849,17 @@ function start(client) {
     console.log("Buffer generated");
     let fileName = `some-file-name.${mime.extension(message.mimetype)}`;
     fs.writeFile(fileName, buffer, (err) => {
-      let updateMsgId;
-      const sendUpdate = (msg) => {
-        updateMsgId = funcReply(
+      // let updatedMsgId;
+      const sendUpdate = async (msg) => {
+        const msgId = await funcReply(
           client,
           message.chatId,
           msg,
           message.id.toString(),
           "Error when sending sticker progress: "
         );
+
+        return msgId;
       };
 
       gm(fileName)
@@ -2865,9 +2867,16 @@ function start(client) {
         .gravity("Center")
         .write(fileName, async (err) => {
           if (!err) {
-            await sendUpdate("Image Downloaded successfully🦾");
-            delMsg(client, message.chatId, updateMsgId, "Error while deleting");
-            console.log("dsn msg id", updateMsgId);
+            const updatedMsgId = await sendUpdate(
+              "Image Downloaded successfully🦾"
+            );
+            delMsg(
+              client,
+              message.chatId,
+              updatedMsgId,
+              "Error while deleting"
+            );
+            console.log("dsn msg id", updatedMsgId);
             // sendReply(
             //   message.chatId,
             //   "Image editing completed🦾\n\nSending Sticker",
