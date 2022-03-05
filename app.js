@@ -2307,7 +2307,9 @@ function start(client) {
             .then((response) => {
               const { data } = response;
               composeMsg = [
-                `*${_.upperFirst(query)}'s* Horoscope for today\n`,
+                `*${_.upperFirst(
+                  queryPart[0]
+                )}'s* Horoscope for ${zodiacDay}\n`,
                 "\n----------------------------------------------\n",
                 data.description,
                 "\n----------------------------------------------\n",
@@ -2316,6 +2318,7 @@ function start(client) {
                 `*Mood*: ${data.mood}\n`,
                 `*Color*: ${data.color}\n`,
                 `*Lucky Number*: ${data.lucky_number}\n`,
+                `\n\n\n_${queryPart[0]}: ${data.date_range}_`,
               ];
 
               composeMsg.forEach((txt) => (msgString += txt));
