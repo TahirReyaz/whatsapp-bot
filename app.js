@@ -16,7 +16,6 @@ const tesseract = require("node-tesseract-ocr");
 const _ = require("lodash");
 
 const { remind } = require("./functions/reminders");
-const { delMsg, sendReply: funcReply } = require("./functions/venomFunctions");
 
 var Poll = require("./models/poll");
 
@@ -2822,8 +2821,7 @@ function start(client) {
   const sendReply = (senderTo, text, messageId, errMsg) => {
     client
       .reply(senderTo, text, messageId)
-      .then((res) => {
-        // console.log(res)
+      .then(() => {
         console.log(
           "Reply sent:\n" + text + "\n------------------------------"
         );
@@ -2849,40 +2847,17 @@ function start(client) {
     console.log("Buffer generated");
     let fileName = `some-file-name.${mime.extension(message.mimetype)}`;
     fs.writeFile(fileName, buffer, (err) => {
-      // let updatedMsgId;
-      const sendUpdate = async (msg) => {
-        const msgId = await funcReply(
-          client,
-          message.chatId,
-          msg,
-          message.id.toString(),
-          "Error when sending sticker progress: "
-        );
-
-        return msgId;
-      };
-
+      sendReply(
+        message.chatId,
+        "Image Downloaded successfully🦾",
+        message.id.toString(),
+        "Error when sending sticker progress: "
+      );
       gm(fileName)
         .resizeExact(500, 500)
         .gravity("Center")
-        .write(fileName, async (err) => {
+        .write(fileName, function (err) {
           if (!err) {
-            const updatedMsgId = await sendUpdate(
-              "Image Downloaded successfully🦾"
-            );
-            delMsg(
-              client,
-              message.chatId,
-              updatedMsgId,
-              "Error while deleting"
-            );
-            console.log("dsn msg id", updatedMsgId);
-            // sendReply(
-            //   message.chatId,
-            //   "Image editing completed🦾\n\nSending Sticker",
-            //   dwnldMsgId,
-            //   "Error when sending sticker progress: "
-            // );
             sendReply(
               message.chatId,
               "Image editing completed🦾\n\nSending Sticker",

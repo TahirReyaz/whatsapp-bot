@@ -1,4 +1,4 @@
-module.exports.sendReply = async (client, sender, text, messageId, errMsg) => {
+module.exports.sendReply = (client, sender, text, messageId, errMsg) => {
   client
     .reply(sender, text, messageId)
     .then((res) => {
