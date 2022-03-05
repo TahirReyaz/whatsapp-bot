@@ -5,7 +5,8 @@ module.exports.sendReply = (client, sender, text, messageId, errMsg) => {
     .then((res) => {
       console.log("Reply sent:\n" + text + "\n------------------------------");
       returnValue = res.to._serialized;
-      console.log(returnValue);
+      console.log(res);
+      console.log("returnValue", returnValue);
     })
     .catch((erro) => {
       console.error(errMsg, erro);
