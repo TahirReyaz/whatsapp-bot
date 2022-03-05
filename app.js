@@ -2861,13 +2861,13 @@ function start(client) {
         .gravity("Center")
         .write(fileName, function (err) {
           if (!err) {
-            // delMsg(client, message.chatId, dwnldMsgId, "Error while deleting");
-            sendReply(
-              message.chatId,
-              "Image editing completed🦾\n\nSending Sticker",
-              dwnldMsgId,
-              "Error when sending sticker progress: "
-            );
+            delMsg(client, message.chatId, dwnldMsgId, "Error while deleting");
+            // sendReply(
+            //   message.chatId,
+            //   "Image editing completed🦾\n\nSending Sticker",
+            //   dwnldMsgId,
+            //   "Error when sending sticker progress: "
+            // );
             sendReply(
               message.chatId,
               "Image editing completed🦾\n\nSending Sticker",
