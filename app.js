@@ -2318,7 +2318,7 @@ function start(client) {
                 `*Mood*: ${data.mood}\n`,
                 `*Color*: ${data.color}\n`,
                 `*Lucky Number*: ${data.lucky_number}\n`,
-                `\n\n\n_${queryPart[0]}: ${data.date_range}_`,
+                `\n\n\n_${_.upperFirst(queryPart[0])}: ${data.date_range}_`,
               ];
 
               composeMsg.forEach((txt) => (msgString += txt));
