@@ -23,5 +23,5 @@ Some of the cool features of this bot are:
 - clone  
 - run ```npm install```  
 - set up api keys and database url in _.env_ file  
-- install system dependencies like tesseract and image editing engine on your machine
+- install system dependencies like tesseract and image editing engines like _gm_ and _im_ on your machine
 - Now you are ready, run ```npm start```
