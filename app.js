@@ -138,6 +138,7 @@ function start(client) {
     "BDAY",
     "pendicul",
     "testing",
+    "Rsp"
   ];
 
   // variables and constants used in the code
