@@ -138,7 +138,7 @@ function start(client) {
     "BDAY",
     "pendicul",
     "testing",
-    "Rsp"
+    "Rsp",
   ];
 
   // variables and constants used in the code
@@ -2848,24 +2848,20 @@ function start(client) {
     console.log("Buffer generated");
     let fileName = `some-file-name.${mime.extension(message.mimetype)}`;
     fs.writeFile(fileName, buffer, (err) => {
-      sendReply(
-        message.chatId,
-        "Image Downloaded successfully🦾",
-        message.id.toString(),
-        "Error when sending sticker progress: "
-      );
+      if (err) {
+        sendReply(
+          message.chatId,
+          "There was a problem while downloading the image\nTry again",
+          message.id.toString(),
+          "Error when sending sticker progress: "
+        );
+        return;
+      }
       gm(fileName)
         .resizeExact(500, 500)
         .gravity("Center")
         .write(fileName, function (err) {
-          if (!err) {
-            sendReply(
-              message.chatId,
-              "Image editing completed🦾\n\nSending Sticker",
-              message.id.toString(),
-              "Error when sending sticker progress: "
-            );
-          } else {
+          if (err) {
             sendReply(
               message.chatId,
               "Image editing failed😞\n\nTry Again",
@@ -2889,7 +2885,6 @@ function start(client) {
               );
             });
         });
-      //fs.unlink(fileName,(err)=>{});
     });
   };
 
