@@ -33,36 +33,6 @@ module.exports.truthOrDare = (client, sender, type) => {
   );
 };
 
-module.exports.dare = (client, sender) => {
-  let dareId,
-    dare,
-    DareLevel,
-    msgString = "";
-  do {
-    dareId = Math.floor(Math.random() * 425); // 424 is the number of entries in the truth-or-dare.json file
-    dare = truthOrDareFile.truthNdares[dareId].summary;
-    DareLevel = truthOrDareFile.truthNdares[dareId].level;
-  } while (truthOrDareFile.truthNdares[dareId].type != "Dare");
-  const composeMsg = ["Dare: ", dare, "\n", "Level: ", DareLevel];
-  composeMsg.forEach((txt) => {
-    msgString += txt;
-  });
-  buttonsArray = [
-    { buttonId: "truth", buttonText: { displayText: ".truth" }, type: 1 },
-    { buttonId: "dare", buttonText: { displayText: ".dare" }, type: 1 },
-    { buttonId: "ghelp", buttonText: { displayText: ".ghelp" }, type: 1 },
-  ];
-  // Send the response to the sender
-  sendButtons(
-    client,
-    sender,
-    msgString,
-    "Click on the buttons for help and other games",
-    buttonsArray,
-    "Error when sending dare: "
-  );
-};
-
 module.exports.wouldYouRather = (client, sender) => {
   let msgString = "";
   wyr()

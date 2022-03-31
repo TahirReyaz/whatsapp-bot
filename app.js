@@ -14,11 +14,7 @@ const tesseract = require("node-tesseract-ocr");
 const _ = require("lodash");
 
 const { remind } = require("./functions/reminders");
-const {
-  truthOrDare,
-  dare,
-  wouldYouRather,
-} = require("./functions/gamesHandlers");
+const { truthOrDare, wouldYouRather } = require("./functions/gamesHandlers");
 
 var Poll = require("./models/poll");
 
