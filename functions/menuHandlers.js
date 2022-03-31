@@ -292,6 +292,10 @@ module.exports.sendMenu = (client, sender, title, type) => {
       list = animeMenuList;
       msg = animeMenuMsg;
       break;
+    case "Role":
+      list = animeMenuList;
+      msg = animeMenuMsg;
+      break;
     default:
       list = botMenuList;
       msg = botMenuMsg;

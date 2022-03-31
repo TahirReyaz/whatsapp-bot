@@ -582,7 +582,7 @@ function start(client) {
           exintro: true,
           explaintext: true,
           generator: "search",
-          gsrlimit: 10,
+          gsrlimit: 50,
           gsrsearch: query,
         };
         axios
@@ -2239,7 +2239,7 @@ function start(client) {
           client,
           message.chatId,
           "Entertainment and Media related commands",
-          "Help"
+          "Ent"
         );
         break;
       /////////////////////////////////INFORMATION MENU/////////////////////////////////
