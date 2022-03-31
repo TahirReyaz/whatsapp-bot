@@ -2171,8 +2171,9 @@ function start(client) {
       case ".horoscope":
         RecievedMsgPermission = true;
         if (botQuery.length > 0) {
-          const zodiacSign = query.toLowerCase();
+          const zodiacSign = queryPart[0].toLowerCase();
           const zodiacDay = queryPart[1] ? queryPart[1] : "today";
+          console.log(zodiacSign, zodiacDay)
 
           axios
             .post(
