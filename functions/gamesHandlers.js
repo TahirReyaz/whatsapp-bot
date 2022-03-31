@@ -64,6 +64,7 @@ module.exports.dare = (client, sender) => {
 };
 
 module.exports.wouldYouRather = (client, sender) => {
+  let msgString = "";
   wyr()
     .then((response) => {
       buttonsArray = [
@@ -83,7 +84,7 @@ module.exports.wouldYouRather = (client, sender) => {
           type: 1,
         },
       ];
-      composeMsg = [
+      const composeMsg = [
         "Click on an option to choose it",
         "\nA: ",
         response.blue.question,
