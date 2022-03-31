@@ -17,7 +17,7 @@ const { remind } = require("./functions/reminders");
 const { truthOrDare, wouldYouRather } = require("./functions/gamesHandlers");
 const { sendButtons } = require("./functions/venomFunctions");
 const { sendMenu } = require("./functions/menuHandlers");
-const { groupRoles } = require("./functions/rolesHandlers");
+const { groupPerms } = require("./functions/rolesHandlers");
 var Poll = require("./models/poll");
 
 const ocrConfig = {
@@ -220,7 +220,7 @@ function start(client) {
         });
         if (!roastPerm) {
           composeMsg = [
-            "This command is not supported here. There are people here who don't like it.\n```THEY AREN'T COOL ENOUGH.```\n\nAsk admins for activating this command in this group\n\nIf you are an admin yourself, then use GroupRoles command for activating this command in this group.",
+            "This command is not supported here. There are people here who don't like it.\n```THEY AREN'T COOL ENOUGH.```\n\nAsk admins for activating this command in this group\n\nIf you are an admin yourself, then use GroupPerms command for activating this command in this group.",
           ];
           composeMsg.forEach((txt) => {
             msgString += txt;
@@ -312,7 +312,7 @@ function start(client) {
         if (!annoyPerm) {
           message.isGroupMsg
             ? (msgString =
-                "People get annoyed by useless mentioning😔\n\nAsk admins for activating this command in this group\n\nIf you are an admin yourself, then use GroupRoles command for activating this command in this group.\n\nFor example:\nGroupRoles")
+                "People get annoyed by useless mentioning😔\n\nAsk admins for activating this command in this group\n\nIf you are an admin yourself, then use GroupPerms command for activating this command in this group.\n\nFor example:\nGroupPerms")
             : (msgString = "This command is not supported in dms😁");
 
           // Send the response to the sender
@@ -1561,14 +1561,14 @@ function start(client) {
           });
         break;
       ////////////////////////////////////GRP ROLES/////////////////////////////////
-      case ".grpRoles":
-      case ".groupRoles":
-      case ".grouproles":
-      case "GroupRoles":
-      case "Grouproles":
-      case ".groles":
+      case ".grpPerms":
+      case ".groupPerms":
+      case ".groupperms":
+      case "GroupPerms":
+      case "Groupperms":
+      case ".gperms":
         RecievedMsgPermission = true;
-        groupRoles(
+        groupPerms(
           client,
           message.chatId,
           message.chat.groupMetadata.participants,

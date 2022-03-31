@@ -1,6 +1,6 @@
 const { sendReply, sendListMenu } = require("./venomFunctions");
 
-const grpRoles = [
+const grpPermissions = [
   {
     title: ".agr mention-all",
     description:
@@ -18,7 +18,7 @@ const grpRoles = [
   },
 ];
 
-module.exports.groupRoles = (client, sendTo, members, senderId, replyTo) => {
+module.exports.groupPerms = (client, sendTo, members, senderId, replyTo) => {
   perm = false;
   members.forEach((participant) => {
     if (participant.isAdmin && participant.id === senderId) {
@@ -39,7 +39,7 @@ module.exports.groupRoles = (client, sendTo, members, senderId, replyTo) => {
     list = [
       {
         title: "Group Roles",
-        rows: grpRoles,
+        rows: grpPermissions,
       },
     ];
 
