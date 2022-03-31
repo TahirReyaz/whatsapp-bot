@@ -16,8 +16,8 @@ const _ = require("lodash");
 const { remind } = require("./functions/reminders");
 const { truthOrDare, wouldYouRather } = require("./functions/gamesHandlers");
 const { sendButtons } = require("./functions/venomFunctions");
+const { sendMenu } = require("./functions/menuHandlers");
 var Poll = require("./models/poll");
-const { botMenu } = require("./functions/menuHandlers");
 
 const ocrConfig = {
   lang: "eng",
@@ -2227,7 +2227,7 @@ function start(client) {
       case "Helpbot":
       case "helpbot":
         RecievedMsgPermission = true;
-        botMenu(client, message.chatId);
+        sendMenu(client, message.chatId, "Help and all commands", "Help");
         break;
       ////////////////////////////////ENTERTAINMENT MENU////////////////////////////////
       case ".ehelp":
@@ -2235,53 +2235,11 @@ function start(client) {
       case "Enthelp":
       case "enthelp":
         RecievedMsgPermission = true;
-        // Compose the message
-        composeMsg = [
-          "If you didn't get the desired result then put the name of the artist too with a hyphen ( - )",
-          "\nFor example:\n*SongDetail Faded-Alan Walker*",
-          "\n--------------------------------------------------",
-          "\n```There is no case sensitivity or need to type . in front of the full commands```",
-        ];
-        composeMsg.forEach((txt) => {
-          msgString += txt;
-        });
-        list = [
-          {
-            title: "Entertainment and Media Related Commands",
-            rows: [
-              {
-                title: "MovieDetail Inception",
-                description:
-                  "To get the details of a Movie/ Series | Short Command: .md <title>",
-              },
-              {
-                title: "SongDetail Faded-Alan Walker",
-                description:
-                  "To get the details of a song | Short Command: .sd <Song name>",
-              },
-              {
-                title: ".lyrics Faded-Alan Walker",
-                description: "To get the lyrics of a song",
-              },
-              {
-                title: "AnimeHelp ",
-                description: "To get help and list of Anime related commands",
-              },
-              {
-                title: "HelpBot ",
-                description: "To get help and list of all commands.",
-              },
-            ],
-          },
-        ];
-
-        sendListMenu(
+        sendMenu(
+          client,
           message.chatId,
           "Entertainment and Media related commands",
-          "subTitle",
-          msgString,
-          "Commands",
-          list
+          "Help"
         );
         break;
       /////////////////////////////////INFORMATION MENU/////////////////////////////////
@@ -2290,84 +2248,7 @@ function start(client) {
       case "Infohelp":
       case "infohelp":
         RecievedMsgPermission = true;
-        // Compose the message
-        composeMsg = [
-          "\n1. To get the meaning of an English word:",
-          "\nSend 'EnglishDefine <Word>' | Short Command: *.ed* <word>",
-          "\nFor example:\n*EnglishDefine table*",
-          "\n--------------------------------------------------",
-          "\n2. For searching wiki page IDs of a term:",
-          "\nSend '.wiki <term>'",
-          "\nFor example:\n*.wiki Indian Population*",
-          "\n--------------------------------------------------",
-          "\n3. To get the details of wiki page from page ID:",
-          "\nSend 'wikiPage <page ID>' | Short Command: *.wp* <page ID>",
-          "\nFor example:\n*wikiPage 14598*",
-          "\n--------------------------------------------------",
-          "\n4. For calculating:",
-          "\nSend '.calc <expression>'",
-          "\nFor example:\n*.calc 5*34*",
-          "\nFor using multiple expressions:",
-          "\nSend '.calc <expressions as array>",
-          "\nFor example:\n*.calc [5+2, 4*6, a= 24, a+3]*",
-          "\n--------------------------------------------------",
-          "\n5. To get the details of a Kanji:",
-          "\nSend 'KanjiDefine <Kanji>' | Short Command: *.kd* <Kanji>",
-          "\nFor example:\n*KanjiDefine 空*",
-          "\n--------------------------------------------------",
-          "\n6. To get other Commands:",
-          "\nSend 'HelpBot' | Short Command: *.help*",
-          "\nFor example:\n*HelpBot*",
-          "\n```There is no case sensitiviy for full commands```",
-        ];
-        composeMsg.forEach((txt) => {
-          msgString += txt;
-        });
-        list = [
-          {
-            title: "Info Related Commands",
-            rows: [
-              {
-                title: "EnglishDefine Table",
-                description: "To get the definition of an English word",
-              },
-              {
-                title: ".wiki Indian Population",
-                description: "For searching a term on Wikipedia",
-              },
-              {
-                title: "wikiPage 14598",
-                description: "To get the details of wiki page.",
-              },
-              {
-                title: ".calc 5*34",
-                description: "For calculating",
-              },
-              {
-                title:
-                  ".calc [5+2, 4*6, a= 24, a+3,5.08 cm in inch,sin(45 deg) ^ 2]",
-                description: "For using multiple expressions:",
-              },
-              {
-                title: "KanjiDefine 空",
-                description: "For readings and meaning of a Kanji.",
-              },
-              {
-                title: "HelpBot ",
-                description: "To get help and list of all commands.",
-              },
-            ],
-          },
-        ];
-
-        sendListMenu(
-          message.chatId,
-          "Info related commands",
-          "subTitle",
-          msgString,
-          "Commands",
-          list
-        );
+        sendMenu(client, message.chatId, "Info related commands", "Info");
         break;
       ////////////////////////////////////GAMES MENU///////////////////////////////////
       case ".ghelp":
@@ -2375,59 +2256,7 @@ function start(client) {
       case "Gamehelp":
       case "gamehelp":
         RecievedMsgPermission = true;
-        // Compose the message
-        composeMsg = [
-          "```Text based Games related commands```",
-          "\n--------------------------------------------------",
-          "\n1. For Truth or Dare Game:",
-          "\nSend 'BotTruth' To get a truth question | Short Command: *.truth*",
-          "\n\nSend 'BotDare' To get a dare | Short Command: *.dare*",
-          "\nFor example:\n*BotTruth* or *BotDare*",
-          "\n--------------------------------------------------",
-          "\n2. To get a 'Would You Rather' question:",
-          "\nSend 'BotWyr' | Short Command: *.wyr*",
-          "\nFor example:\n*BotWyr*",
-          "\n--------------------------------------------------",
-          "\n3. To get other Commands:",
-          "\nSend 'HelpBot' | Short Command: *.help*",
-          "\nFor example:\n*HelpBot*",
-          "\n```There is no case sensitiviy for full commands```",
-        ];
-        composeMsg.forEach((txt) => {
-          msgString += txt;
-        });
-        list = [
-          {
-            title: "Game Commands",
-            rows: [
-              {
-                title: "BotDare ",
-                description: "To get a dare",
-              },
-              {
-                title: "BotTruth ",
-                description: "To get a truth question",
-              },
-              {
-                title: "BotWyr ",
-                description: "To get a 'Would You Rather' question",
-              },
-              {
-                title: "HelpBot ",
-                description: "To get help and list of all commands.",
-              },
-            ],
-          },
-        ];
-
-        sendListMenu(
-          message.chatId,
-          "Commands for Games",
-          "subTitle",
-          msgString,
-          "Commands",
-          list
-        );
+        sendMenu(client, message.chatId, "Commands for Games", "Game");
         break;
 
       ///////////////////////////////////ANIME MENU////////////////////////////////////
@@ -2436,76 +2265,7 @@ function start(client) {
       case "Animehelp":
       case "animehelp":
         RecievedMsgPermission = true;
-        // Compose the message
-        composeMsg = [
-          "1. To get the details of an Anime:",
-          "\nSend 'AnimeDetail <Title>' | Short Command: *.ad* <Title>",
-          "\nFor example:\n*AnimeDetail Naruto*",
-          "\n--------------------------------------------------",
-          "\n2. To get details of an Anime character by search:",
-          "\nSend 'CharDetail <Name>' | Short Command: *.cd* <Name>",
-          "\nFor example:\n*CharDetail Kakashi*",
-          "\n--------------------------------------------------",
-          "\n3. To get details of an Anime character by id:",
-          "\nSend 'CharIdDetail <id>' | Short Command: *.cid* <id>",
-          "\nFor example:\n*CharIdDetail 10820*",
-          "\n--------------------------------------------------",
-          "\n4. To get IDs of an Anime by search:",
-          "\nSend 'AnimeIds <Anime name or Title>' | Short Command: *.aid* <Name or Title>",
-          "\nFor example:\n*AnimeIds Naruto*",
-          "\n--------------------------------------------------",
-          "\n5. To get character list and character Ids of an Anime by anime id:",
-          "\nSend 'AnimeChars <AnimeId>' | Short Command: *.ac* <AnimeId>",
-          "\nFor example:\n*AnimeChars 100053*",
-          "\n--------------------------------------------------",
-          "\n6. To get other Commands:",
-          "\nSend 'HelpBot' | Short Command: *.help*",
-          "\nFor example:\n*HelpBot*",
-          "\n```There is no case sensitiviy for full commands```",
-        ];
-        composeMsg.forEach(function (txt) {
-          msgString += txt;
-        });
-        list = [
-          {
-            title: "Anime Commands",
-            rows: [
-              {
-                title: "AnimeDetail Naruto",
-                description: "To get the details of an Anime",
-              },
-              {
-                title: "CharDetail Kakashi",
-                description: "To get details of an Anime Charater by Search",
-              },
-              {
-                title: "CharIdDetail 10820",
-                description: "To get details of an Anime Charater by ID",
-              },
-              {
-                title: "AnimeIds Naruto",
-                description: "To get Character IDs of an anime",
-              },
-              {
-                title: "AnimeChars 100053",
-                description: "To get Character ID and list.",
-              },
-              {
-                title: "HelpBot ",
-                description: "To get help and list of all commands.",
-              },
-            ],
-          },
-        ];
-
-        sendListMenu(
-          message.chatId,
-          "Anime related commands",
-          "subTitle",
-          msgString,
-          "Commands",
-          list
-        );
+        sendMenu(client, message.chatId, "Anime related commands", "Anime");
         break;
     }
 
