@@ -1654,7 +1654,7 @@ function start(client) {
 
               sendReply(
                 message.chatId,
-                `Added this group to ${query}`,
+                `Added ${query} permission to this group`,
                 message.id.toString(),
                 "Error when sending warning: "
               );
@@ -1750,7 +1750,7 @@ function start(client) {
 
               sendReply(
                 message.chatId,
-                `Removed ${query} role from this group`,
+                `Removed ${query} permission from this group`,
                 message.id.toString(),
                 "Error when sending warning: "
               );
