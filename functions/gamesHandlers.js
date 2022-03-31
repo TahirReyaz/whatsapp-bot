@@ -3,17 +3,17 @@ const wyr = require("wyr");
 const { sendButtons } = require("./venomFunctions");
 const truthOrDareFile = require("../data/truth-or-dare.json");
 
-module.exports.truth = (client, sender) => {
-  let truthid,
-    truth,
-    truthLevel,
+module.exports.truthOrDare = (client, sender, type) => {
+  let resId,
+    res,
+    resLevel,
     msgString = "";
   do {
-    truthid = Math.floor(Math.random() * 425); // 424 is the number of entries in the truth-or-dare.json file
-    truth = truthOrDareFile.truthNdares[truthid].summary;
-    truthLevel = truthOrDareFile.truthNdares[truthid].level;
-  } while (truthOrDareFile.truthNdares[truthid].type != "Truth");
-  const composeMsg = ["Truth: ", truth, "\n", "Level: ", truthLevel];
+    resId = Math.floor(Math.random() * 425); // 424 is the number of entries in the truth-or-dare.json file
+    res = truthOrDareFile.truthNdares[resId].summary;
+    resLevel = truthOrDareFile.truthNdares[resId].level;
+  } while (truthOrDareFile.truthNdares[resId].type != type);
+  const composeMsg = [type, ": ", res, "\n", "Level: ", resLevel];
   composeMsg.forEach((txt) => {
     msgString += txt;
   });
@@ -29,7 +29,7 @@ module.exports.truth = (client, sender) => {
     msgString,
     "Click on the buttons for help and other games",
     buttonsArray,
-    "Error when sending truth: "
+    "Error when sending truth or dare: "
   );
 };
 

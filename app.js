@@ -14,7 +14,11 @@ const tesseract = require("node-tesseract-ocr");
 const _ = require("lodash");
 
 const { remind } = require("./functions/reminders");
-const { truth, dare, wouldYouRather } = require("./functions/gamesHandlers");
+const {
+  truthOrDare,
+  dare,
+  wouldYouRather,
+} = require("./functions/gamesHandlers");
 
 var Poll = require("./models/poll");
 
@@ -1487,7 +1491,7 @@ function start(client) {
       case "Bottruth":
       case "bottruth":
         RecievedMsgPermission = true;
-        truth(client, message.chatId);
+        truthOrDare(client, message.chatId, "Truth");
         break;
       ////////////////////////////////TRUTH OR DARE: DARE///////////////////////////////
       case ".dare":
@@ -1495,7 +1499,7 @@ function start(client) {
       case "Botdare":
       case "botdare":
         RecievedMsgPermission = true;
-        dare(client, message.chatId);
+        truthOrDare(client, message.chatId, "Dare");
         break;
       /////////////////////////////////WOULD YOU RATHER/////////////////////////////////
       case ".wyr":
