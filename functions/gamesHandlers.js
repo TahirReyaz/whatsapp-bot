@@ -130,5 +130,6 @@ module.exports.wouldYouRather = (client, sender) => {
         buttonsArray,
         "Error when sending error: "
       );
+      console.log(err);
     });
 };
