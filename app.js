@@ -1,11 +1,9 @@
 // Supports ES6
 const venom = require("venom-bot");
-const truthOrDareFile = require("./data/truth-or-dare.json");
 const axios = require("axios");
 const malScraper = require("mal-scraper");
 const acb = require("acb-api");
 const musicInfo = require("music-info");
-const wyr = require("wyr");
 const openai = require("openai-grammaticalcorrection");
 const fs = require("fs");
 const mime = require("mime-types");
@@ -16,7 +14,7 @@ const tesseract = require("node-tesseract-ocr");
 const _ = require("lodash");
 
 const { remind } = require("./functions/reminders");
-const { truth } = require("./functions/gamesHandlers");
+const { truth, dare, wouldYouRather } = require("./functions/gamesHandlers");
 
 var Poll = require("./models/poll");
 
@@ -1497,35 +1495,7 @@ function start(client) {
       case "Botdare":
       case "botdare":
         RecievedMsgPermission = true;
-        let dareId, dare, DareLevel;
-        do {
-          dareId = Math.floor(Math.random() * 425); // 424 is the number of entries in the truth-or-dare.json file
-          dare = truthOrDareFile.truthNdares[dareId].summary;
-          DareLevel = truthOrDareFile.truthNdares[dareId].level;
-        } while (truthOrDareFile.truthNdares[dareId].type != "Dare");
-        composeMsg = ["Dare: ", dare, "\n", "Level: ", DareLevel];
-        composeMsg.forEach((txt) => {
-          msgString += txt;
-        });
-        buttonsArray = [
-          { buttonId: "truth", buttonText: { displayText: ".truth" }, type: 1 },
-          { buttonId: "dare", buttonText: { displayText: ".dare" }, type: 1 },
-          { buttonId: "ghelp", buttonText: { displayText: ".ghelp" }, type: 1 },
-        ];
-        // Send the response to the sender
-        client
-          .sendButtons(
-            message.chatId,
-            msgString,
-            buttonsArray,
-            "Click on the buttons for help and other games"
-          )
-          .then(() => {
-            console.log("Sent message: " + msgString + "\n-------------------");
-          })
-          .catch((error) => {
-            console.error("Error when sending truth: ", error);
-          });
+        dare(client, message.chatId);
         break;
       /////////////////////////////////WOULD YOU RATHER/////////////////////////////////
       case ".wyr":
@@ -1533,85 +1503,7 @@ function start(client) {
       case "Botwyr":
       case "botwyr":
         RecievedMsgPermission = true;
-        wyr()
-          .then((response) => {
-            buttonsArray = [
-              {
-                buttonId: "wyr1",
-                buttonText: { displayText: response.blue.question },
-                type: 1,
-              },
-              {
-                buttonId: "wyr2",
-                buttonText: { displayText: response.red.question },
-                type: 1,
-              },
-              {
-                buttonId: "ghelp",
-                buttonText: { displayText: ".ghelp" },
-                type: 1,
-              },
-            ];
-            composeMsg = [
-              "Click on an option to choose it",
-              "\nA: ",
-              response.blue.question,
-              "\nB: ",
-              response.red.question,
-            ];
-            composeMsg.forEach((txt) => {
-              msgString += txt;
-            });
-            // Send the response to the sender
-            client
-              .sendButtons(
-                message.chatId,
-                "Would you rather:",
-                buttonsArray,
-                msgString
-              )
-              .then(() => {
-                console.log(
-                  "Sent Wyr question:\n" +
-                    response.blue.question +
-                    "\n" +
-                    response.red.question +
-                    "\n-------------------"
-                );
-              })
-              .catch((error) => {
-                console.error("Error when sending truth: ", error);
-              });
-          })
-          .catch((err) => {
-            // Send not found to sender
-            buttonsArray = [
-              { buttonId: "wyr", buttonText: { displayText: ".wyr" }, type: 1 },
-              {
-                buttonId: "ghelp",
-                buttonText: { displayText: "GameHelp" },
-                type: 1,
-              },
-              {
-                buttonId: "help",
-                buttonText: { displayText: ".help" },
-                type: 1,
-              },
-            ];
-            client
-              .sendButtons(
-                message.chatId,
-                "Question not found.. Sorry\nTry again",
-                buttonsArray,
-                "Chose the buttons for examples and menu"
-              )
-              .then(() => {
-                console.log(err);
-              })
-              .catch((erro) => {
-                console.error("Error when sending error: ", erro);
-              });
-          });
+        wouldYouRather(client, message, chatId);
         break;
       ////////////////////////////////////REMINDER/////////////////////////////////
       case ".remind":
