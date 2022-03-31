@@ -16,6 +16,7 @@ const tesseract = require("node-tesseract-ocr");
 const _ = require("lodash");
 
 const { remind } = require("./functions/reminders");
+const { truth } = require("./functions/gamesHandlers");
 
 var Poll = require("./models/poll");
 
@@ -1488,35 +1489,7 @@ function start(client) {
       case "Bottruth":
       case "bottruth":
         RecievedMsgPermission = true;
-        let truthid, truth, truthLevel;
-        do {
-          truthid = Math.floor(Math.random() * 425); // 424 is the number of entries in the truth-or-dare.json file
-          truth = truthOrDareFile.truthNdares[truthid].summary;
-          truthLevel = truthOrDareFile.truthNdares[truthid].level;
-        } while (truthOrDareFile.truthNdares[truthid].type != "Truth");
-        composeMsg = ["Truth: ", truth, "\n", "Level: ", truthLevel];
-        composeMsg.forEach((txt) => {
-          msgString += txt;
-        });
-        buttonsArray = [
-          { buttonId: "truth", buttonText: { displayText: ".truth" }, type: 1 },
-          { buttonId: "dare", buttonText: { displayText: ".dare" }, type: 1 },
-          { buttonId: "ghelp", buttonText: { displayText: ".ghelp" }, type: 1 },
-        ];
-        // Send the response to the sender
-        client
-          .sendButtons(
-            message.chatId,
-            msgString,
-            buttonsArray,
-            "Click on the buttons for help and other games"
-          )
-          .then(() => {
-            console.log("Sent message: " + msgString + "\n-------------------");
-          })
-          .catch((error) => {
-            console.error("Error when sending truth: ", error);
-          });
+        truth(client, message.chatId);
         break;
       ////////////////////////////////TRUTH OR DARE: DARE///////////////////////////////
       case ".dare":

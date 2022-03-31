@@ -11,6 +11,24 @@ module.exports.sendReply = (client, sender, text, messageId, errMsg) => {
     });
 };
 
+module.exports.sendButtons = (
+  client,
+  sender,
+  text,
+  description,
+  buttons,
+  errMsg
+) => {
+  client
+    .sendButtons(sender, text, buttons, description)
+    .then(() => {
+      console.log("Sent message: " + text + "\n-------------------");
+    })
+    .catch((error) => {
+      console.error(errMsg, error);
+    });
+};
+
 module.exports.sendText = (client, sender, text, errMsg) => {
   client
     .sendText(sender, text)
