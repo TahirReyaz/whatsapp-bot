@@ -15,8 +15,9 @@ const _ = require("lodash");
 
 const { remind } = require("./functions/reminders");
 const { truthOrDare, wouldYouRather } = require("./functions/gamesHandlers");
-
+const { sendButtons } = require("./functions/venomFunctions");
 var Poll = require("./models/poll");
+const { botMenu } = require("./functions/menuHandlers");
 
 const ocrConfig = {
   lang: "eng",
@@ -876,10 +877,12 @@ function start(client) {
           },
         ];
         sendButtons(
+          client,
           message.chatId,
           msgString,
+          "You can click on the buttons for voting.\nIf buttons are not available- Send '.poll op1' or '.poll op2' to vote or '.poll end' to end the poll.",
           buttonsArray,
-          "You can click on the buttons for voting.\nIf buttons are not availabe- Send '.poll op1' or '.poll op2' to vote or '.poll end' to end the poll."
+          "Error when sending poll response: "
         );
         break;
       ///////////////////////////////////ANIME DETAIL///////////////////////////////////
@@ -2220,94 +2223,11 @@ function start(client) {
         break;
       /////////////////////////////////////BOT MENU/////////////////////////////////////
       case ".help":
-      case "BotHelp":
-      case "Bothelp":
       case "HelpBot":
       case "Helpbot":
       case "helpbot":
         RecievedMsgPermission = true;
-        // Compose the message
-        composeMsg = [
-          "Check out the bottom menu for commands👇",
-          "\nFor making stickers: ",
-          "\nSend the image with caption *.sticker*",
-          "\nFor extracting text from image (ocr):",
-          "\nSend the image with caption *.ocr*",
-          "\n--------------------------------------------------",
-          "\n```There is no case sensitivity or need to type . in front of the full commands```",
-        ];
-        composeMsg.forEach((txt) => {
-          msgString += txt;
-        });
-
-        // Configuring the list menu
-        list = [
-          {
-            title: "General Commands",
-            rows: [
-              {
-                title: "HiBot ",
-                description: "For just getting a reply",
-              },
-              {
-                title: ".poll <message>-<option 1>-<option 2>",
-                description:
-                  "For creating polls. Example .poll Do you drink tea or coffee?-Tea-Coffee",
-              },
-              {
-                title: ".talk Who are you",
-                description: "To talk with an AI",
-              },
-              {
-                title: ".remind 13:01",
-                description:
-                  "For setting a reminder (In 24 hour format). Bot remind you at the specified time. Write the additional message in the next line",
-              },
-              {
-                title: "@everyone <message>",
-                description: "For tagging everyone like discord",
-              },
-              {
-                title: "horoscopeMenu",
-                description:
-                  "For checking out today's Horoscope\nShort command: .hsm",
-              },
-              {
-                title: "GroupRoles",
-                description:
-                  "For activating certain commands in a group (Admin only)",
-              },
-              {
-                title: "InfoHelp ",
-                description:
-                  "To get Information related commands like wiki, dictionary, maths etc.",
-              },
-              {
-                title: "GameHelp ",
-                description:
-                  "To get help and commands related to Games like truth or dare, Would you rather etc.",
-              },
-              {
-                title: "EntHelp ",
-                description:
-                  "To get Entertainment related commands like movie, song, anime detail and lyrics",
-              },
-              {
-                title: "AnimeHelp ",
-                description: "To get help and commands related to Anime",
-              },
-            ],
-          },
-        ];
-
-        sendListMenu(
-          message.chatId,
-          "Welcome to THE BOT",
-          "Help and all commands",
-          msgString,
-          "Commands",
-          list
-        );
+        botMenu(client, message.chatId);
         break;
       ////////////////////////////////ENTERTAINMENT MENU////////////////////////////////
       case ".ehelp":
@@ -2650,17 +2570,6 @@ function start(client) {
   });
 
   //////////////////////////// FUNCTIONS ///////////////////////////
-
-  const sendButtons = (sender, msg, buttons, description) => {
-    client
-      .sendButtons(sender, msg, buttons, description)
-      .then(() => {
-        console.log("Sent message: ", msg + "\n-------------------------");
-      })
-      .catch((erro) => {
-        console.error("Error when sending: ", erro);
-      });
-  };
 
   const sendListMenu = (sender, title, subtitle, desc, menuName, list) => {
     client

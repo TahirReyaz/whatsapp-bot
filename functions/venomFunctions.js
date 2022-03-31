@@ -50,3 +50,22 @@ module.exports.delMsg = (client, sender, messageId, errMsg) => {
       console.error(errMsg, erro);
     });
 };
+
+module.exports.sendListMenu = (
+  client,
+  sender,
+  title,
+  subtitle,
+  desc,
+  menuName,
+  list
+) => {
+  client
+    .sendListMenu(sender, title, subtitle, desc, menuName, list)
+    .then(() => {
+      console.log("Menu sent");
+    })
+    .catch((erro) => {
+      console.error("Error when sending: ", erro);
+    });
+};
