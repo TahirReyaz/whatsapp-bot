@@ -1503,7 +1503,7 @@ function start(client) {
       case "Botwyr":
       case "botwyr":
         RecievedMsgPermission = true;
-        wouldYouRather(client, message, chatId);
+        wouldYouRather(client, message.chatId);
         break;
       ////////////////////////////////////REMINDER/////////////////////////////////
       case ".remind":
@@ -2173,7 +2173,6 @@ function start(client) {
         if (botQuery.length > 0) {
           const zodiacSign = queryPart[0].toLowerCase();
           const zodiacDay = queryPart[1] ? queryPart[1] : "today";
-          console.log(zodiacSign, zodiacDay)
 
           axios
             .post(
