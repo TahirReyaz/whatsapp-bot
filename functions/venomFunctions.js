@@ -1,4 +1,4 @@
-module.exports.sendReply = (client, sender, text, messageId, errMsg) => {
+export function sendReply(client, sender, text, messageId, errMsg) {
   client
     .reply(sender, text, messageId)
     .then((res) => {
@@ -9,16 +9,16 @@ module.exports.sendReply = (client, sender, text, messageId, errMsg) => {
     .catch((erro) => {
       console.error(errMsg, erro);
     });
-};
+}
 
-module.exports.sendButtons = (
+export function sendButtons(
   client,
   sender,
   text,
   description,
   buttons,
   errMsg
-) => {
+) {
   client
     .sendButtons(sender, text, buttons, description)
     .then(() => {
@@ -27,9 +27,9 @@ module.exports.sendButtons = (
     .catch((error) => {
       console.error(errMsg, error);
     });
-};
+}
 
-module.exports.sendText = (client, sender, text, errMsg) => {
+export function sendText(client, sender, text, errMsg) {
   client
     .sendText(sender, text)
     .then(() => {
@@ -38,9 +38,9 @@ module.exports.sendText = (client, sender, text, errMsg) => {
     .catch((erro) => {
       console.error(errMsg, erro);
     });
-};
+}
 
-module.exports.delMsg = (client, sender, messageId, errMsg) => {
+export function delMsg(client, sender, messageId, errMsg) {
   client
     .deleteMessageMe(sender, messageId)
     .then(() => {
@@ -49,9 +49,9 @@ module.exports.delMsg = (client, sender, messageId, errMsg) => {
     .catch((erro) => {
       console.error(errMsg, erro);
     });
-};
+}
 
-module.exports.sendListMenu = (
+export function sendListMenu(
   client,
   sender,
   title,
@@ -59,7 +59,7 @@ module.exports.sendListMenu = (
   desc,
   menuName,
   list
-) => {
+) {
   client
     .sendListMenu(sender, title, subtitle, desc, menuName, list)
     .then(() => {
@@ -68,4 +68,4 @@ module.exports.sendListMenu = (
     .catch((erro) => {
       console.error("Error when sending: ", erro);
     });
-};
+}

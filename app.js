@@ -17,6 +17,7 @@ const { remind } = require("./functions/reminders");
 const { truthOrDare, wouldYouRather } = require("./functions/gamesHandlers");
 const { sendButtons } = require("./functions/venomFunctions");
 const { sendMenu } = require("./functions/menuHandlers");
+const { groupRoles } = require("./functions/rolesHandlers");
 var Poll = require("./models/poll");
 
 const ocrConfig = {
@@ -109,23 +110,6 @@ function start(client) {
       grpData.push({ grpId: key, roles: roleData });
     }
   });
-  const grpRoles = [
-    {
-      title: ".agr mention-all",
-      description:
-        "To enable this group for letting all members mention everyone like discord",
-    },
-    {
-      title: ".agr mention-all-admin-only",
-      description:
-        "To enable this group for letting only admins mention everyone",
-    },
-    {
-      title: ".agr nsfw-roast",
-      description:
-        "To enable this group for letting all members use roast command which may be nsfw",
-    },
-  ];
   const pollGrps = [
     "Unofficial",
     "#3: HASH",
@@ -1584,39 +1568,12 @@ function start(client) {
       case "Grouproles":
       case ".groles":
         RecievedMsgPermission = true;
-        console.log("in groles");
-        perm = false;
-        message.chat.groupMetadata.participants.forEach((participant) => {
-          if (participant.isAdmin && participant.id === message.sender.id) {
-            perm = true;
-          }
-        });
-
-        // If sender is not a an admin then send warning
-        if (!perm) {
-          sendReply(
-            message.chatId,
-            "This command is used for choosing a group roles.\n\nThis commands is only for admins",
-            message.id.toString(),
-            "Error when sending warning: "
-          );
-          break;
-        }
-
-        list = [
-          {
-            title: "Group Roles",
-            rows: grpRoles,
-          },
-        ];
-
-        sendListMenu(
+        groupRoles(
+          client,
           message.chatId,
-          "Welcome to THE BOT",
-          "Select the type of role",
-          "Select the Group Role for this group\n\nThis command is only for admins",
-          "Group Roles",
-          list
+          message.chat.groupMetadata.participants,
+          message.sender.id,
+          message.id.toString()
         );
         break;
       ////////////////////////////////////ADD GRP ROLE/////////////////////////////////
