@@ -58,12 +58,12 @@ const botMenuList = [
 ];
 const botMenuMsg = [
   "Check out the bottom menu for commands👇",
-  "\nFor making stickers: ",
-  "\nSend the image with caption *.sticker*",
-  "\nFor extracting text from image (ocr):",
-  "\nSend the image with caption *.ocr*",
-  "\n--------------------------------------------------",
-  "\n```There is no case sensitivity or need to type . in front of the full commands```",
+  "For making stickers: ",
+  "Send the image with caption *.sticker*",
+  "For extracting text from image (ocr):",
+  "Send the image with caption *.ocr*",
+  "--------------------------------------------------",
+  "```There is no case sensitivity or need to type . in front of the full commands```",
 ];
 
 const entMenuList = [
@@ -97,9 +97,9 @@ const entMenuList = [
 ];
 const entMenuMsg = [
   "If you didn't get the desired result then put the name of the artist too with a hyphen ( - )",
-  "\nFor example:\n*SongDetail Faded-Alan Walker*",
-  "\n--------------------------------------------------",
-  "\n```There is no case sensitivity or need to type . in front of the full commands```",
+  "For example:\n*SongDetail Faded-Alan Walker*",
+  "--------------------------------------------------",
+  "```There is no case sensitivity or need to type . in front of the full commands```",
 ];
 
 const infoMenuList = [
@@ -138,33 +138,33 @@ const infoMenuList = [
   },
 ];
 const infoMenuMsg = [
-  "\n1. To get the meaning of an English word:",
-  "\nSend 'EnglishDefine <Word>' | Short Command: *.ed* <word>",
-  "\nFor example:\n*EnglishDefine table*",
-  "\n--------------------------------------------------",
-  "\n2. For searching wiki page IDs of a term:",
-  "\nSend '.wiki <term>'",
-  "\nFor example:\n*.wiki Indian Population*",
-  "\n--------------------------------------------------",
-  "\n3. To get the details of wiki page from page ID:",
-  "\nSend 'wikiPage <page ID>' | Short Command: *.wp* <page ID>",
-  "\nFor example:\n*wikiPage 14598*",
-  "\n--------------------------------------------------",
-  "\n4. For calculating:",
-  "\nSend '.calc <expression>'",
-  "\nFor example:\n*.calc 5*34*",
-  "\nFor using multiple expressions:",
-  "\nSend '.calc <expressions as array>",
-  "\nFor example:\n*.calc [5+2, 4*6, a= 24, a+3]*",
-  "\n--------------------------------------------------",
-  "\n5. To get the details of a Kanji:",
-  "\nSend 'KanjiDefine <Kanji>' | Short Command: *.kd* <Kanji>",
-  "\nFor example:\n*KanjiDefine 空*",
-  "\n--------------------------------------------------",
-  "\n6. To get other Commands:",
-  "\nSend 'HelpBot' | Short Command: *.help*",
-  "\nFor example:\n*HelpBot*",
-  "\n```There is no case sensitiviy for full commands```",
+  "1. To get the meaning of an English word:",
+  "Send 'EnglishDefine <Word>' | Short Command: *.ed* <word>",
+  "For example:\n*EnglishDefine table*",
+  "--------------------------------------------------",
+  "2. For searching wiki page IDs of a term:",
+  "Send '.wiki <term>'",
+  "For example:\n*.wiki Indian Population*",
+  "--------------------------------------------------",
+  "3. To get the details of wiki page from page ID:",
+  "Send 'wikiPage <page ID>' | Short Command: *.wp* <page ID>",
+  "For example:\n*wikiPage 14598*",
+  "--------------------------------------------------",
+  "4. For calculating:",
+  "Send '.calc <expression>'",
+  "For example:\n*.calc 5*34*",
+  "For using multiple expressions:",
+  "Send '.calc <expressions as array>",
+  "For example:\n*.calc [5+2, 4*6, a= 24, a+3]*",
+  "--------------------------------------------------",
+  "5. To get the details of a Kanji:",
+  "Send 'KanjiDefine <Kanji>' | Short Command: *.kd* <Kanji>",
+  "For example:\n*KanjiDefine 空*",
+  "--------------------------------------------------",
+  "6. To get other Commands:",
+  "Send 'HelpBot' | Short Command: *.help*",
+  "For example:\n*HelpBot*",
+  "```There is no case sensitiviy for full commands```",
 ];
 
 const gameMenuList = [
@@ -192,20 +192,20 @@ const gameMenuList = [
 ];
 const gameMenuMsg = [
   "```Text based Games related commands```",
-  "\n--------------------------------------------------",
-  "\n1. For Truth or Dare Game:",
-  "\nSend 'BotTruth' To get a truth question | Short Command: *.truth*",
-  "\n\nSend 'BotDare' To get a dare | Short Command: *.dare*",
-  "\nFor example:\n*BotTruth* or *BotDare*",
-  "\n--------------------------------------------------",
-  "\n2. To get a 'Would You Rather' question:",
-  "\nSend 'BotWyr' | Short Command: *.wyr*",
-  "\nFor example:\n*BotWyr*",
-  "\n--------------------------------------------------",
-  "\n3. To get other Commands:",
-  "\nSend 'HelpBot' | Short Command: *.help*",
-  "\nFor example:\n*HelpBot*",
-  "\n```There is no case sensitiviy for full commands```",
+  "--------------------------------------------------",
+  "1. For Truth or Dare Game:",
+  "Send 'BotTruth' To get a truth question | Short Command: *.truth*",
+  "\nSend 'BotDare' To get a dare | Short Command: *.dare*",
+  "For example:\n*BotTruth* or *BotDare*",
+  "--------------------------------------------------",
+  "2. To get a 'Would You Rather' question:",
+  "Send 'BotWyr' | Short Command: *.wyr*",
+  "For example:\n*BotWyr*",
+  "--------------------------------------------------",
+  "3. To get other Commands:",
+  "Send 'HelpBot' | Short Command: *.help*",
+  "For example:\n*HelpBot*",
+  "```There is no case sensitiviy for full commands```",
 ];
 
 const animeMenuList = [
@@ -241,35 +241,33 @@ const animeMenuList = [
 ];
 const animeMenuMsg = [
   "1. To get the details of an Anime:",
-  "\nSend 'AnimeDetail <Title>' | Short Command: *.ad* <Title>",
-  "\nFor example:\n*AnimeDetail Naruto*",
-  "\n--------------------------------------------------",
-  "\n2. To get details of an Anime character by search:",
-  "\nSend 'CharDetail <Name>' | Short Command: *.cd* <Name>",
-  "\nFor example:\n*CharDetail Kakashi*",
-  "\n--------------------------------------------------",
-  "\n3. To get details of an Anime character by id:",
-  "\nSend 'CharIdDetail <id>' | Short Command: *.cid* <id>",
-  "\nFor example:\n*CharIdDetail 10820*",
-  "\n--------------------------------------------------",
-  "\n4. To get IDs of an Anime by search:",
-  "\nSend 'AnimeIds <Anime name or Title>' | Short Command: *.aid* <Name or Title>",
-  "\nFor example:\n*AnimeIds Naruto*",
-  "\n--------------------------------------------------",
-  "\n5. To get character list and character Ids of an Anime by anime id:",
-  "\nSend 'AnimeChars <AnimeId>' | Short Command: *.ac* <AnimeId>",
-  "\nFor example:\n*AnimeChars 100053*",
-  "\n--------------------------------------------------",
-  "\n6. To get other Commands:",
-  "\nSend 'HelpBot' | Short Command: *.help*",
-  "\nFor example:\n*HelpBot*",
-  "\n```There is no case sensitiviy for full commands```",
+  "Send 'AnimeDetail <Title>' | Short Command: *.ad* <Title>",
+  "For example:\n*AnimeDetail Naruto*",
+  "--------------------------------------------------",
+  "2. To get details of an Anime character by search:",
+  "Send 'CharDetail <Name>' | Short Command: *.cd* <Name>",
+  "For example:\n*CharDetail Kakashi*",
+  "--------------------------------------------------",
+  "3. To get details of an Anime character by id:",
+  "Send 'CharIdDetail <id>' | Short Command: *.cid* <id>",
+  "For example:\n*CharIdDetail 10820*",
+  "--------------------------------------------------",
+  "4. To get IDs of an Anime by search:",
+  "Send 'AnimeIds <Anime name or Title>' | Short Command: *.aid* <Name or Title>",
+  "For example:\n*AnimeIds Naruto*",
+  "--------------------------------------------------",
+  "5. To get character list and character Ids of an Anime by anime id:",
+  "Send 'AnimeChars <AnimeId>' | Short Command: *.ac* <AnimeId>",
+  "For example:\n*AnimeChars 100053*",
+  "--------------------------------------------------",
+  "6. To get other Commands:",
+  "Send 'HelpBot' | Short Command: *.help*",
+  "For example:\n*HelpBot*",
+  "```There is no case sensitiviy for full commands```",
 ];
 
 module.exports.sendMenu = (client, sender, title, type) => {
-  let msgString = "",
-    list,
-    msg;
+  let list, msg;
 
   switch (type) {
     case "Help":
@@ -302,17 +300,12 @@ module.exports.sendMenu = (client, sender, title, type) => {
       break;
   }
 
-  // Compose the message
-  msg.forEach((txt) => {
-    msgString += txt;
-  });
-
   sendListMenu(
     client,
     sender,
     "Welcome to THE BOT",
     title,
-    msgString,
+    msg.join("\n"),
     "Commands",
     list
   );
