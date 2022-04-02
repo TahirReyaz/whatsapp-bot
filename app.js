@@ -17,7 +17,7 @@ const { remind } = require("./functions/reminders");
 const { truthOrDare, wouldYouRather } = require("./functions/gamesHandlers");
 const { sendButtons } = require("./functions/venomFunctions");
 const { sendMenu } = require("./functions/menuHandlers");
-const { groupPerms } = require("./functions/rolesHandlers");
+const { groupPerms, showAllRoles } = require("./functions/rolesHandlers");
 var Poll = require("./models/poll");
 
 const ocrConfig = {
@@ -1544,7 +1544,7 @@ function start(client) {
         );
         break;
       ////////////////////////////////////ADD GRP ROLE/////////////////////////////////
-      case ".agr":
+      case ".agp":
         RecievedMsgPermission = true;
         console.log("in add groles");
 
@@ -1833,46 +1833,9 @@ function start(client) {
       //////////////////////////////////MEMBER ROLES/////////////////////////////////
       case ".roles":
         RecievedMsgPermission = true;
-
-        selectedGrp = grpData.find(
-          (grp) =>
-            grp.grpId === message.chatId.substring(0, message.chatId.length - 3)
-        );
-        if (!selectedGrp) {
-          sendReply(
-            message.chatId,
-            "This group has no roles\n\nAsk admin to add some\n\nIf You are an admin yourself, add member roles to this group by using the addRole command\n\nFor example\n```.ar admin```\n```.ar active```",
-            message.id.toString(),
-            "Error when sending warning: "
-          );
-          break;
-        }
-
-        let memberRoles = [];
-        selectedGrp.roles.forEach((role) => {
-          memberRoles.push({
-            title: `.amr ${role.roleName}`,
-            description: "Send to take this role",
-          });
-        });
-
-        list = [
-          {
-            title: "Member Roles",
-            rows: memberRoles,
-          },
-        ];
-
-        sendListMenu(
-          message.chatId,
-          "Welcome to THE BOT",
-          "Select the type of role",
-          "Chose appropriate role",
-          "Member Roles",
-          list
-        );
+        showAllRoles(client, message.chatId, grpData, message.id.toString());
         break;
-      //////////////////////////////////ADD ROLE TO MEMBER/////////////////////////////////
+      ///////////////////////////////ADD ROLE TO MEMBER/////////////////////////////////
       case ".amr":
       case "addmemeberrole":
         RecievedMsgPermission = true;
@@ -1935,6 +1898,14 @@ function start(client) {
             });
         }
 
+        break;
+      //////////////////////////////////SEE MY ROLES/////////////////////////////////
+      case "showmyroles":
+      case ".smr":
+        break;
+      //////////////////////////////SEE OTHER'S ROLES/////////////////////////////////
+      case "showtheirroles":
+      case ".str":
         break;
       //////////////////////////////////SEND ROLE MENTIONS/////////////////////////////////
       case ".mention":
