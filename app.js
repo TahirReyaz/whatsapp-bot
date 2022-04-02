@@ -154,6 +154,7 @@ function start(client) {
     // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
+    botQuery[0] = botQuery[0].toLowerCase();
     const queryCutter = botQuery[0] + " ";
     const queryWithDesc = data.substring(queryCutter.length).split("\n"); // Get everything written after the command
     let query = queryWithDesc[0]; // This is used as the option people type after the command
@@ -171,8 +172,7 @@ function start(client) {
 
     switch (botQuery[0]) {
       //////////////////////////////////////HI BOT//////////////////////////////////////
-      case "HiBot":
-      case "Hibot":
+      case ".hi":
       case "hibot":
         RecievedMsgPermission = true;
         sendReply(
@@ -207,8 +207,6 @@ function start(client) {
         break;
       //////////////////////////////////////ROAST///////////////////////////////////////
       case ".roast":
-      case "BotRoast":
-      case "Botroast":
       case "botroast":
         RecievedMsgPermission = true;
         let roastPerm = false;
@@ -368,9 +366,7 @@ function start(client) {
         break;
       /////////////////////////////////KANJI DEFINITION/////////////////////////////////
       case ".kd":
-      case "KanjiDef":
-      case "KanjiDefine":
-      case "Kanjidefine":
+      case "kanjidef":
       case "kanjidefine":
         RecievedMsgPermission = true;
         // Get the response from the api
@@ -435,9 +431,7 @@ function start(client) {
         break;
       ////////////////////////////////////DICTIONARY////////////////////////////////////
       case ".ed":
-      case "Engdef":
-      case "EnglishDefine":
-      case "Englishdefine":
+      case "engdef":
       case "englishdefine":
         RecievedMsgPermission = true;
         buttonsArray = [
@@ -615,8 +609,6 @@ function start(client) {
         break;
       //////////////////////////////////WIKIPEDIA PAGE//////////////////////////////////
       case ".wp":
-      case "wikiPage":
-      case "WikiPage":
       case "wikipage":
         RecievedMsgPermission = true;
         params = {
@@ -871,8 +863,6 @@ function start(client) {
         break;
       ///////////////////////////////////ANIME DETAIL///////////////////////////////////
       case ".ad":
-      case "AnimeDetail":
-      case "Animedetail":
       case "animedetail":
         RecievedMsgPermission = true;
         malScraper
@@ -973,8 +963,6 @@ function start(client) {
         break;
       ////////////////////////////////////ANIME IDs/////////////////////////////////////
       case ".aid":
-      case "AnimeIds":
-      case "Animeids":
       case "animeids":
         RecievedMsgPermission = true;
         acb
@@ -1044,8 +1032,6 @@ function start(client) {
         break;
       //////////////////////////////ANIME CHARACTERS IDs////////////////////////////////
       case ".ac":
-      case "AnimeChars":
-      case "AnimeChars":
       case "animechars":
         RecievedMsgPermission = true;
         acb
@@ -1107,8 +1093,6 @@ function start(client) {
         break;
       /////////////////////////ANIME CHARACTER DETAIL- BY SEARCH////////////////////////
       case ".cd":
-      case "CharDetail":
-      case "Chardetail":
       case "chardetail":
         RecievedMsgPermission = true;
         acb
@@ -1186,8 +1170,6 @@ function start(client) {
         break;
       ////////////////////////////////////MOVIE DETAIL//////////////////////////////////
       case ".md":
-      case "MovieDetail":
-      case "Moviedetail":
       case "moviedetail":
         RecievedMsgPermission = true;
         buttonsArray = [
@@ -1309,8 +1291,6 @@ function start(client) {
         break;
       /////////////////////////////////////SONG DETAIL//////////////////////////////////
       case ".sd":
-      case "SongDetail":
-      case "Songdetail":
       case "songdetail":
         RecievedMsgPermission = true;
         musicInfo
@@ -1419,8 +1399,6 @@ function start(client) {
         break;
       ///////////////////////////ANIME CHARACTER DETAIL- BY ID//////////////////////////
       case ".cid":
-      case "CharIdDetail":
-      case "Chariddetail":
       case "chariddetail":
         RecievedMsgPermission = true;
         acb
@@ -1470,24 +1448,18 @@ function start(client) {
         break;
       ///////////////////////////////TRUTH OR DARE: TRUTH///////////////////////////////
       case ".truth":
-      case "BotTruth":
-      case "Bottruth":
       case "bottruth":
         RecievedMsgPermission = true;
         truthOrDare(client, message.chatId, "Truth");
         break;
       ////////////////////////////////TRUTH OR DARE: DARE///////////////////////////////
       case ".dare":
-      case "BotDare":
-      case "Botdare":
       case "botdare":
         RecievedMsgPermission = true;
         truthOrDare(client, message.chatId, "Dare");
         break;
       /////////////////////////////////WOULD YOU RATHER/////////////////////////////////
       case ".wyr":
-      case "BotWyr":
-      case "Botwyr":
       case "botwyr":
         RecievedMsgPermission = true;
         wouldYouRather(client, message.chatId);
@@ -1495,7 +1467,6 @@ function start(client) {
       ////////////////////////////////////REMINDER/////////////////////////////////
       case ".remind":
       case ".rem":
-      case "BotRemind":
       case "botremind":
         RecievedMsgPermission = true;
 
@@ -1561,11 +1532,7 @@ function start(client) {
           });
         break;
       ////////////////////////////////////GRP ROLES/////////////////////////////////
-      case ".grpPerms":
-      case ".groupPerms":
-      case ".groupperms":
-      case "GroupPerms":
-      case "Groupperms":
+      case "groupperms":
       case ".gperms":
         RecievedMsgPermission = true;
         groupPerms(
@@ -1769,7 +1736,7 @@ function start(client) {
         break;
       //////////////////////////////////ADD ROLE/////////////////////////////////
       case ".ar":
-      case "addRole":
+      case "addrole":
         RecievedMsgPermission = true;
         console.log("in add role");
 
@@ -1907,7 +1874,7 @@ function start(client) {
         break;
       //////////////////////////////////ADD ROLE TO MEMBER/////////////////////////////////
       case ".amr":
-      case "addMemeberRole":
+      case "addmemeberrole":
         RecievedMsgPermission = true;
         console.log("in add member role");
 
@@ -2048,7 +2015,7 @@ function start(client) {
       /////////////////////////////////////HOROSCOPE MENU/////////////////////////////////////
       case ".hsmenu":
       case ".hsm":
-      case "horoscopeMenu":
+      case "horoscopemenu":
         RecievedMsgPermission = true;
 
         msgString = "Select your Zodiac sign👇";
@@ -2180,16 +2147,12 @@ function start(client) {
         break;
       /////////////////////////////////////BOT MENU/////////////////////////////////////
       case ".help":
-      case "HelpBot":
-      case "Helpbot":
       case "helpbot":
         RecievedMsgPermission = true;
         sendMenu(client, message.chatId, "Help and all commands", "Help");
         break;
       ////////////////////////////////ENTERTAINMENT MENU////////////////////////////////
       case ".ehelp":
-      case "EntHelp":
-      case "Enthelp":
       case "enthelp":
         RecievedMsgPermission = true;
         sendMenu(
@@ -2201,25 +2164,18 @@ function start(client) {
         break;
       /////////////////////////////////INFORMATION MENU/////////////////////////////////
       case ".ihelp":
-      case "InfoHelp":
-      case "Infohelp":
       case "infohelp":
         RecievedMsgPermission = true;
         sendMenu(client, message.chatId, "Info related commands", "Info");
         break;
       ////////////////////////////////////GAMES MENU///////////////////////////////////
       case ".ghelp":
-      case "GameHelp":
-      case "Gamehelp":
       case "gamehelp":
         RecievedMsgPermission = true;
         sendMenu(client, message.chatId, "Commands for Games", "Game");
         break;
-
       ///////////////////////////////////ANIME MENU////////////////////////////////////
       case ".ahelp":
-      case "AnimeHelp":
-      case "Animehelp":
       case "animehelp":
         RecievedMsgPermission = true;
         sendMenu(client, message.chatId, "Anime related commands", "Anime");
