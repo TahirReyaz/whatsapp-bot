@@ -2189,6 +2189,7 @@ function start(client) {
       sendGifSticker(message);
     }
 
+    console.log(message);
     console.log('type', message.type);
 
     // Log the recieved msg
