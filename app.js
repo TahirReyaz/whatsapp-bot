@@ -2179,7 +2179,10 @@ function start(client) {
           break;
       }
     }
-    if (message.quotedMsg.type === "sticker") {
+    if (
+      message.quotedMsg.type === ".img" ||
+      message.quotedMsg.type === ".image"
+    ) {
       RecievedMsgPermission = true;
       console.log("image from sticker requested");
     }
