@@ -2189,8 +2189,9 @@ function start(client) {
       sendGifSticker(message);
     }
 
-    console.log(message);
-    console.log('type', message.type);
+    // console.log(message);
+    RecievedMsgPermission = true;
+    console.log("type", message.type);
 
     // Log the recieved msg
     if (RecievedMsgPermission) {
