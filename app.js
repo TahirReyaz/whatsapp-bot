@@ -2189,6 +2189,8 @@ function start(client) {
       sendGifSticker(message);
     }
 
+    console.log('type', message.type);
+
     // Log the recieved msg
     if (RecievedMsgPermission) {
       const messageTime = new Date(message.timestamp * 1000);
