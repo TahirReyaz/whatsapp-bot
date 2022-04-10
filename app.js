@@ -2179,6 +2179,10 @@ function start(client) {
           break;
       }
     }
+    if (message.quotedMsg.type === "sticker") {
+      RecievedMsgPermission = true;
+      console.log("image from sticker requested");
+    }
     /////////////////////// Video and gif functions ////////////////////////
     /////////////////////// Gif Sticker ////////////////////////
     if (
@@ -2189,9 +2193,9 @@ function start(client) {
       sendGifSticker(message);
     }
 
-    RecievedMsgPermission = true;
-    console.log(message);
-    console.log("type", message.type);
+    // RecievedMsgPermission = true;
+    // console.log(message);
+    // console.log("type", message.type);
 
     // Log the recieved msg
     if (RecievedMsgPermission) {
