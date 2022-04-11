@@ -2134,6 +2134,15 @@ function start(client) {
         console.log(message.quotedMsg);
         const msgObj = {
           clientUrl: message.quotedMsg.deprecatedMms3Url,
+          mimetype: message.quotedMsg.mimetype,
+          mediaKey: message.quotedMsg.mediaKey,
+          size: message.quotedMsg.size,
+          height: message.quotedMsg.height,
+          width: message.quotedMsg.width,
+          body: message.quotedMsg.body,
+          filehash: message.quotedMsg.filehash,
+          encFilehash: message.quotedMsg.encFilehash,
+          directPath: message.quotedMsg.directPath,
         };
         imgToSticker(
           client,
