@@ -151,11 +151,13 @@ function start(client) {
     console.log("in any msg");
     // variables and constants required to make the data readable
     const data = message.body;
+    console.log(data);
     const botQuery = data.split(" ");
     botQuery[0] = botQuery[0].toLowerCase();
     const queryCutter = botQuery[0] + " ";
     const queryWithDesc = data.substring(queryCutter.length).split("\n"); // Get everything written after the command
     let query = queryWithDesc[0]; // This is used as the option people type after the command
+    console.log(query);
     const queryPart = query.split("-"); // This is used as extra options that people type after the above query
     let composeMsg = [],
       msgString = "",
@@ -170,8 +172,8 @@ function start(client) {
     let msgObj = {
       type: message.quotedMsg.type ? message.quotedMsg.type : "image",
     };
-    console.table(botQuery);
     console.log({ botQuery });
+    console.table(botQuery);
 
     switch (botQuery[0]) {
       //////////////////////////////////////HI BOT//////////////////////////////////////
