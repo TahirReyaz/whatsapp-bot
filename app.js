@@ -2131,12 +2131,7 @@ function start(client) {
       case ".sticker":
       case ".sparsh":
         RecievedMsgPermission = true;
-        stkToImg(
-          client,
-          message.quotedMsg.type,
-          message.chatId,
-          message.id.toString()
-        );
+        console.log(message.quotedMsg);
         break;
       /////////////////////////////////////BOT MENU/////////////////////////////////////
       case ".help":

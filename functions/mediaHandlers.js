@@ -10,7 +10,7 @@ module.exports.stkToImg = (client, msgType, sendIn, replyTo) => {
     sendReply(
       client,
       sendIn,
-      "This feature has not been implemented yet.\nThe developer will complete it when he feels like it.",
+      "This feature has not been implemented yet.\nThe developer will complete it when he feels like it.\nUntil then, bear with it.",
       replyTo,
       "Error when sending warning: "
     );
