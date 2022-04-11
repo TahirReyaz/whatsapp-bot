@@ -151,15 +151,12 @@ function start(client) {
     console.log("in any msg");
     // variables and constants required to make the data readable
     const data = message.body;
-    console.log({ data });
     const botQuery = data.split(" ");
     botQuery[0] = botQuery[0].toLowerCase();
     const queryCutter = botQuery[0] + " ";
-    console.log("query 0", botQuery[0]);
     console.table(botQuery);
     const queryWithDesc = data.substring(queryCutter.length).split("\n"); // Get everything written after the command
     let query = queryWithDesc[0]; // This is used as the option people type after the command
-    console.log({ query });
     const queryPart = query.split("-"); // This is used as extra options that people type after the above query
     let composeMsg = [],
       msgString = "",
@@ -171,9 +168,13 @@ function start(client) {
       title: queryPart[0],
       artist: queryPart[1],
     };
-    let msgObj = {
-      type: message.quotedMsg.type ? message.quotedMsg.type : "image",
-    };
+    try {
+      let msgObj = {
+        type: message.quotedMsg.type ? message.quotedMsg.type : "chat",
+      };
+    } catch (err) {
+      console.log(err);
+    }
     console.log({ botQuery });
     console.table(botQuery);
 
@@ -182,6 +183,7 @@ function start(client) {
       case ".hi":
       case "hibot":
         RecievedMsgPermission = true;
+        console.log("in hi");
         sendReply(
           message.chatId,
           "No need to say hi to me, I am always here, reading every message you send to this guy.😁\nSend 'HelpBot' for commands",
