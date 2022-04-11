@@ -30,7 +30,7 @@ module.exports.imgToSticker = async (client, sendIn, replyTo, msgObj) => {
     sendReply(
       client,
       sendIn,
-      "The selected message is not a image",
+      "The selected message is not an image",
       replyTo,
       "Error when sending warning: "
     );
@@ -39,7 +39,7 @@ module.exports.imgToSticker = async (client, sendIn, replyTo, msgObj) => {
 
   const buffer = await client.decryptFile(msgObj);
   console.log("Buffer generated");
-  let fileName = `some-file-name.${mime.extension(msgObj.mimeType)}`;
+  let fileName = `some-file-name.${mime.extension(msgObj.mimetype)}`;
   fs.writeFile(fileName, buffer, (err) => {
     if (err) {
       sendReply(
