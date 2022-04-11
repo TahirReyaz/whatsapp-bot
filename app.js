@@ -10,7 +10,6 @@ const mime = require("mime-types");
 const gify = require("gify");
 const gm = require("gm").subClass({ imageMagick: true });
 require("dotenv").config();
-const tesseract = require("node-tesseract-ocr");
 const _ = require("lodash");
 
 const { remind } = require("./functions/reminders");
