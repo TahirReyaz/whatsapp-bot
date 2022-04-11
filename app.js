@@ -155,6 +155,9 @@ function start(client) {
     const botQuery = data.split(" ");
     botQuery[0] = botQuery[0].toLowerCase();
     const queryCutter = botQuery[0] + " ";
+    console.log("query 0", botQuery[0]);
+    console.log({ botQuery });
+    console.table(botQuery);
     const queryWithDesc = data.substring(queryCutter.length).split("\n"); // Get everything written after the command
     let query = queryWithDesc[0]; // This is used as the option people type after the command
     console.log(query);
