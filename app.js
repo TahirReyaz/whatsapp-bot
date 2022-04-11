@@ -20,7 +20,12 @@ const {
 } = require("./functions/venomFunctions");
 const { sendMenu } = require("./functions/menuHandlers");
 const { groupPerms, showAllRoles } = require("./functions/rolesHandlers");
-const { stkToImg, imgToSticker, ocr } = require("./functions/mediaHandlers");
+const {
+  stkToImg,
+  imgToSticker,
+  ocr,
+  sendGifSticker,
+} = require("./functions/mediaHandlers");
 
 // Create the client
 venom
@@ -165,7 +170,9 @@ function start(client) {
       title: queryPart[0],
       artist: queryPart[1],
     };
-    let msgObj = { type: "image" };
+    let msgObj = {
+      type: message.quotedMsg.type ? message.quotedMsg.type : "image",
+    };
 
     switch (botQuery[0]) {
       //////////////////////////////////////HI BOT//////////////////////////////////////
@@ -2131,7 +2138,11 @@ function start(client) {
         for (quotedMsgKey in message.quotedMsg) {
           msgObj[quotedMsgKey] = message.quotedMsg[quotedMsgKey];
         }
-        imgToSticker(client, message.chatId, message.id.toString(), msgObj);
+        if (msgObj.type === "image") {
+          imgToSticker(client, message.chatId, message.id.toString(), msgObj);
+        } else {
+          sendGifSticker(client, message.chatId, message.id.toString(), msgObj);
+        }
         break;
       ////////////////////////////////// OCR ////////////////////////////////////
       case ".ocr":
@@ -2219,7 +2230,13 @@ function start(client) {
       (message.caption === ".sticker" || message.caption === ".sparsh")
     ) {
       RecievedMsgPermission = true;
-      sendGifSticker(message);
+      VsendReply(
+        client,
+        message.chatId,
+        "The usage of this command has been changed\nIt now works with just replying to the gif you want to make sticker of with *.sticker*",
+        message.id.toString(),
+        "Err while sending ocr warning"
+      );
     }
 
     // Log the recieved msg
@@ -2292,62 +2309,5 @@ function start(client) {
       .catch((erro) => {
         console.error(errMsg, erro);
       });
-  };
-
-  const sendGifSticker = async (message) => {
-    const buffer = await client.decryptFile(message);
-    console.log("Buffer generated");
-    fileName = `some-file-name.${mime.extension(message.mimetype)}`;
-    fs.writeFile(fileName, buffer, (err) => {
-      //console.log("Error while writing file", err);
-    });
-    console.log("File write successful");
-    sendReply(
-      message.chatId,
-      "Gif Downloaded successfully🦾",
-      message.id.toString(),
-      "Error when sending sticker progress: "
-    );
-    fileName = fileName.slice(0, 14) + ".gif";
-    gify("some-file-name.mp4", "some-file-name.gif", function (err) {
-      if (err) {
-        sendReply(
-          message.chatId,
-          "Gif conversion failed😞",
-          message.id.toString(),
-          "Error when sending sticker error: "
-        );
-        throw err;
-      }
-      console.log("Gify converted the mp4 to gif");
-      gm(fileName)
-        .resizeExact(500, 500)
-        .gravity("Center")
-        .write(fileName, async function (err) {
-          if (!err) {
-            sendReply(
-              message.chatId,
-              "Gif resizing completed🦾\n\nSending Sticker",
-              message.id.toString(),
-              "Error when sending sticker progress: "
-            );
-            console.log(" hooray! ");
-          }
-          client
-            .sendImageAsStickerGif(message.chatId, fileName)
-            .then(() => {
-              console.log("Sticker sent\n-------------------------\n");
-            })
-            .catch((erro) => {
-              console.error("Error when sending sticker: \n" + erro);
-              sendReply(
-                message.chatId,
-                "Sending sticker failed😞\n\nTry again",
-                message.id.toString(),
-                "Error when sending sticker error: "
-              );
-            });
-        });
-    });
   };
 }

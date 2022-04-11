@@ -91,6 +91,78 @@ module.exports.imgToSticker = async (client, sendIn, replyTo, msgObj) => {
   });
 };
 
+module.exports.sendGifSticker = async (client, sendIn, replyTo, msgObj) => {
+  if (msgObj.type !== "video") {
+    sendReply(
+      client,
+      sendIn,
+      "The selected message is not a gif",
+      replyTo,
+      "Error when sending warning: "
+    );
+    return;
+  }
+
+  const buffer = await client.decryptFile(msgObj);
+  console.log("Buffer generated");
+  fileName = `some-file-name.${mime.extension(msgObj.mimetype)}`;
+  fs.writeFile(fileName, buffer, (err) => {
+    //console.log("Error while writing file", err);
+  });
+  console.log("File write successful");
+  sendReply(
+    client,
+    sendIn,
+    "Gif Downloaded successfully🦾",
+    replyTo,
+    "Error when sending sticker progress: "
+  );
+  fileName = fileName.slice(0, 14) + ".gif";
+  gify("some-file-name.mp4", "some-file-name.gif", function (err) {
+    if (err) {
+      sendReply(
+        client,
+        sendIn,
+        "Gif conversion failed😞",
+        replyTo,
+        "Error when sending sticker error: "
+      );
+      throw err;
+    }
+    console.log("Gify converted the mp4 to gif");
+    gm(fileName)
+      .resizeExact(500, 500)
+      .gravity("Center")
+      .write(fileName, async function (err) {
+        if (!err) {
+          sendReply(
+            client,
+            sendIn,
+            "Gif resizing completed🦾\n\nSending Sticker",
+            replyTo,
+            "Error when sending sticker progress: "
+          );
+          console.log(" hooray! ");
+        }
+        client
+          .sendImageAsStickerGif(sendIn, fileName)
+          .then(() => {
+            console.log("Sticker sent\n-------------------------\n");
+          })
+          .catch((erro) => {
+            console.error("Error when sending sticker: \n" + erro);
+            sendReply(
+              client,
+              sendIn,
+              "Sending sticker failed😞\n\nTry again",
+              replyTo,
+              "Error when sending sticker error: "
+            );
+          });
+      });
+  });
+};
+
 module.exports.ocr = async (client, sendIn, replyTo, msgObj) => {
   if (msgObj.type !== "image") {
     sendReply(
