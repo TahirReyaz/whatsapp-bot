@@ -2192,6 +2192,7 @@ function start(client) {
 
     /////////////////////// Image Functions ////////////////////////
     if (message.type === "image") {
+      console.log(message);
       const imgData = message.caption;
       const imgBotQuery = imgData.split(" ");
       const imgQueryCutter = imgBotQuery[0] + " ";
