@@ -2132,6 +2132,14 @@ function start(client) {
       case ".sparsh":
         RecievedMsgPermission = true;
         console.log(message.quotedMsg);
+        imgToSticker(
+          client,
+          message.chatId,
+          message.id.toString(),
+          message.quotedMsg.type,
+          message.quotedMsg.mimetype,
+          message.quotedMsg.mediaKey
+        );
         break;
       /////////////////////////////////////BOT MENU/////////////////////////////////////
       case ".help":

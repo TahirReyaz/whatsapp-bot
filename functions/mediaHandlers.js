@@ -25,10 +25,27 @@ module.exports.stkToImg = (client, msgType, sendIn, replyTo) => {
   }
 };
 
-module.exports.imgToSticker = async (client, message, sendIn, replyTo) => {
-  const buffer = await client.decryptFile(message);
+module.exports.imgToSticker = async (
+  client,
+  sendIn,
+  replyTo,
+  msgType,
+  mimeType,
+  mediaKey
+) => {
+  if (msgType !== "image") {
+    sendReply(
+      client,
+      sendIn,
+      "The selected message is not a image",
+      replyTo,
+      "Error when sending warning: "
+    );
+  }
+
+  const buffer = await client.decryptFile(mediaKey);
   console.log("Buffer generated");
-  let fileName = `some-file-name.${mime.extension(message.mimetype)}`;
+  let fileName = `some-file-name.${mime.extension(mimeType)}`;
   fs.writeFile(fileName, buffer, (err) => {
     if (err) {
       sendReply(
