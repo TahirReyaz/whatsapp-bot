@@ -2120,7 +2120,7 @@ function start(client) {
       case ".image":
       case ".img":
         RecievedMsgPermission = true;
-        console.log("in .img");
+        console.log("type", message.quotedMsg.type);
         stkToImg(
           client,
           message.quotedMsg.type,
