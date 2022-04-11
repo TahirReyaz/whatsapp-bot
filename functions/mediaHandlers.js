@@ -2,6 +2,7 @@ const fs = require("fs");
 const mime = require("mime-types");
 const gm = require("gm").subClass({ imageMagick: true });
 const tesseract = require("node-tesseract-ocr");
+const gify = require("gify");
 
 const { sendReply } = require("./venomFunctions");
 

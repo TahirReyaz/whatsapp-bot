@@ -5,10 +5,6 @@ const malScraper = require("mal-scraper");
 const acb = require("acb-api");
 const musicInfo = require("music-info");
 const openai = require("openai-grammaticalcorrection");
-const fs = require("fs");
-const mime = require("mime-types");
-const gify = require("gify");
-const gm = require("gm").subClass({ imageMagick: true });
 require("dotenv").config();
 const _ = require("lodash");
 
@@ -2140,8 +2136,16 @@ function start(client) {
         }
         if (msgObj.type === "image") {
           imgToSticker(client, message.chatId, message.id.toString(), msgObj);
-        } else {
+        } else if (msgObj.type === "video") {
           sendGifSticker(client, message.chatId, message.id.toString(), msgObj);
+        } else {
+          VsendReply(
+            client,
+            message.chatid,
+            "The selected message is not an image or a gif",
+            message.id.toString(),
+            "Error when sending warning: "
+          );
         }
         break;
       ////////////////////////////////// OCR ////////////////////////////////////
