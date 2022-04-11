@@ -148,7 +148,6 @@ function start(client) {
 
   // This function executes whenever a message is sent or recieved
   client.onAnyMessage((message) => {
-    console.log("in any msg");
     // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
@@ -168,15 +167,9 @@ function start(client) {
       title: queryPart[0],
       artist: queryPart[1],
     };
-    try {
-      let msgObj = {
-        type: message.quotedMsg.type ? message.quotedMsg.type : "chat",
-      };
-    } catch (err) {
-      console.log(err);
-    }
-    console.log({ botQuery });
-    console.table(botQuery);
+    let msgObj = {
+      type: message.quotedMsg ? message.quotedMsg.type : "chat",
+    };
 
     switch (botQuery[0]) {
       //////////////////////////////////////HI BOT//////////////////////////////////////
