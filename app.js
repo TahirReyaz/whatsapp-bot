@@ -15,7 +15,10 @@ const _ = require("lodash");
 
 const { remind } = require("./functions/reminders");
 const { truthOrDare, wouldYouRather } = require("./functions/gamesHandlers");
-const { sendButtons } = require("./functions/venomFunctions");
+const {
+  sendButtons,
+  sendReply: VsendReply,
+} = require("./functions/venomFunctions");
 const { sendMenu } = require("./functions/menuHandlers");
 const { groupPerms, showAllRoles } = require("./functions/rolesHandlers");
 const { stkToImg, imgToSticker } = require("./functions/mediaHandlers");
@@ -2137,12 +2140,7 @@ function start(client) {
         for (quotedMsgKey in message.quotedMsg) {
           msgObj[quotedMsgKey] = message.quotedMsg[quotedMsgKey];
         }
-        imgToSticker(
-          client,
-          message.chatId,
-          message.id.toString(),
-          msgObj
-        );
+        imgToSticker(client, message.chatId, message.id.toString(), msgObj);
         break;
       /////////////////////////////////////BOT MENU/////////////////////////////////////
       case ".help":
@@ -2194,7 +2192,13 @@ function start(client) {
         case ".sticker":
         case ".sparsh":
           RecievedMsgPermission = true;
-          imgToSticker(client, message, message.chatId, message.id.toString());
+          VsendReply(
+            client,
+            message.chatId,
+            "The usage of this command has been changed\nIt now works with just replying to the image you want to make sticker of with *.sticker*",
+            message.id.toString(),
+            "Err while sending sticker waring"
+          );
           break;
         /////////////////////// OCR ////////////////////////
         case ".ocr":
