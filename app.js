@@ -2133,7 +2133,7 @@ function start(client) {
         RecievedMsgPermission = true;
         console.log(message.quotedMsg);
         const msgObj = {
-          clientUrl: message.quotedMsg.mediaKey,
+          clientUrl: message.quotedMsg.deprecatedMms3Url,
         };
         imgToSticker(
           client,
