@@ -4,6 +4,12 @@ const gm = require("gm").subClass({ imageMagick: true });
 
 const { sendReply } = require("./venomFunctions");
 
+const ocrConfig = {
+  lang: "eng",
+  oem: 1,
+  psm: 3,
+};
+
 module.exports.stkToImg = (client, msgType, sendIn, replyTo) => {
   if (msgType === "sticker") {
     console.log("image from sticker requested");
@@ -80,6 +86,58 @@ module.exports.imgToSticker = async (client, sendIn, replyTo, msgObj) => {
               "Error when sending sticker error: "
             );
           });
+      });
+  });
+};
+
+module.exports.ocr = async (client, sendIn, replyTo, msgObj) => {
+  if (msgObj.type !== "image") {
+    sendReply(
+      client,
+      sendIn,
+      "The selected message is not an image",
+      replyTo,
+      "Error when sending warning: "
+    );
+    return;
+  }
+
+  const buffer = await client.decryptFile(msgObj);
+  console.log("Buffer generated");
+  let filename = `some-file-name.jpg`;
+  fs.writeFile(filename, buffer, async (err) => {
+    if (err) throw err;
+    console.log("File write successful");
+    console.log(`${__dirname}/${filename}`);
+
+    tesseract
+      .recognize(`${__dirname}/${filename}`, ocrConfig)
+      .then((text) => {
+        console.log("Result:", text);
+        sendReply(
+          message.chatId,
+          "Text recognised through OCR:",
+          message.id.toString(),
+          "Error when sending ocr: "
+        );
+        sendReply(
+          message.chatId,
+          text,
+          message.id.toString(),
+          "Error when sending ocr: "
+        );
+        ocrConfig.lang = "eng";
+      })
+      .catch((error) => {
+        console.log("ERROR");
+        console.log(error.message);
+        sendReply(
+          message.chatId,
+          "Text not found",
+          message.id.toString(),
+          "Error when sending ocr failure: "
+        );
+        ocrConfig.lang = "eng";
       });
   });
 };

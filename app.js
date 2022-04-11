@@ -21,13 +21,7 @@ const {
 } = require("./functions/venomFunctions");
 const { sendMenu } = require("./functions/menuHandlers");
 const { groupPerms, showAllRoles } = require("./functions/rolesHandlers");
-const { stkToImg, imgToSticker } = require("./functions/mediaHandlers");
-
-const ocrConfig = {
-  lang: "eng",
-  oem: 1,
-  psm: 3,
-};
+const { stkToImg, imgToSticker, ocr } = require("./functions/mediaHandlers");
 
 // Create the client
 venom
@@ -172,6 +166,7 @@ function start(client) {
       title: queryPart[0],
       artist: queryPart[1],
     };
+    let msgObj = { type: "image" };
 
     switch (botQuery[0]) {
       //////////////////////////////////////HI BOT//////////////////////////////////////
@@ -2134,13 +2129,20 @@ function start(client) {
       case ".sticker":
       case ".sparsh":
         RecievedMsgPermission = true;
-        const msgObj = {
-          type: "image",
-        };
         for (quotedMsgKey in message.quotedMsg) {
           msgObj[quotedMsgKey] = message.quotedMsg[quotedMsgKey];
         }
         imgToSticker(client, message.chatId, message.id.toString(), msgObj);
+        break;
+      ////////////////////////////////// OCR ////////////////////////////////////
+      case ".ocr":
+      case ".imgtotext":
+      case "imagetotext":
+        RecievedMsgPermission = true;
+        for (quotedMsgKey in message.quotedMsg) {
+          msgObj[quotedMsgKey] = message.quotedMsg[quotedMsgKey];
+        }
+        ocr(client, message.chatId, message.id.toString(), msgObj);
         break;
       /////////////////////////////////////BOT MENU/////////////////////////////////////
       case ".help":
@@ -2181,12 +2183,8 @@ function start(client) {
 
     /////////////////////// Image Functions ////////////////////////
     if (message.type === "image") {
-      console.log(message);
       const imgData = message.caption;
       const imgBotQuery = imgData.split(" ");
-      const imgQueryCutter = imgBotQuery[0] + " ";
-      query = imgData.substring(imgQueryCutter.length);
-      const imgQueryPart = query.split("-");
       switch (imgBotQuery[0]) {
         /////////////////////// Image Sticker ////////////////////////
         case ".sticker":
@@ -2197,7 +2195,7 @@ function start(client) {
             message.chatId,
             "The usage of this command has been changed\nIt now works with just replying to the image you want to make sticker of with *.sticker*",
             message.id.toString(),
-            "Err while sending sticker waring"
+            "Err while sending sticker warning"
           );
           break;
         /////////////////////// OCR ////////////////////////
@@ -2205,10 +2203,13 @@ function start(client) {
         case ".imgToText":
         case "imageToText":
           RecievedMsgPermission = true;
-          if (query) {
-            ocrConfig.lang = query;
-          }
-          sendOCR(message);
+          VsendReply(
+            client,
+            message.chatId,
+            "The usage of this command has been changed\nIt now works with just replying to the image you want to make sticker of with *.ocr*",
+            message.id.toString(),
+            "Err while sending ocr warning"
+          );
           break;
       }
     }
@@ -2347,47 +2348,6 @@ function start(client) {
                 "Error when sending sticker error: "
               );
             });
-        });
-    });
-  };
-
-  const sendOCR = async (message) => {
-    const buffer = await client.decryptFile(message);
-    console.log("Buffer generated");
-    let filename = `some-file-name.jpg`;
-    fs.writeFile(filename, buffer, async (err) => {
-      if (err) throw err;
-      console.log("File write successful");
-      console.log(`${__dirname}/${filename}`);
-
-      tesseract
-        .recognize(`${__dirname}/${filename}`, ocrConfig)
-        .then((text) => {
-          console.log("Result:", text);
-          sendReply(
-            message.chatId,
-            "Text recognised through OCR:",
-            message.id.toString(),
-            "Error when sending ocr: "
-          );
-          sendReply(
-            message.chatId,
-            text,
-            message.id.toString(),
-            "Error when sending ocr: "
-          );
-          ocrConfig.lang = "eng";
-        })
-        .catch((error) => {
-          console.log("ERROR");
-          console.log(error.message);
-          sendReply(
-            message.chatId,
-            "Text not found",
-            message.id.toString(),
-            "Error when sending ocr failure: "
-          );
-          ocrConfig.lang = "eng";
         });
     });
   };
