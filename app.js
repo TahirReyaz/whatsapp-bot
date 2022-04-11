@@ -148,7 +148,7 @@ function start(client) {
 
   // This function executes whenever a message is sent or recieved
   client.onAnyMessage((message) => {
-    console.log('in any msg');
+    console.log("in any msg");
     // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
@@ -170,6 +170,8 @@ function start(client) {
     let msgObj = {
       type: message.quotedMsg.type ? message.quotedMsg.type : "image",
     };
+    console.table(botQuery);
+    console.log({ botQuery });
 
     switch (botQuery[0]) {
       //////////////////////////////////////HI BOT//////////////////////////////////////
