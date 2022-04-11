@@ -31,7 +31,7 @@ module.exports.imgToSticker = async (
   replyTo,
   msgType,
   mimeType,
-  mediaKey
+  msgObj
 ) => {
   if (msgType !== "image") {
     sendReply(
@@ -41,9 +41,10 @@ module.exports.imgToSticker = async (
       replyTo,
       "Error when sending warning: "
     );
+    return;
   }
 
-  const buffer = await client.decryptFile(mediaKey);
+  const buffer = await client.decryptFile(msgObj);
   console.log("Buffer generated");
   let fileName = `some-file-name.${mime.extension(mimeType)}`;
   fs.writeFile(fileName, buffer, (err) => {
