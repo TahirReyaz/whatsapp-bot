@@ -2141,7 +2141,7 @@ function start(client) {
         } else {
           VsendReply(
             client,
-            message.chatid,
+            message.chatId,
             "The selected message is not an image or a gif",
             message.id.toString(),
             "Error when sending warning: "
