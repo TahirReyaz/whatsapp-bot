@@ -148,6 +148,7 @@ function start(client) {
 
   // This function executes whenever a message is sent or recieved
   client.onAnyMessage((message) => {
+    console.log('in any msg');
     // variables and constants required to make the data readable
     const data = message.body;
     const botQuery = data.split(" ");
@@ -2197,7 +2198,7 @@ function start(client) {
       case ".rhelp":
       case "rolehelp":
         RecievedMsgPermission = true;
-        sendMenu(client, message.chatId, "Anime related commands", "Role");
+        sendMenu(client, message.chatId, "Roles related commands", "Role");
         break;
     }
 
