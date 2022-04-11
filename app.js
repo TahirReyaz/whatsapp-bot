@@ -2127,7 +2127,7 @@ function start(client) {
           message.id.toString()
         );
         break;
-      ////////////////////////////////// IMAGE TO STICKER ////////////////////////////////////
+      ////////////////////////////////// STICKER ////////////////////////////////////
       case ".sticker":
       case ".sparsh":
         RecievedMsgPermission = true;

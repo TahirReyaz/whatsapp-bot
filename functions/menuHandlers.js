@@ -27,6 +27,16 @@ const botMenuList = [
         description: "For tagging everyone like discord",
       },
       {
+        title: ".sticker",
+        description:
+          "To generate stickers, reply to the image or gif with .sticker",
+      },
+      {
+        title: ".imgToText",
+        description:
+          "To read text from image, reply to the image with *imageToText* | Short command .ocr",
+      },
+      {
         title: "horoscopeMenu",
         description: "For checking out today's Horoscope\nShort command: .hsm",
       },
@@ -58,10 +68,6 @@ const botMenuList = [
 ];
 const botMenuMsg = [
   "Check out the bottom menu for commands👇",
-  "For making stickers: ",
-  "Send the image with caption *.sticker*",
-  "For extracting text from image (ocr):",
-  "Send the image with caption *.ocr*",
   "--------------------------------------------------",
   "```There is no case sensitivity or need to type . in front of the full commands```",
 ];
