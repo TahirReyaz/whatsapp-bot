@@ -116,26 +116,23 @@ module.exports.ocr = async (client, sendIn, replyTo, msgObj) => {
       .then((text) => {
         console.log("Result:", text);
         sendReply(
-          message.chatId,
+          client,
+          sendIn,
           "Text recognised through OCR:",
-          message.id.toString(),
+          replyTo,
           "Error when sending ocr: "
         );
-        sendReply(
-          message.chatId,
-          text,
-          message.id.toString(),
-          "Error when sending ocr: "
-        );
+        sendReply(client, sendIn, text, replyTo, "Error when sending ocr: ");
         ocrConfig.lang = "eng";
       })
       .catch((error) => {
         console.log("ERROR");
         console.log(error.message);
         sendReply(
-          message.chatId,
+          client,
+          sendIn,
           "Text not found",
-          message.id.toString(),
+          replyTo,
           "Error when sending ocr failure: "
         );
         ocrConfig.lang = "eng";
