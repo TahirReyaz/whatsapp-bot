@@ -25,15 +25,8 @@ module.exports.stkToImg = (client, msgType, sendIn, replyTo) => {
   }
 };
 
-module.exports.imgToSticker = async (
-  client,
-  sendIn,
-  replyTo,
-  msgType,
-  mimeType,
-  msgObj
-) => {
-  if (msgType !== "image") {
+module.exports.imgToSticker = async (client, sendIn, replyTo, msgObj) => {
+  if (msgObj.type !== "image") {
     sendReply(
       client,
       sendIn,
@@ -46,7 +39,7 @@ module.exports.imgToSticker = async (
 
   const buffer = await client.decryptFile(msgObj);
   console.log("Buffer generated");
-  let fileName = `some-file-name.${mime.extension(mimeType)}`;
+  let fileName = `some-file-name.${mime.extension(msgObj.mimeType)}`;
   fs.writeFile(fileName, buffer, (err) => {
     if (err) {
       sendReply(

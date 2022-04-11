@@ -2141,8 +2141,6 @@ function start(client) {
           client,
           message.chatId,
           message.id.toString(),
-          message.quotedMsg.type,
-          message.quotedMsg.mimetype,
           msgObj
         );
         break;
