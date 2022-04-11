@@ -1,7 +1,8 @@
 const { sendReply } = require("./venomFunctions");
 
-module.exports.stkToImg = (client, sendIn, replyTo) => {
-  if (message.quotedMsg.type === ".sticker") {
+module.exports.stkToImg = (client, msgType, sendIn, replyTo) => {
+  console.log("in stk to img");
+  if (msgType === ".sticker") {
     console.log("image from sticker requested");
     sendReply(
       client,
@@ -11,6 +12,7 @@ module.exports.stkToImg = (client, sendIn, replyTo) => {
       "Error when sending warning: "
     );
   } else {
+    console.log("selected msg wasnt stk");
     sendReply(
       client,
       sendIn,

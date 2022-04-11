@@ -18,7 +18,6 @@ const { truthOrDare, wouldYouRather } = require("./functions/gamesHandlers");
 const { sendButtons } = require("./functions/venomFunctions");
 const { sendMenu } = require("./functions/menuHandlers");
 const { groupPerms, showAllRoles } = require("./functions/rolesHandlers");
-var Poll = require("./models/poll");
 const { stkToImg } = require("./functions/mediaHandlers");
 
 const ocrConfig = {
@@ -2121,7 +2120,13 @@ function start(client) {
       case ".image":
       case ".img":
         RecievedMsgPermission = true;
-        stkToImg(client, message.chatId, message.id.toString());
+        console.log("in .img");
+        stkToImg(
+          client,
+          message.quotedMsg.type,
+          message.chatId,
+          message.id.toString()
+        );
         break;
       /////////////////////////////////////BOT MENU/////////////////////////////////////
       case ".help":
@@ -2195,10 +2200,6 @@ function start(client) {
       RecievedMsgPermission = true;
       sendGifSticker(message);
     }
-
-    // RecievedMsgPermission = true;
-    // console.log(message);
-    // console.log("type", message.type);
 
     // Log the recieved msg
     if (RecievedMsgPermission) {
