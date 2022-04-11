@@ -18,7 +18,7 @@ const { truthOrDare, wouldYouRather } = require("./functions/gamesHandlers");
 const { sendButtons } = require("./functions/venomFunctions");
 const { sendMenu } = require("./functions/menuHandlers");
 const { groupPerms, showAllRoles } = require("./functions/rolesHandlers");
-const { stkToImg } = require("./functions/mediaHandlers");
+const { stkToImg, imgToSticker } = require("./functions/mediaHandlers");
 
 const ocrConfig = {
   lang: "eng",
@@ -2120,7 +2120,17 @@ function start(client) {
       case ".image":
       case ".img":
         RecievedMsgPermission = true;
-        console.log("type", message.quotedMsg.type);
+        stkToImg(
+          client,
+          message.quotedMsg.type,
+          message.chatId,
+          message.id.toString()
+        );
+        break;
+      ////////////////////////////////// IMAGE TO STICKER ////////////////////////////////////
+      case ".sticker":
+      case ".sparsh":
+        RecievedMsgPermission = true;
         stkToImg(
           client,
           message.quotedMsg.type,
@@ -2177,7 +2187,7 @@ function start(client) {
         case ".sticker":
         case ".sparsh":
           RecievedMsgPermission = true;
-          sendImgSticker(message);
+          imgToSticker(client, message, message.chatId, message.id.toString());
           break;
         /////////////////////// OCR ////////////////////////
         case ".ocr":
@@ -2271,51 +2281,6 @@ function start(client) {
       .catch((erro) => {
         console.error(errMsg, erro);
       });
-  };
-
-  const sendImgSticker = async (message) => {
-    const buffer = await client.decryptFile(message);
-    console.log("Buffer generated");
-    let fileName = `some-file-name.${mime.extension(message.mimetype)}`;
-    fs.writeFile(fileName, buffer, (err) => {
-      if (err) {
-        sendReply(
-          message.chatId,
-          "There was a problem while downloading the image\nTry again",
-          message.id.toString(),
-          "Error when sending sticker progress: "
-        );
-        return;
-      }
-      gm(fileName)
-        .resizeExact(500, 500)
-        .gravity("Center")
-        .write(fileName, function (err) {
-          if (err) {
-            sendReply(
-              message.chatId,
-              "Image editing failed😞\n\nTry Again",
-              message.id.toString(),
-              "Error when sending sticker progress: "
-            );
-            return;
-          }
-          client
-            .sendImageAsSticker(message.chatId, fileName)
-            .then(() => {
-              console.log("Sticker sent\n-------------------------\n");
-            })
-            .catch((erro) => {
-              console.error("Error when sending sticker: \n", erro);
-              sendReply(
-                message.chatId,
-                "Sending sticker failed😞\n\nTry again",
-                message.id.toString(),
-                "Error when sending sticker error: "
-              );
-            });
-        });
-    });
   };
 
   const sendGifSticker = async (message) => {
