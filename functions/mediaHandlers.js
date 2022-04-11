@@ -73,7 +73,7 @@ module.exports.imgToSticker = async (
           return;
         }
         client
-          .sendImageAsSticker(message.chatId, fileName)
+          .sendImageAsSticker(sendIn, fileName)
           .then(() => {
             console.log("Sticker sent\n-------------------------\n");
           })
