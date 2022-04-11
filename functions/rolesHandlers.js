@@ -63,7 +63,7 @@ module.exports.addGroupPerm = (
   replyTo
 ) => {};
 
-module.exports.showAllRoles = (client, sendTo, grpData, replyTo) => {
+module.exports.showAllRoles = (client, sendIn, grpData, replyTo) => {
   const selectedGrp = grpData.find(
     (grp) =>
       grp.grpId === message.chatId.substring(0, message.chatId.length - 3)
@@ -71,7 +71,7 @@ module.exports.showAllRoles = (client, sendTo, grpData, replyTo) => {
   if (!selectedGrp) {
     sendReply(
       client,
-      sendTo,
+      sendIn,
       "This group has no roles\n\nAsk admin to add some\n\nIf You are an admin yourself, add member roles to this group by using the addRole command\n\nFor example\n```.ar admin```\n```.ar active```",
       replyTo,
       "Error when sending warning: "
@@ -96,7 +96,7 @@ module.exports.showAllRoles = (client, sendTo, grpData, replyTo) => {
 
   sendListMenu(
     client,
-    sendTo,
+    sendIn,
     "Welcome to THE BOT",
     "Select the type of role",
     "Chose appropriate role",

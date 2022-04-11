@@ -19,6 +19,7 @@ const { sendButtons } = require("./functions/venomFunctions");
 const { sendMenu } = require("./functions/menuHandlers");
 const { groupPerms, showAllRoles } = require("./functions/rolesHandlers");
 var Poll = require("./models/poll");
+const { stkToImg } = require("./functions/mediaHandlers");
 
 const ocrConfig = {
   lang: "eng",
@@ -2116,6 +2117,12 @@ function start(client) {
         }
 
         break;
+      ////////////////////////////////// STICKER TO IMAGE ////////////////////////////////////
+      case ".image":
+      case ".img":
+        RecievedMsgPermission = true;
+        stkToImg(client, message.chatId, message.id.toString());
+        break;
       /////////////////////////////////////BOT MENU/////////////////////////////////////
       case ".help":
       case "helpbot":
@@ -2178,13 +2185,6 @@ function start(client) {
           sendOCR(message);
           break;
       }
-    }
-    if (
-      message.quotedMsg.type === ".img" ||
-      message.quotedMsg.type === ".image"
-    ) {
-      RecievedMsgPermission = true;
-      console.log("image from sticker requested");
     }
     /////////////////////// Video and gif functions ////////////////////////
     /////////////////////// Gif Sticker ////////////////////////
