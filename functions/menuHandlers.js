@@ -272,6 +272,22 @@ const animeMenuMsg = [
   "```There is no case sensitiviy for full commands```",
 ];
 
+const roleMenuList = [
+  {
+    title: "Role Commands",
+    rows: [
+      {
+        title: ".roles",
+        description: "To check the available roles in the group",
+      },
+    ],
+  },
+];
+const roleMenuMsg = [
+  "Checkout the menu for roles related commands",
+  "```There is no case sensitiviy for full commands```",
+];
+
 module.exports.sendMenu = (client, sender, title, type) => {
   let list, msg;
 
@@ -297,8 +313,8 @@ module.exports.sendMenu = (client, sender, title, type) => {
       msg = animeMenuMsg;
       break;
     case "Role":
-      list = animeMenuList;
-      msg = animeMenuMsg;
+      list = roleMenuList;
+      msg = roleMenuMsg;
       break;
     default:
       list = botMenuList;
