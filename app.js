@@ -2132,31 +2132,11 @@ function start(client) {
       case ".sparsh":
         RecievedMsgPermission = true;
         const msgObj = {
-          clientUrl: message.quotedMsg.deprecatedMms3Url,
-          mimetype: message.quotedMsg.mimetype,
           type: "image",
-          mediaKey: message.quotedMsg.mediaKey,
-          mediaKeyTimestamp: message.quotedMsg.mediaKeyTimestamp,
-          size: message.quotedMsg.size,
-          height: message.quotedMsg.height,
-          width: message.quotedMsg.width,
-          body: message.quotedMsg.body,
-          filehash: message.quotedMsg.filehash,
-          encFilehash: message.quotedMsg.encFilehash,
-          directPath: message.quotedMsg.directPath,
-          // mediaData: {
-          //   mimetype: message.quotedMsg.mimetype,
-          //   type: "image",
-          //   size: message.quotedMsg.size,
-          //   fullHeight: message.quotedMsg.height,
-          //   fullWidth: message.quotedMsg.width,
-          //   filehash: message.quotedMsg.filehash,
-          //   preview: {
-          //     _mimetype: message.quotedMsg.mimetype,
-          //     _b64: message.quotedMsg.body,
-          //   },
-          // },
         };
+        for (quotedMsgKey in message.quotedMsg) {
+          msgObj[quotedMsgKey] = message.quotedMsg[quotedMsgKey];
+        }
         imgToSticker(
           client,
           message.chatId,
