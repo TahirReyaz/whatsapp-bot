@@ -2193,6 +2193,12 @@ function start(client) {
         RecievedMsgPermission = true;
         sendMenu(client, message.chatId, "Anime related commands", "Anime");
         break;
+      ///////////////////////////////////ROLES MENU////////////////////////////////////
+      case ".rhelp":
+      case "rolehelp":
+        RecievedMsgPermission = true;
+        sendMenu(client, message.chatId, "Anime related commands", "Role");
+        break;
     }
 
     /////////////////////// Image Functions ////////////////////////
