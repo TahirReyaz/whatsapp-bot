@@ -877,7 +877,7 @@ function start(client) {
         break;
       ///////////////////////////////////MANGA DETAIL///////////////////////////////////
       case ".ms":
-      case "mangadetail":
+      case "mangasearch":
         RecievedMsgPermission = true;
         mangaSearch(client, message.chatId, query);
         break;
