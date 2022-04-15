@@ -12,7 +12,7 @@ module.exports.animeSearch = (client, sendIn, query) => {
     ];
 
     res.media.forEach((anime) => {
-      list.rows.push({
+      list[0].rows.push({
         title: ".aid " + anime.id,
         description: anime.title.english + "\n" + anime.title.romaji,
       });
