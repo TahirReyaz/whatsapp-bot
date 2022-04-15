@@ -191,8 +191,8 @@ module.exports.animeStaffDetails = (client, sendIn, id) => {
   });
 };
 
-module.exports.searchCharacterDetail = (client, sendIn, id) => {
-  Anilist.searchEntry.character(id, 1, 30).then((data) => {
+module.exports.searchCharacterDetail = (client, sendIn, query) => {
+  Anilist.searchEntry.character(query, 1, 30).then((data) => {
     const list = [
       {
         title: "Search Results",
