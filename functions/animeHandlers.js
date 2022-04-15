@@ -72,7 +72,7 @@ module.exports.animeDetail = (client, sendIn, id) => {
 
     data.relations.forEach((relation) => {
       relation.type === "ANIME" &&
-        list[0].rows.push({
+        relatedAnimeList[0].rows.push({
           title: ".aid " + relation.id,
           description: relation.title.english + "\n" + relation.title.romaji,
         });
