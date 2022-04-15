@@ -218,3 +218,141 @@ module.exports.searchCharacterDetail = (client, sendIn, query) => {
     );
   });
 };
+
+module.exports.mangaSearch = (client, sendIn, query) => {
+  Anilist.searchEntry.manga("naruto", null, 1, 50).then((data) => {
+    const list = [
+      {
+        title: "Search Results",
+        rows: [],
+      },
+    ];
+
+    data.media.forEach((manga) => {
+      list[0].rows.push({
+        title: "mangaDetail " + manga.id,
+        description: manga.title.romaji + "\n" + manga.title.userPreferred,
+      });
+    });
+
+    sendListMenu(
+      client,
+      sendIn,
+      "Searched: " + query,
+      "Hi",
+      "Checkout the bottom menu for results",
+      "Search results",
+      list
+    );
+  });
+};
+
+module.exports.mangaDetailsById = (client, sendIn, id) => {
+  let msg = [];
+  Anilist.media.manga(Number(id)).then((data) => {
+    // Compose the caption
+    msg.push(...[`*Id* : ${data.id}`, `*MAL id* : ${data.idMal}`]);
+    for (title in data.title) {
+      msg.push(`*${_.capitalize(title)}* : ${data.title[title]}`);
+    }
+    msg.push(
+      ...[
+        `*Format* : ${data.format}`,
+        `*Status* : ${data.status}`,
+        `*Total Chapters* : ${data.chapters}`,
+        `*Total Volumes* : ${data.volumes}`,
+        `*Started on* : ${data.startDate}`,
+        `*Ended on* : ${data.endDate}`,
+        `*Genres* : ${data.genres.join(", ")}`,
+        "",
+        `*Description* : ${data.description}`,
+      ]
+    );
+
+    // Send the result
+    sendImage(
+      client,
+      sendIn,
+      data.coverImage.large,
+      msg.join("\n"),
+      "Error while sending anime detail"
+    );
+
+    // Related Media
+    const relatedAnimeList = [
+      {
+        title: "Related to your search",
+        rows: [],
+      },
+    ];
+
+    data.relations.forEach((relation) => {
+      relatedAnimeList[0].rows.push({
+        title: relation.type === "ANIME" ? ".aid " : ".mid " + relation.id,
+        description: relation.title.english + "\n" + relation.title.romaji,
+      });
+    });
+
+    sendListMenu(
+      client,
+      sendIn,
+      "Related animes",
+      "Hi",
+      "Checkout the bottom menu for related animes",
+      "Related animes",
+      relatedAnimeList
+    );
+
+    // Tags
+    console.table(data.tags);
+    // Characters
+    const charactersList = [
+      {
+        title: "Featured Characters",
+        rows: [],
+      },
+    ];
+
+    data.characters.forEach((character) => {
+      charactersList[0].rows.push({
+        title: ".cid " + character.id,
+        description: character.name,
+      });
+    });
+
+    sendListMenu(
+      client,
+      sendIn,
+      "Featured Characters",
+      "Hi",
+      "Checkout the bottom menu for characters appearing in this anime",
+      "Featured Characters",
+      charactersList
+    );
+
+    // Staff
+    const staffList = [
+      {
+        title: "Staff",
+        rows: [],
+      },
+    ];
+
+    data.staff.forEach((staff) => {
+      staffList[0].rows.push({
+        title: ".asid " + staff.id,
+        description: staff.name,
+      });
+    });
+
+    sendListMenu(
+      client,
+      sendIn,
+      "Staff",
+      "Hi",
+      "Checkout the bottom menu for the people who worked on this anime",
+      "Staff",
+      staffList
+    );
+  });
+};

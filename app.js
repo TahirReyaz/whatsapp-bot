@@ -26,6 +26,8 @@ const {
   charDetailById,
   animeStaffDetails,
   searchCharacterDetail,
+  mangaSearch,
+  mangaDetailsById,
 } = require("./functions/animeHandlers");
 
 // Create the client
@@ -873,11 +875,22 @@ function start(client) {
         RecievedMsgPermission = true;
         animeSearch(client, message.chatId, query);
         break;
-      ////////////////////////////////////ANIME IDs/////////////////////////////////////
+      ///////////////////////////////////MANGA DETAIL///////////////////////////////////
+      case ".ms":
+      case "mangadetail":
+        RecievedMsgPermission = true;
+        mangaSearch(client, message.chatId, query);
+        break;
+      ////////////////////////////////////ANIME DETAIL BY ID/////////////////////////////////////
       case ".aid":
       case "animedetailbyid":
         RecievedMsgPermission = true;
         animeDetail(client, message.chatId, query);
+        break;
+      ////////////////////////////////////MANGA DETAIL BY ID/////////////////////////////////////
+      case "mangadetail":
+        RecievedMsgPermission = true;
+        mangaDetailsById(client, message.chatId, query);
         break;
       /////////////////////////ANIME CHARACTER DETAIL- BY SEARCH////////////////////////
       case ".cd":
