@@ -31,12 +31,31 @@ module.exports.animeSearch = (client, sendIn, query) => {
 };
 
 module.exports.animeDetail = (client, sendIn, id) => {
+  let msg = [];
   Anilist.media.anime(Number(id)).then((data) => {
+    // Compose the caption
+    msg.push(...[`*Id* : ${data.id}`, `*MAL id* : ${data.idMal}`]);
+    for (title in data.title) {
+      msg.push(`*${title}* : ${data.title[title]}`);
+    }
+    msg.push(
+      ...[
+        `*Format* : ${data.format}`,
+        `*Status* : ${data.status}`,
+        `*Total episodes* : ${data.episodes}`,
+        `*Started on* : ${data.startDate}`,
+        `*Ended on* : ${data.endDate}`,
+        `*Duration* : ${data.duration} minutes`,
+        `*Genres* : ${data.genres.join(", ")}`,
+      ]
+    );
+
+    // Send the result
     sendImage(
       client,
       sendIn,
-      data.coverImage.medium,
-      data.title.romaji,
+      data.coverImage.large,
+      msg,
       "Error while sending anime detail"
     );
   });
