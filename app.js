@@ -945,7 +945,7 @@ function start(client) {
       case ".cd":
       case "chardetail":
         RecievedMsgPermission = true;
-        searchCharacterDetail(client, message.id, query);
+        searchCharacterDetail(client, message.chatId, query);
         break;
       ////////////////////////////////////MOVIE DETAIL//////////////////////////////////
       case ".md":
