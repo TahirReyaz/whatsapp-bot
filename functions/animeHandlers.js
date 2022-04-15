@@ -1,5 +1,6 @@
 const anilist = require("anilist-node");
 const { sendListMenu, sendImage } = require("./venomFunctions");
+const _ = require("lodash");
 const Anilist = new anilist();
 
 module.exports.animeSearch = (client, sendIn, query) => {
@@ -36,7 +37,7 @@ module.exports.animeDetail = (client, sendIn, id) => {
     // Compose the caption
     msg.push(...[`*Id* : ${data.id}`, `*MAL id* : ${data.idMal}`]);
     for (title in data.title) {
-      msg.push(`*${title}* : ${data.title[title]}`);
+      msg.push(`*${_.capitalize(title)}* : ${data.title[title]}`);
     }
     msg.push(
       ...[
@@ -47,6 +48,8 @@ module.exports.animeDetail = (client, sendIn, id) => {
         `*Ended on* : ${data.endDate}`,
         `*Duration* : ${data.duration} minutes`,
         `*Genres* : ${data.genres.join(", ")}`,
+        "",
+        `*Description* : ${data.description}`,
       ]
     );
 
@@ -58,5 +61,14 @@ module.exports.animeDetail = (client, sendIn, id) => {
       msg.join("\n"),
       "Error while sending anime detail"
     );
+
+    // Relations
+    console.table(data.relations);
+    // Tags
+    console.table(data.tags);
+    // Characters
+    console.table(data.characters);
+    // Staff
+    console.table(data.staff);
   });
 };

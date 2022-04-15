@@ -1,7 +1,6 @@
 // Supports ES6
 const venom = require("venom-bot");
 const axios = require("axios");
-const malScraper = require("mal-scraper");
 const acb = require("acb-api");
 const musicInfo = require("music-info");
 const openai = require("openai-grammaticalcorrection");
