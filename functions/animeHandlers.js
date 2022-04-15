@@ -220,7 +220,7 @@ module.exports.searchCharacterDetail = (client, sendIn, query) => {
 };
 
 module.exports.mangaSearch = (client, sendIn, query) => {
-  Anilist.searchEntry.manga("naruto", null, 1, 50).then((data) => {
+  Anilist.searchEntry.manga(query, null, 1, 50).then((data) => {
     const list = [
       {
         title: "Search Results",
