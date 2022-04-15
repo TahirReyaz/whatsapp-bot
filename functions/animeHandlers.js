@@ -63,7 +63,32 @@ module.exports.animeDetail = (client, sendIn, id) => {
     );
 
     // Relations
-    console.table(data.relations);
+    const relatedAnimeList = [
+      {
+        title: "Related to your search",
+        rows: [],
+      },
+    ];
+
+    data.relations.forEach((relation) => {
+      relation.type === "ANIME" &&
+        list[0].rows.push({
+          title: ".aid " + relation.id,
+          description: relation.title.english + "\n" + relation.title.romaji,
+        });
+    });
+
+    sendListMenu(
+      client,
+      sendIn,
+      "Related animes",
+      "Hi",
+      "Checkout the bottom menu for related animes",
+      "Related animes",
+      relatedAnimeList
+    );
+
+    // console.table(data.relations);
     // Tags
     console.table(data.tags);
     // Characters
