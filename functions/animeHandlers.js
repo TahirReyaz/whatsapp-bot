@@ -55,7 +55,7 @@ module.exports.animeDetail = (client, sendIn, id) => {
       client,
       sendIn,
       data.coverImage.large,
-      msg,
+      msg.join("\n"),
       "Error while sending anime detail"
     );
   });
