@@ -62,7 +62,7 @@ module.exports.animeDetail = (client, sendIn, id) => {
       "Error while sending anime detail"
     );
 
-    // Relations
+    // Related Media
     const relatedAnimeList = [
       {
         title: "Related to your search",
@@ -99,11 +99,10 @@ module.exports.animeDetail = (client, sendIn, id) => {
     ];
 
     data.characters.forEach((character) => {
-      character.type === "ANIME" &&
-        charactersList[0].rows.push({
-          title: ".cid " + character.id,
-          description: character.name,
-        });
+      charactersList[0].rows.push({
+        title: ".cid " + character.id,
+        description: character.name,
+      });
     });
 
     sendListMenu(
