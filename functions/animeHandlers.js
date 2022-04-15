@@ -108,7 +108,7 @@ module.exports.animeDetail = (client, sendIn, id) => {
     sendListMenu(
       client,
       sendIn,
-      "Related animes",
+      "Featured Characters",
       "Hi",
       "Checkout the bottom menu for characters appearing in this anime",
       "Featured Characters",
@@ -116,7 +116,29 @@ module.exports.animeDetail = (client, sendIn, id) => {
     );
 
     // Staff
-    console.table(data.staff);
+    const staffList = [
+      {
+        title: "Staff",
+        rows: [],
+      },
+    ];
+
+    data.staff.forEach((staff) => {
+      staffList[0].rows.push({
+        title: ".asid " + staff.id,
+        description: staff.name,
+      });
+    });
+
+    sendListMenu(
+      client,
+      sendIn,
+      "Staff",
+      "Hi",
+      "Checkout the bottom menu for the people who worked on this anime",
+      "Staff",
+      staffList
+    );
   });
 };
 
@@ -140,6 +162,31 @@ module.exports.charDetailById = (client, sendIn, id) => {
       data.image.large,
       msg.join("\n"),
       "Error while sending character detail"
+    );
+  });
+};
+
+module.exports.animeStaffDetails = (client, sendIn, id) => {
+  Anilist.people.staff(Number(id)).then((data) => {
+    const msg = [];
+    msg.push(
+      ...[
+        `*Id* : ${data.id}`,
+        `*Name (English)* : ${data.name.english}`,
+        `*Name (Native)* : ${data.name.native}`,
+        data.name.alternative &&
+          `*Alt Names* : ${data.name.alternative.join(", ")}`,
+        `*Language* : ${data.language}`,
+        "",
+        `*Description* : ${data.description}`,
+      ]
+    );
+    sendImage(
+      client,
+      sendIn,
+      data.image.large,
+      msg.join("\n"),
+      "Error while sending staff detail"
     );
   });
 };

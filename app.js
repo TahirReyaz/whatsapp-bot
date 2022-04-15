@@ -25,6 +25,7 @@ const {
   animeSearch,
   animeDetail,
   charDetailById,
+  animeStaffDetails,
 } = require("./functions/animeHandlers");
 
 // Create the client
@@ -1250,6 +1251,12 @@ function start(client) {
       case "chariddetail":
         RecievedMsgPermission = true;
         charDetailById(client, message.chatId, query);
+        break;
+      ///////////////////////////ANIME STAFF DETAIL- BY ID//////////////////////////
+      case ".asid":
+      case "staffdetails":
+        RecievedMsgPermission = true;
+        animeStaffDetails(client, message.chatId, query);
         break;
       ///////////////////////////////TRUTH OR DARE: TRUTH///////////////////////////////
       case ".truth":
