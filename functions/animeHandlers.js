@@ -88,12 +88,59 @@ module.exports.animeDetail = (client, sendIn, id) => {
       relatedAnimeList
     );
 
-    // console.table(data.relations);
     // Tags
     console.table(data.tags);
     // Characters
-    console.table(data.characters);
+    const charactersList = [
+      {
+        title: "Featured Characters",
+        rows: [],
+      },
+    ];
+
+    data.characters.forEach((character) => {
+      character.type === "ANIME" &&
+        charactersList[0].rows.push({
+          title: ".cid " + character.id,
+          description: character.name,
+        });
+    });
+
+    sendListMenu(
+      client,
+      sendIn,
+      "Related animes",
+      "Hi",
+      "Checkout the bottom menu for characters appearing in this anime",
+      "Featured Characters",
+      charactersList
+    );
+
     // Staff
     console.table(data.staff);
+  });
+};
+
+module.exports.charDetailById = (client, sendIn, id) => {
+  Anilist.people.character(Number(id)).then((data) => {
+    const msg = [];
+    msg.push(
+      ...[
+        `*Id* : ${data.id}`,
+        `*Name (English)* : ${data.name.english}`,
+        `*Name (Native)* : ${data.name.native}`,
+        data.name.alternative &&
+          `*Alt Names* : ${data.name.alternative.join(", ")}`,
+        "",
+        `*Description* : ${data.description}`,
+      ]
+    );
+    sendImage(
+      client,
+      sendIn,
+      data.image.large,
+      msg.join("\n"),
+      "Error while sending character detail"
+    );
   });
 };

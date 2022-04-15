@@ -158,3 +158,48 @@
 //         console.error("Error when sending error: ", erro);
 //       });
 //   });
+
+// acb
+//   .get_character_by_id(query)
+//   .then((data) => {
+//     // Set the fields to be sent in message
+//     composeMsg = [
+//       "*Name* : ",
+//       data.name,
+//       "\n*Gender* : ",
+//       data.gender,
+//       "\n*ID* : ",
+//       data.id,
+//       "\n*Description* : ",
+//       data.desc,
+//     ];
+//     composeMsg.forEach((txt) => {
+//       msgString += txt;
+//     });
+//     // Send the response to the sender
+//     client
+//       .sendImage(message.chatId, data.character_image, null, msgString)
+//       .then(() => {
+//         console.log(
+//           "Sent message: \n" + msgString + "\n--------------------"
+//         );
+//       })
+//       .catch((erro) => {
+//         console.error("Error when sending kanji definition: ", erro);
+//       });
+//   })
+//   .catch((err) => {
+//     // Send not found to sender
+//     client
+//       .reply(
+//         message.chatId,
+//         "Character not found.. Sorry",
+//         message.id.toString()
+//       )
+//       .then(() => {
+//         console.log(err);
+//       })
+//       .catch((erro) => {
+//         console.error("Error when sending error: ", erro);
+//       });
+//   });
