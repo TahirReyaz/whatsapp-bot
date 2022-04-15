@@ -1,7 +1,6 @@
 // Supports ES6
 const venom = require("venom-bot");
 const axios = require("axios");
-const acb = require("acb-api");
 const musicInfo = require("music-info");
 const openai = require("openai-grammaticalcorrection");
 require("dotenv").config();
@@ -26,6 +25,9 @@ const {
   animeDetail,
   charDetailById,
   animeStaffDetails,
+  searchCharacterDetail,
+  mangaSearch,
+  mangaDetailsById,
 } = require("./functions/animeHandlers");
 
 const {
@@ -878,149 +880,28 @@ function start(client) {
         RecievedMsgPermission = true;
         animeSearch(client, message.chatId, query);
         break;
-      ////////////////////////////////////ANIME IDs/////////////////////////////////////
+      ///////////////////////////////////MANGA DETAIL///////////////////////////////////
+      case ".ms":
+      case "mangasearch":
+        RecievedMsgPermission = true;
+        mangaSearch(client, message.chatId, query);
+        break;
+      ////////////////////////////////////ANIME DETAIL BY ID/////////////////////////////////////
       case ".aid":
-      case "animeids":
+      case "animedetailbyid":
         RecievedMsgPermission = true;
         animeDetail(client, message.chatId, query);
         break;
-      //////////////////////////////ANIME CHARACTERS IDs////////////////////////////////
-      case ".ac":
-      case "animechars":
+      ////////////////////////////////////MANGA DETAIL BY ID/////////////////////////////////////
+      case "mangadetail":
         RecievedMsgPermission = true;
-        acb
-          .get_anime_by_id(query)
-          .then((data) => {
-            // Set the fields to be sent in message
-            msgString =
-              data.anime_id + "- *" + data.anime_name + "*\n*Characters:*";
-            data.characters.forEach((character) => {
-              msgString += "\n*" + character.id + "* - " + character.name;
-            });
-            msgString +=
-              "\nGet details of a character by sending 'CharIdDetail <id>\nFor example\n*CharIdDetail 10820*";
-            // Send the response to the sender
-            client
-              .sendImage(message.chatId, data.anime_image, null, msgString)
-              .then(() => {
-                console.log(
-                  "Sent message: \n" + msgString + "\n--------------------"
-                );
-              })
-              .catch((erro) => {
-                console.error("Error when sending character ids: ", erro);
-              });
-          })
-          .catch((err) => {
-            // Send not found to sender
-            buttonsArray = [
-              {
-                buttonId: "aid",
-                buttonText: { displayText: "AnimeChars Naruto" },
-                type: 1,
-              },
-              {
-                buttonId: "ahelp",
-                buttonText: { displayText: "AnimeHelp" },
-                type: 1,
-              },
-              {
-                buttonId: "help",
-                buttonText: { displayText: ".help" },
-                type: 1,
-              },
-            ];
-            client
-              .sendButtons(
-                message.chatId,
-                "Anime not found.. Sorry",
-                buttonsArray,
-                "Chose the buttons for examples and menu"
-              )
-              .then(() => {
-                console.log(err);
-              })
-              .catch((erro) => {
-                console.error("Error when sending error: ", erro);
-              });
-          });
+        mangaDetailsById(client, message.chatId, query);
         break;
       /////////////////////////ANIME CHARACTER DETAIL- BY SEARCH////////////////////////
       case ".cd":
       case "chardetail":
         RecievedMsgPermission = true;
-        acb
-          .get_character_by_search(query)
-          .then((data) => {
-            // Set the fields to be sent in message
-            composeMsg = [
-              "*Name* : ",
-              data[0].name,
-              "\n*Gender* : ",
-              data[0].gender,
-              "\n*ID* : ",
-              data[0].id,
-              "\n*Description* : ",
-              data[0].desc,
-            ];
-            if (data.length > 1) {
-              list = [
-                {
-                  title: "Search Results",
-                  rows: [],
-                },
-              ];
-              data.forEach((result) => {
-                list[0].rows.push({
-                  title: `CharIdDetail ${result.id}`,
-                  description: result.anime_name,
-                });
-              });
-            }
-            composeMsg.forEach((txt) => {
-              msgString += txt;
-            });
-            // Send the response to the sender
-            client
-              .sendImage(
-                message.chatId,
-                data[0].character_image,
-                null,
-                msgString
-              )
-              .then(() => {
-                console.log(
-                  "Sent message: \n" + msgString + "\n--------------------"
-                );
-              })
-              .catch((erro) => {
-                console.error("Error when sending character details: ", erro);
-              });
-
-            sendListMenu(
-              message.chatId,
-              "Characters with similar Names",
-              "subTitle",
-              "Checkout the menu",
-              "Results",
-              list
-            );
-          })
-          .catch((err) => {
-            // Send not found to sender
-            client
-              .reply(
-                message.chatId,
-                "Character not found.. Sorry.\nCheck if the command syntax is right or not.\nDon't get confused by similar looking commands.",
-                message.id.toString()
-              )
-              .then(() => {
-                console.log(err);
-              })
-              .catch((erro) => {
-                console.error("Error when sending error: ", erro);
-              });
-          });
+        searchCharacterDetail(client, message.chatId, query);
         break;
       ////////////////////////////////////MOVIE DETAIL//////////////////////////////////
       case ".md":
@@ -1253,7 +1134,6 @@ function start(client) {
         break;
       ///////////////////////////ANIME CHARACTER DETAIL- BY ID//////////////////////////
       case ".cid":
-      case "chariddetail":
         RecievedMsgPermission = true;
         charDetailById(client, message.chatId, query);
         break;
