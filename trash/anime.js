@@ -203,3 +203,76 @@
 //         console.error("Error when sending error: ", erro);
 //       });
 //   });
+
+// acb
+//   .get_character_by_search(query)
+//   .then((data) => {
+//     // Set the fields to be sent in message
+//     composeMsg = [
+//       "*Name* : ",
+//       data[0].name,
+//       "\n*Gender* : ",
+//       data[0].gender,
+//       "\n*ID* : ",
+//       data[0].id,
+//       "\n*Description* : ",
+//       data[0].desc,
+//     ];
+//     if (data.length > 1) {
+//       list = [
+//         {
+//           title: "Search Results",
+//           rows: [],
+//         },
+//       ];
+//       data.forEach((result) => {
+//         list[0].rows.push({
+//           title: `CharIdDetail ${result.id}`,
+//           description: result.anime_name,
+//         });
+//       });
+//     }
+//     composeMsg.forEach((txt) => {
+//       msgString += txt;
+//     });
+//     // Send the response to the sender
+//     client
+//       .sendImage(
+//         message.chatId,
+//         data[0].character_image,
+//         null,
+//         msgString
+//       )
+//       .then(() => {
+//         console.log(
+//           "Sent message: \n" + msgString + "\n--------------------"
+//         );
+//       })
+//       .catch((erro) => {
+//         console.error("Error when sending character details: ", erro);
+//       });
+
+//     sendListMenu(
+//       message.chatId,
+//       "Characters with similar Names",
+//       "subTitle",
+//       "Checkout the menu",
+//       "Results",
+//       list
+//     );
+//   })
+//   .catch((err) => {
+//     // Send not found to sender
+//     client
+//       .reply(
+//         message.chatId,
+//         "Character not found.. Sorry.\nCheck if the command syntax is right or not.\nDon't get confused by similar looking commands.",
+//         message.id.toString()
+//       )
+//       .then(() => {
+//         console.log(err);
+//       })
+//       .catch((erro) => {
+//         console.error("Error when sending error: ", erro);
+//       });
+//   });

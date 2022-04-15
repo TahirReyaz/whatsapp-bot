@@ -190,3 +190,31 @@ module.exports.animeStaffDetails = (client, sendIn, id) => {
     );
   });
 };
+
+module.exports.searchCharacterDetail = (client, sendIn, id) => {
+  Anilist.searchEntry.character(id, 1, 30).then((data) => {
+    const list = [
+      {
+        title: "Search Results",
+        rows: [],
+      },
+    ];
+
+    data.characters.forEach((character) => {
+      list[0].rows.push({
+        title: ".cid " + character.id,
+        description: character.name.english,
+      });
+    });
+
+    sendListMenu(
+      client,
+      sendIn,
+      "Searched: " + query,
+      "Hi",
+      "Checkout the bottom menu for results",
+      "Search results",
+      list
+    );
+  });
+};
