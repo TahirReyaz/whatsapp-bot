@@ -22,7 +22,7 @@ const {
   ocr,
   sendGifSticker,
 } = require("./functions/mediaHandlers");
-const { animeSearch } = require("./functions/animeHandlers");
+const { animeSearch, animeDetail } = require("./functions/animeHandlers");
 
 // Create the client
 venom
@@ -867,7 +867,7 @@ function start(client) {
       case ".ad":
       case "animedetail":
         RecievedMsgPermission = true;
-        animeSearch(client, query);
+        animeSearch(client, message.chatId, query);
         // malScraper
         //   .getInfoFromName(query)
         //   .then((data) => {
@@ -968,70 +968,71 @@ function start(client) {
       case ".aid":
       case "animeids":
         RecievedMsgPermission = true;
-        acb
-          .get_anime_by_search(query)
-          .then((data) => {
-            msgString =
-              "Click on an Anime ID from the buttons to get its characters"; // composeMsg will be used as description of the button options
-            list = [
-              {
-                title: "Search Results",
-                rows: [],
-              },
-            ];
+        animeDetail(client, query);
+        // acb
+        //   .get_anime_by_search(query)
+        //   .then((data) => {
+        //     msgString =
+        //       "Click on an Anime ID from the buttons to get its characters"; // composeMsg will be used as description of the button options
+        //     list = [
+        //       {
+        //         title: "Search Results",
+        //         rows: [],
+        //       },
+        //     ];
 
-            data.forEach((result) => {
-              msgString += "\n*" + result.anime_id + "* - " + result.anime_name;
-              list[0].rows.push({
-                title: `AnimeChars ${result.anime_id}`,
-                description: result.anime_name,
-              });
-            });
-            msgString +=
-              "\nGet the IDs of characters of an anime by sending 'AnimeChars <id>\nFor example\n*AnimeChars 101671*";
+        //     data.forEach((result) => {
+        //       msgString += "\n*" + result.anime_id + "* - " + result.anime_name;
+        //       list[0].rows.push({
+        //         title: `AnimeChars ${result.anime_id}`,
+        //         description: result.anime_name,
+        //       });
+        //     });
+        //     msgString +=
+        //       "\nGet the IDs of characters of an anime by sending 'AnimeChars <id>\nFor example\n*AnimeChars 101671*";
 
-            sendListMenu(
-              message.chatId,
-              "Checkout the bottom menu To get character of the Animes",
-              "Help and all commands",
-              msgString,
-              "Commands",
-              list
-            );
-          })
-          .catch((err) => {
-            // Send not found to sender
-            buttonsArray = [
-              {
-                buttonId: "aid",
-                buttonText: { displayText: "AnimeIds Naruto" },
-                type: 1,
-              },
-              {
-                buttonId: "ahelp",
-                buttonText: { displayText: "AnimeHelp" },
-                type: 1,
-              },
-              {
-                buttonId: "help",
-                buttonText: { displayText: ".help" },
-                type: 1,
-              },
-            ];
-            client
-              .sendButtons(
-                message.chatId,
-                "Anime not found.. Sorry. Check if the command syntax is wrong",
-                buttonsArray,
-                "Chose the buttons for examples and menu"
-              )
-              .then(() => {
-                console.log(err);
-              })
-              .catch((erro) => {
-                console.error("Error when sending error: ", erro);
-              });
-          });
+        //     sendListMenu(
+        //       message.chatId,
+        //       "Checkout the bottom menu To get character of the Animes",
+        //       "Help and all commands",
+        //       msgString,
+        //       "Commands",
+        //       list
+        //     );
+        //   })
+        //   .catch((err) => {
+        //     // Send not found to sender
+        //     buttonsArray = [
+        //       {
+        //         buttonId: "aid",
+        //         buttonText: { displayText: "AnimeIds Naruto" },
+        //         type: 1,
+        //       },
+        //       {
+        //         buttonId: "ahelp",
+        //         buttonText: { displayText: "AnimeHelp" },
+        //         type: 1,
+        //       },
+        //       {
+        //         buttonId: "help",
+        //         buttonText: { displayText: ".help" },
+        //         type: 1,
+        //       },
+        //     ];
+        //     client
+        //       .sendButtons(
+        //         message.chatId,
+        //         "Anime not found.. Sorry. Check if the command syntax is wrong",
+        //         buttonsArray,
+        //         "Chose the buttons for examples and menu"
+        //       )
+        //       .then(() => {
+        //         console.log(err);
+        //       })
+        //       .catch((erro) => {
+        //         console.error("Error when sending error: ", erro);
+        //       });
+        //   });
         break;
       //////////////////////////////ANIME CHARACTERS IDs////////////////////////////////
       case ".ac":
