@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "acb-api": "^1.3.6",
+    "anilist-node": "^1.11.2",
     "axios": "^0.21.1",
     "dotenv": "^10.0.0",
     "gify": "^0.2.0",

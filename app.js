@@ -22,6 +22,7 @@ const {
   ocr,
   sendGifSticker,
 } = require("./functions/mediaHandlers");
+const { animeSearch } = require("./functions/animeHandlers");
 
 // Create the client
 venom
@@ -153,7 +154,6 @@ function start(client) {
     const botQuery = data.split(" ");
     botQuery[0] = botQuery[0].toLowerCase();
     const queryCutter = botQuery[0] + " ";
-    console.table(botQuery);
     const queryWithDesc = data.substring(queryCutter.length).split("\n"); // Get everything written after the command
     let query = queryWithDesc[0]; // This is used as the option people type after the command
     const queryPart = query.split("-"); // This is used as extra options that people type after the above query
@@ -867,101 +867,102 @@ function start(client) {
       case ".ad":
       case "animedetail":
         RecievedMsgPermission = true;
-        malScraper
-          .getInfoFromName(query)
-          .then((data) => {
-            console.log(data);
-            let genreString = "",
-              staffString = "",
-              charString = "";
-            data.genres.forEach((genre) => {
-              genreString += genre + " | ";
-            });
-            data.staff.forEach((person) => {
-              staffString += `${person.name} (${person.role}) | `;
-            });
-            data.characters.forEach((char) => {
-              if (char.role === "Main") {
-                charString += char.name + " | ";
-              }
-            });
-            // Set the fields to be sent in message
-            composeMsg = [
-              "*Title* : ",
-              data.title,
-              "\n*English Title* : ",
-              data.englishTitle,
-              "\n*Japanese Title* : ",
-              data.japaneseTitle,
-              "\n*Episodes* : ",
-              data.episodes,
-              "\n*Type* : ",
-              data.type,
-              "\n*Aired* : ",
-              data.aired,
-              "\n*Genres* : ",
-              genreString,
-              "\n*Status* : ",
-              data.status,
-              "\n*Duration*🕑 : ",
-              data.duration,
-              "\n*Rating* : ",
-              data.rating,
-              "\n\n*Main Characters* : ",
-              charString,
-              "\n\n*Staff* : ",
-              staffString,
-              "\n\n*Synopsis* : ",
-              data.synopsis,
-            ];
-            composeMsg.forEach((txt) => {
-              msgString += txt;
-            });
-            // Send the response to the sender
-            client
-              .sendImage(message.chatId, data.picture, null, msgString)
-              .then(() => {
-                console.log(
-                  "Sent message: \n" + msgString + "\n--------------------"
-                );
-              })
-              .catch((erro) => {
-                console.error("Error when sending kanji definition: ", erro);
-              });
-          })
-          .catch((err) => {
-            // Send not found to sender
-            buttonsArray = [
-              {
-                buttonId: "ad",
-                buttonText: { displayText: "AnimeDetail Naruto" },
-                type: 1,
-              },
-              {
-                buttonId: "ahelp",
-                buttonText: { displayText: "AnimeHelp" },
-                type: 1,
-              },
-              {
-                buttonId: "help",
-                buttonText: { displayText: ".help" },
-                type: 1,
-              },
-            ];
-            client
-              .sendButtons(
-                message.chatId,
-                "Anime not found.. Sorry",
-                buttonsArray,
-                "Chose the buttons for examples and menu"
-              )
-              .then(() => {
-                console.log(err);
-              })
-              .catch((erro) => {
-                console.error("Error when sending error: ", erro);
-              });
-          });
+        animeSearch(client, query);
+        // malScraper
+        //   .getInfoFromName(query)
+        //   .then((data) => {
+        //     console.log(data);
+        //     let genreString = "",
+        //       staffString = "",
+        //       charString = "";
+        //     data.genres.forEach((genre) => {
+        //       genreString += genre + " | ";
+        //     });
+        //     data.staff.forEach((person) => {
+        //       staffString += `${person.name} (${person.role}) | `;
+        //     });
+        //     data.characters.forEach((char) => {
+        //       if (char.role === "Main") {
+        //         charString += char.name + " | ";
+        //       }
+        //     });
+        //     // Set the fields to be sent in message
+        //     composeMsg = [
+        //       "*Title* : ",
+        //       data.title,
+        //       "\n*English Title* : ",
+        //       data.englishTitle,
+        //       "\n*Japanese Title* : ",
+        //       data.japaneseTitle,
+        //       "\n*Episodes* : ",
+        //       data.episodes,
+        //       "\n*Type* : ",
+        //       data.type,
+        //       "\n*Aired* : ",
+        //       data.aired,
+        //       "\n*Genres* : ",
+        //       genreString,
+        //       "\n*Status* : ",
+        //       data.status,
+        //       "\n*Duration*🕑 : ",
+        //       data.duration,
+        //       "\n*Rating* : ",
+        //       data.rating,
+        //       "\n\n*Main Characters* : ",
+        //       charString,
+        //       "\n\n*Staff* : ",
+        //       staffString,
+        //       "\n\n*Synopsis* : ",
+        //       data.synopsis,
+        //     ];
+        //     composeMsg.forEach((txt) => {
+        //       msgString += txt;
+        //     });
+        //     // Send the response to the sender
+        //     client
+        //       .sendImage(message.chatId, data.picture, null, msgString)
+        //       .then(() => {
+        //         console.log(
+        //           "Sent message: \n" + msgString + "\n--------------------"
+        //         );
+        //       })
+        //       .catch((erro) => {
+        //         console.error("Error when sending kanji definition: ", erro);
+        //       });
+        //   })
+        //   .catch((err) => {
+        //     // Send not found to sender
+        //     buttonsArray = [
+        //       {
+        //         buttonId: "ad",
+        //         buttonText: { displayText: "AnimeDetail Naruto" },
+        //         type: 1,
+        //       },
+        //       {
+        //         buttonId: "ahelp",
+        //         buttonText: { displayText: "AnimeHelp" },
+        //         type: 1,
+        //       },
+        //       {
+        //         buttonId: "help",
+        //         buttonText: { displayText: ".help" },
+        //         type: 1,
+        //       },
+        //     ];
+        //     client
+        //       .sendButtons(
+        //         message.chatId,
+        //         "Anime not found.. Sorry",
+        //         buttonsArray,
+        //         "Chose the buttons for examples and menu"
+        //       )
+        //       .then(() => {
+        //         console.log(err);
+        //       })
+        //       .catch((erro) => {
+        //         console.error("Error when sending error: ", erro);
+        //       });
+        //   });
         break;
       ////////////////////////////////////ANIME IDs/////////////////////////////////////
       case ".aid":
