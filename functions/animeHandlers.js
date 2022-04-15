@@ -1,5 +1,5 @@
 const anilist = require("anilist-node");
-const { sendListMenu } = require("./venomFunctions");
+const { sendListMenu, sendImage } = require("./venomFunctions");
 const Anilist = new anilist();
 
 module.exports.animeSearch = (client, sendIn, query) => {
@@ -32,6 +32,12 @@ module.exports.animeSearch = (client, sendIn, query) => {
 
 module.exports.animeDetail = (client, sendIn, id) => {
   Anilist.media.anime(Number(id)).then((data) => {
-    console.log(data);
+    sendImage(
+      client,
+      sendIn,
+      data.coverImage.medium,
+      data.title.romaji,
+      "Error while sending anime detail"
+    );
   });
 };

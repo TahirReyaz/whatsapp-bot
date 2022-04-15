@@ -69,3 +69,14 @@ module.exports.sendListMenu = (
       console.error("Error when sending: ", erro);
     });
 };
+
+module.exports.sendImage = (client, sendIn, imgSrc, caption, errMsg) => {
+  client
+    .sendImage(sendIn, imgSrc, null, caption)
+    .then(() => {
+      console.log("Sent message: \n" + caption + "\n--------------------");
+    })
+    .catch((erro) => {
+      console.error(errMsg, erro);
+    });
+};
