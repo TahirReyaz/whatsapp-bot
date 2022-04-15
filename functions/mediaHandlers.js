@@ -46,7 +46,7 @@ module.exports.imgToSticker = async (client, sendIn, replyTo, msgObj) => {
   }
 
   const buffer = await client.decryptFile(msgObj);
-  console.log("Buffer generated");
+  console.log("Buffer generated", __dirname);
   let fileName = `some-file-name.${mime.extension(msgObj.mimetype)}`;
   fs.writeFile(fileName, buffer, (err) => {
     if (err) {
@@ -59,11 +59,14 @@ module.exports.imgToSticker = async (client, sendIn, replyTo, msgObj) => {
       );
       return;
     }
+    console.log("File write successful");
+
     gm(fileName)
       .resizeExact(500, 500)
       .gravity("Center")
       .write(fileName, function (err) {
         if (err) {
+          console.log("Error while resizing image", err);
           sendReply(
             client,
             sendIn,
