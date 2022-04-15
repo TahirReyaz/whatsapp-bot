@@ -1,7 +1,6 @@
 // Supports ES6
 const venom = require("venom-bot");
 const axios = require("axios");
-const acb = require("acb-api");
 const musicInfo = require("music-info");
 const openai = require("openai-grammaticalcorrection");
 require("dotenv").config();
@@ -876,70 +875,9 @@ function start(client) {
         break;
       ////////////////////////////////////ANIME IDs/////////////////////////////////////
       case ".aid":
-      case "animeids":
+      case "animedetailbyid":
         RecievedMsgPermission = true;
         animeDetail(client, message.chatId, query);
-        break;
-      //////////////////////////////ANIME CHARACTERS IDs////////////////////////////////
-      case ".ac":
-      case "animechars":
-        RecievedMsgPermission = true;
-        acb
-          .get_anime_by_id(query)
-          .then((data) => {
-            // Set the fields to be sent in message
-            msgString =
-              data.anime_id + "- *" + data.anime_name + "*\n*Characters:*";
-            data.characters.forEach((character) => {
-              msgString += "\n*" + character.id + "* - " + character.name;
-            });
-            msgString +=
-              "\nGet details of a character by sending 'CharIdDetail <id>\nFor example\n*CharIdDetail 10820*";
-            // Send the response to the sender
-            client
-              .sendImage(message.chatId, data.anime_image, null, msgString)
-              .then(() => {
-                console.log(
-                  "Sent message: \n" + msgString + "\n--------------------"
-                );
-              })
-              .catch((erro) => {
-                console.error("Error when sending character ids: ", erro);
-              });
-          })
-          .catch((err) => {
-            // Send not found to sender
-            buttonsArray = [
-              {
-                buttonId: "aid",
-                buttonText: { displayText: "AnimeChars Naruto" },
-                type: 1,
-              },
-              {
-                buttonId: "ahelp",
-                buttonText: { displayText: "AnimeHelp" },
-                type: 1,
-              },
-              {
-                buttonId: "help",
-                buttonText: { displayText: ".help" },
-                type: 1,
-              },
-            ];
-            client
-              .sendButtons(
-                message.chatId,
-                "Anime not found.. Sorry",
-                buttonsArray,
-                "Chose the buttons for examples and menu"
-              )
-              .then(() => {
-                console.log(err);
-              })
-              .catch((erro) => {
-                console.error("Error when sending error: ", erro);
-              });
-          });
         break;
       /////////////////////////ANIME CHARACTER DETAIL- BY SEARCH////////////////////////
       case ".cd":
@@ -1178,7 +1116,6 @@ function start(client) {
         break;
       ///////////////////////////ANIME CHARACTER DETAIL- BY ID//////////////////////////
       case ".cid":
-      case "chariddetail":
         RecievedMsgPermission = true;
         charDetailById(client, message.chatId, query);
         break;
