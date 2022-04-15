@@ -968,7 +968,7 @@ function start(client) {
       case ".aid":
       case "animeids":
         RecievedMsgPermission = true;
-        animeDetail(client, query);
+        animeDetail(client, message.chatId, query);
         // acb
         //   .get_anime_by_search(query)
         //   .then((data) => {

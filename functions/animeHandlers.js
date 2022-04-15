@@ -30,7 +30,8 @@ module.exports.animeSearch = (client, sendIn, query) => {
   });
 };
 
-module.exports.animeDetail = (client, id) => {
+module.exports.animeDetail = (client, sendIn, id) => {
+  console.log({ id });
   Anilist.media.anime(id).then((data) => {
     console.log(data);
   });
