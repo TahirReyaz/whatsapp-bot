@@ -30,9 +30,7 @@ const {
   mangaDetailsById,
 } = require("./functions/animeHandlers");
 
-const {
-  analyzeText
-} = require("./functions/tensorflowHandlers");
+const { analyzeText } = require("./functions/tensorflowHandlers");
 
 // Create the client
 venom
@@ -1828,18 +1826,21 @@ function start(client) {
       case ".analyze":
       case ".feel":
         RecievedMsgPermission = true;
-        console.log("Analyzing text");
-        console.log(message.quotedMsg);
-        if (message.quotedMsg.type === "chat") { 
-            analyzeText(client, message.chatId, message.id.toString(), message.quotedMsg.body);
+        if (message.quotedMsg.type === "chat") {
+          analyzeText(
+            client,
+            message.chatId,
+            message.id.toString(),
+            message.quotedMsg.body
+          );
         } else {
           VsendReply(
             client,
             message.chatId,
-            "Please send a text to analyze",
+            "The selected message is not text",
             message.id.toString(),
             "Error when sending warning: "
-          )
+          );
         }
 
         break;
