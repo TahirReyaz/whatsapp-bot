@@ -5,7 +5,7 @@ const botMenuList = [
     title: "General Commands",
     rows: [
       {
-        title: "HiBot ",
+        title: "HiBot",
         description: "For just getting a reply",
       },
       {
@@ -32,9 +32,9 @@ const botMenuList = [
           "To generate stickers, reply to the image or gif with .sticker",
       },
       {
-        title: ".imgToText",
+        title: ".feel",
         description:
-          "To read text from image, reply to the image with *imageToText* | Short command .ocr",
+          "To extract the feelings from a text using machine learning. Reply to a text message with *.feel*",
       },
       {
         title: "horoscopeMenu",
@@ -235,7 +235,7 @@ const animeMenuList = [
         description: "To search for the details of a manga",
       },
       {
-        title: "HelpBot ",
+        title: "HelpBot",
         description: "To get help about all commands.",
       },
     ],
