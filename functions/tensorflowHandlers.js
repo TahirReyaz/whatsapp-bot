@@ -10,14 +10,6 @@ let model;
 })();
 
 const analyzeText = async (client, sendIn, replyTo, text) => {
-  sendReply(
-    client,
-    sendIn,
-    "*Analyzing your text.... please wait*",
-    replyTo,
-    "Error when sending message: "
-  );
-
   const predictions = await model.classify(text);
 
   const msg = [`Text Analysis`, "------------------------------", ""];
