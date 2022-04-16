@@ -23,7 +23,7 @@ const analyzeText = async (client, sendIn, replyTo, text) => {
   const msg = [`Text Analysis`, "------------------------------", ""];
 
   predictions.forEach((prediction) => {
-    let label = _.capitalize(prediction.label);
+    let label = _.capitalize(prediction.label.split("_").join(" "));
     msg.push(
       `*${label}* - ${(prediction.results[0].probabilities[1] * 100).toFixed(
         2
