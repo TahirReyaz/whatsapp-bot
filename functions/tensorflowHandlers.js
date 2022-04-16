@@ -1,4 +1,5 @@
 const tf = require("@tensorflow-models/toxicity");
+const _ = require("lodash");
 
 const { sendReply } = require("./venomFunctions");
 let model;
@@ -19,12 +20,12 @@ const analyzeText = async (client, sendIn, replyTo, text) => {
 
   const predictions = await model.classify(text);
 
-  const values = [`Text Analysis`];
+  const msg = [`Text Analysis`, "------------------------------", ""];
 
   predictions.forEach((prediction) => {
-    let value = prediction.label;
-    values.push(
-      `${value}  -  ${(prediction.results[0].probabilities[1] * 100).toFixed(
+    let label = _.capitalize(prediction.label);
+    msg.push(
+      `*${label}* - ${(prediction.results[0].probabilities[1] * 100).toFixed(
         2
       )}%`
     );
@@ -33,12 +34,12 @@ const analyzeText = async (client, sendIn, replyTo, text) => {
   sendReply(
     client,
     sendIn,
-    values.join("\n"),
+    msg.join("\n"),
     replyTo,
     "Error when sending message: "
   );
 
-  return values;
+  return msg;
 };
 
 module.exports = {
