@@ -27,11 +27,11 @@ Some of the cool features of this bot are:
 - Create a _.env_ file in the root folder of the project and set up the api keys and database url in _.env_ file  
 ```OMDB_API_KEY=<YOUR OMDB API KEY>```  
 ```OPENAI_API_KEY=<YOUR OPENAI API KEY>```  
-```FIREBASE_DOMAIN=https:<YOUR FIREBASE DATABASE URL>```  
+```FIREBASE_DOMAIN=<YOUR FIREBASE DATABASE URL>```  
 The firebase rtdb url looks like this: ```https://<YOUR PROJECT NAME>.firebaseio.com```  
 You can get the OMDB api key at [OMDB](https://www.omdbapi.com/apikey.aspx). It is used for getting movie details  
 You can get the OpenAi api key at [OpenAi](https://openai.com/api). It is used for AI/ML related functions  
 - install system dependencies like tesseract and image editing engines like _gm_ and _im_ on your machine
 - Now you are ready, run ```npm start``` to start the bot  
 - You will see a QR code in the terminal. Scan it in the _Linked devices_ menu in WhatsApp  
-Now You are ready to go. Send ```hibot``` in any chat in WhatsApp
+### Now You are ready to go. Send ```hibot``` in any chat in WhatsApp
