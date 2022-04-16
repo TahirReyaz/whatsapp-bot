@@ -30,6 +30,10 @@ const {
   mangaDetailsById,
 } = require("./functions/animeHandlers");
 
+const {
+  analyzeText
+} = require("./functions/tensorflowHandlers");
+
 // Create the client
 venom
   .create({
@@ -39,8 +43,9 @@ venom
   .then((client) => {
     start(client);
   })
-  .catch((erro) => {
-    console.log(erro);
+  .catch((error) => {
+    console.log(error);
+    console.log("ERROR OCCURED");
   });
 let RecievedMsgPermission = false;
 // Start the client
@@ -1818,6 +1823,25 @@ function start(client) {
           message.chatId,
           message.id.toString()
         );
+        break;
+      ////////////////////////////////// TEXT ANALYSIS ////////////////////////////////////
+      case ".analyze":
+      case ".feel":
+        RecievedMsgPermission = true;
+        console.log("Analyzing text");
+        console.log(message.quotedMsg);
+        if (message.quotedMsg.type === "chat") { 
+            analyzeText(client, message.chatId, message.id.toString(), message.quotedMsg.body);
+        } else {
+          VsendReply(
+            client,
+            message.chatId,
+            "Please send a text to analyze",
+            message.id.toString(),
+            "Error when sending warning: "
+          )
+        }
+
         break;
       ////////////////////////////////// STICKER ////////////////////////////////////
       case ".sticker":
