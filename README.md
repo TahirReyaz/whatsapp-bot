@@ -33,7 +33,7 @@ Some of the cool features of this bot are:
   The firebase rtdb url looks like this: `https://<YOUR PROJECT NAME>.firebaseio.com`  
   You can get the OMDB api key at [OMDB](https://www.omdbapi.com/apikey.aspx). It is used for getting movie details  
   You can get the OpenAi api key at [OpenAi](https://openai.com/api). It is used for AI/ML related functions
-- install system dependencies like tesseract and image editing engines like _gm_ and _im_ on your machine. They are used for the ML/AI and image editing functions
+- install system dependencies like tesseract and image editing engines like _imagemagick_ on your machine, if the sticker command still doesnt work then install _graphicsmagick_ too. They are used for the ML/AI and image editing functions
 - Now you are ready, run `npm start` to start the bot
 - You will see a QR code in the terminal. Scan it in the _Linked devices_ menu in WhatsApp
 
