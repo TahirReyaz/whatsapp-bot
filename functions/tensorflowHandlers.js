@@ -16,6 +16,7 @@ const analyzeText = async (client, sendIn, replyTo, text) => {
 
   predictions.forEach((prediction) => {
     let label = _.capitalize(prediction.label.split("_").join(" "));
+    console.log("prediction.results", prediction.results);
     msg.push(
       `*${label}* - ${(prediction.results[0].probabilities[1] * 100).toFixed(
         2
@@ -30,8 +31,6 @@ const analyzeText = async (client, sendIn, replyTo, text) => {
     replyTo,
     "Error when sending message: "
   );
-
-  return msg;
 };
 
 module.exports = {

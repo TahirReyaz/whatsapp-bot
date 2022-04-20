@@ -71,7 +71,6 @@ function start(client) {
       for (const key in res.data) {
         mentionAllGrps.push({ id: key, grpId: res.data[key].grpId });
       }
-      console.log({ mentionAllGrps });
     });
 
   // Get all groups who have mention all admin only role
@@ -82,7 +81,6 @@ function start(client) {
       for (const key in res.data) {
         mentionAllAdminOnlyGrps.push({ id: key, grpId: res.data[key].grpId });
       }
-      console.log({ mentionAllAdminOnlyGrps });
     });
 
   // Get all groups who have nsfw roast role
@@ -93,7 +91,6 @@ function start(client) {
       for (const key in res.data) {
         nsfwRoastGrps.push({ id: key, grpId: res.data[key].grpId });
       }
-      console.log({ nsfwRoastGrps });
     });
 
   // Get all group data which contains the roles opted by members
@@ -118,7 +115,6 @@ function start(client) {
       }
       grpData.push({ grpId: key, roles: roleData });
     }
-    console.log({ grpData });
   });
   const pollGrps = [
     "Unofficial",
